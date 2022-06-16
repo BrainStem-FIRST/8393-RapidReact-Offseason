@@ -4,13 +4,27 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.PathCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class RobotContainer {
@@ -56,15 +70,49 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 
+      Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(m_drivetrainSubsystem.m_kinematics);
     
-    // m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-    //     m_drivetrainSubsystem,
-    //     () -> 0,
-    //     () -> 0,
-    //     () -> 2
-    // ));
+    Trajectory trajectory = 
+    TrajectoryGenerator.generateTrajectory
+    (new Pose2d(0, 0, new Rotation2d(0)), 
+    List.of(//
+            new Translation2d(3, 0), 
+            new Translation2d(3, -3)
+            ), 
+            new Pose2d(6, -3, 
+            Rotation2d.fromDegrees(360)), 
+            trajectoryConfig);
 
-    return new InstantCommand();
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+        Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+    trajectory, 
+    m_drivetrainSubsystem::getPose,
+    Constants.kDriveKinematics, 
+    xController,
+    yController,
+    thetaController,
+    m_drivetrainSubsystem::setModuleStates,
+    m_drivetrainSubsystem);
+
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() -> m_drivetrainSubsystem.stopModules())
+    );
+    /*  m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
+         m_drivetrainSubsystem,
+         () -> 30,
+         () -> 0,
+        () -> 0
+     ));
+
+    return new InstantCommand();*/
   }
 
   private static double deadband(double value, double deadband) {

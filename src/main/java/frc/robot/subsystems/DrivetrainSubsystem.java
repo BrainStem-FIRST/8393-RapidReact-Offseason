@@ -5,22 +5,27 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SPI;
+import frc.robot.Constants;
 //import com.ctre.phoenix.sensors.PigeonIMU;
 import com.kauailabs.navx.frc.AHRS;
 //import com.swervedrivespecialties.swervelib.Mk4ModuleConfiguration;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 //import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import static frc.robot.Constants.*;
 
@@ -31,6 +36,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
    */
   public static final double MAX_VOLTAGE = 2.0;
+
   // FIXME Measure the drivetrain's maximum velocity or calculate the theoretical.
   //  The formula for calculating the theoretical maximum velocity is:
   //   <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
@@ -53,8 +59,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
-
-  private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+//orignally m_kinematics is private, made it public for auto experimentation
+  public final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
           // Front left
           new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
           // Front right
@@ -78,6 +84,28 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final SwerveModule m_frontRightModule;
   private final SwerveModule m_backLeftModule;
   private final SwerveModule m_backRightModule;
+
+    // new thing I added(Mihir)
+private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(Constants.kDriveKinematics, 
+new Rotation2d(0));
+
+public void zeroHeading() {
+        m_navx.reset();
+    }
+public double getHeading() {
+        return Math.IEEEremainder(m_navx.getAngle(), 360);
+    }
+
+public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(getHeading());
+    }
+
+public Pose2d getPose(){
+        return odometer.getPoseMeters();
+}
+public void resetOdometry(Pose2d pose) {
+        odometer.resetPosition(pose, getRotation2d());
+    }
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
@@ -157,6 +185,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
             BACK_RIGHT_MODULE_STEER_OFFSET
     );
   }
+  //I(mihir) added this too
+  public void stopModules(){
+        m_backLeftModule.set(0, 0);
+        m_frontLeftModule.set(0, 0);
+        m_backRightModule.set(0, 0);
+        m_frontRightModule.set(0, 0);
+  }
 
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
@@ -169,6 +204,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // FIXME Uncomment if you are using a NavX
         m_navx.zeroYaw();
   }
+
 
   public Rotation2d getGyroscopeRotation() {
 //     // FIXME Remove if you are using a Pigeon
@@ -186,6 +222,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public void drive(ChassisSpeeds chassisSpeeds) {
     m_chassisSpeeds = chassisSpeeds;
+  }
+  public void setModuleStates(SwerveModuleState[] desiredStates){
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, MAX_VELOCITY_METERS_PER_SECOND);
+        m_frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
+    m_frontRightModule.set(desiredStates[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[1].angle.getRadians());
+    m_backLeftModule.set(desiredStates[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[2].angle.getRadians());
+    m_backRightModule.set(desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[3].angle.getRadians());
+
   }
 
   @Override
