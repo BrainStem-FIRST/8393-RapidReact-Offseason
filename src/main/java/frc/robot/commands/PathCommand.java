@@ -6,7 +6,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 import java.util.function.DoubleSupplier;
 
-public class PathCommand extends CommandBase{
+public class PathCommand extends CommandBase {
     private final DrivetrainSubsystem m_drivetrainSubsystem;
 
     private final DoubleSupplier m_translationXSupplier;
@@ -14,9 +14,9 @@ public class PathCommand extends CommandBase{
     private final DoubleSupplier m_rotationSupplier;
 
     public PathCommand(DrivetrainSubsystem drivetrainSubsystem,
-                               DoubleSupplier translationXSupplier,
-                               DoubleSupplier translationYSupplier,
-                               DoubleSupplier rotationSupplier) {
+            DoubleSupplier translationXSupplier,
+            DoubleSupplier translationYSupplier,
+            DoubleSupplier rotationSupplier) {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
@@ -27,15 +27,14 @@ public class PathCommand extends CommandBase{
 
     @Override
     public void execute() {
-        // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
+        // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of
+        // field-oriented movement
         m_drivetrainSubsystem.drive(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                         m_translationXSupplier.getAsDouble(),
                         m_translationYSupplier.getAsDouble(),
                         m_rotationSupplier.getAsDouble(),
-                        m_drivetrainSubsystem.getGyroscopeRotation()
-                )
-        );
+                        m_drivetrainSubsystem.getGyroscopeRotation()));
     }
 
     @Override
