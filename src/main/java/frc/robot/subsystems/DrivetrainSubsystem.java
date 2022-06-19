@@ -103,7 +103,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return Math.IEEEremainder(m_navx.getAngle(), 360);
         }
 
-        public Rotation2d getRotation2d() {
+        public Rotation2d getRotation2d() { 
                 return Rotation2d.fromDegrees(getHeading());
         }
 
@@ -254,7 +254,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         @Override
         public void periodic() {
-                SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                odometer.update(getRotation2d(), m_frontLeftModule.getCrap(), m_frontRightModule.getCrap(), m_backLeftModule.getCrap(), m_backRightModule.getCrap());
+                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
                                 states[0].angle.getRadians());
@@ -265,4 +266,5 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
                                 states[3].angle.getRadians());
         }
+
 }

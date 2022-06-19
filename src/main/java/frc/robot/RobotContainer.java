@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.PathCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class RobotContainer {
@@ -69,16 +70,13 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-        DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(m_drivetrainSubsystem.m_kinematics);
-
+    /*TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+        Constants.kMaxSpeedMetersPerSecond,
+        Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.kDriveKinematics);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(//
-            new Translation2d(3, 0),
-            new Translation2d(3, -3)),
-        new Pose2d(6, -3,
-            Rotation2d.fromDegrees(360)),
+    List.of(new Translation2d(6, 0), new Translation2d(6, 6)),
+        new Pose2d(12, -6,
+            Rotation2d.fromDegrees(-90)),
         trajectoryConfig);
 
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
@@ -100,16 +98,16 @@ public class RobotContainer {
         new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
         new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
-    /*
-     * m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
-     * m_drivetrainSubsystem,
-     * () -> 30,
-     * () -> 0,
-     * () -> 0
-     * ));
-     * 
-     * return new InstantCommand();
-     */
+    */
+     m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
+      m_drivetrainSubsystem,
+      () -> 0,
+     () -> 0,
+      () -> 20
+     ));
+     
+     return new InstantCommand();
+     
   }
 
   private static double deadband(double value, double deadband) {
