@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -21,8 +25,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  Solenoid pnuematics_0 = new Solenoid(9, PneumaticsModuleType.REVPH, 0);
+  Compressor compressorsensor = new Compressor(9, PneumaticsModuleType.REVPH);
 
   private RobotContainer m_robotContainer;
+  Joystick m_controller = new Joystick(0);
+
   // private DrivetrainSubsystem m_drivetrain;
 
   /**
@@ -36,6 +44,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+ 
   }
 
   /**
@@ -111,6 +120,14 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    double current = compressorsensor.getPressure();
+
+    if (m_controller.getRawButton(4)){
+      pnuematics_0.set(true);
+    } else {
+      pnuematics_0.set(false);
+    }
+
   }
 
   @Override
