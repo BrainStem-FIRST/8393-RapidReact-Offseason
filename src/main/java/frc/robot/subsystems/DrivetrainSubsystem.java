@@ -103,7 +103,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return Math.IEEEremainder(m_navx.getAngle(), 360);
         }
 
-        public Rotation2d getRotation2d() { 
+        public Rotation2d getRotation2d() {
                 return Rotation2d.fromDegrees(getHeading());
         }
 
@@ -115,7 +115,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 odometer.resetPosition(pose, getRotation2d());
         }
 
-        private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+        private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
+         0.0);
 
         public DrivetrainSubsystem() {
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
@@ -144,6 +145,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 // a different configuration or motors
                 // you MUST change it. If you do not, your code will crash on startup.
                 // FIXME Setup motor configuration
+
+                // Mihir added code here too
+                new Thread(() -> {
+                        try {
+                                Thread.sleep(1000);
+                                zeroHeading();
+                        } catch (Exception e) {
+                        }
+                }).start();
 
                 m_frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
                                 // This parameter is optional, but will allow you to see the current state of
@@ -197,10 +207,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         // I(mihir) added this too
         public void stopModules() {
-                m_backLeftModule.set(0, 0);
-                m_frontLeftModule.set(0, 0);
-                m_backRightModule.set(0, 0);
-                m_frontRightModule.set(0, 0);
+                m_backLeftModule.set(0, m_backLeftModule.getSteerAngle());
+                m_frontLeftModule.set(0, m_frontLeftModule.getSteerAngle());
+                m_backRightModule.set(0, m_backRightModule.getSteerAngle());
+                m_frontRightModule.set(0, m_frontRightModule.getSteerAngle());
         }
 
         /**
@@ -209,10 +219,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
          * 'forwards' direction.
          */
         public void zeroGyroscope() {
-                // // FIXME Remove if you are using a Pigeon
-                // m_pigeon.setFusedHeading(0.0);
-
-                // FIXME Uncomment if you are using a NavX
                 m_navx.zeroYaw();
         }
 
@@ -249,13 +255,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 m_backRightModule.set(
                                 desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
                                 desiredStates[3].angle.getRadians());
-
         }
 
         @Override
         public void periodic() {
-                odometer.update(getRotation2d(), m_frontLeftModule.getCrap(), m_frontRightModule.getCrap(), m_backLeftModule.getCrap(), m_backRightModule.getCrap());
-                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                odometer.update(getRotation2d(), m_frontLeftModule.getState(), m_frontRightModule.getState(),
+                                m_backLeftModule.getState(), m_backRightModule.getState());
+                SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+
                 SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
                                 states[0].angle.getRadians());

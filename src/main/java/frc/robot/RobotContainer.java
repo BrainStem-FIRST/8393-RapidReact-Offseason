@@ -69,14 +69,14 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    /*TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         Constants.kMaxSpeedMetersPerSecond,
         Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.kDriveKinematics);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-    List.of(new Translation2d(6, 0), new Translation2d(6, 6)),
-        new Pose2d(12, -6,
-            Rotation2d.fromDegrees(-90)),
+        List.of(new Translation2d(1, 0), new Translation2d(1, -1)),
+        new Pose2d(2, -1,
+            Rotation2d.fromDegrees(180)),
         trajectoryConfig);
 
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
@@ -98,16 +98,19 @@ public class RobotContainer {
         new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
         new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
-    */
-     m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
-      m_drivetrainSubsystem,
-      () -> 0,
-     () -> 0,
-      () -> 20
-     ));
-     
-     return new InstantCommand();
-     
+
+    // An ExampleCommand will run in autonomous
+    /*
+     * m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
+     * m_drivetrainSubsystem,
+     * () -> 0,
+     * () -> 0,
+     * () -> 20
+     * ));
+     * 
+     * return new InstantCommand();
+     */
+
   }
 
   private static double deadband(double value, double deadband) {

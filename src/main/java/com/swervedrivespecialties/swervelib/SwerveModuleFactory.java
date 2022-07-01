@@ -56,12 +56,16 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
         public double getSteerAngle() {
             return steerController.getStateAngle();
         }
-        //
+        //Mihir created functions
         @Override
-        public SwerveModuleState getCrap(){
+        public SwerveModuleState getState(){
             return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getSteerAngle()));
         }
-
+        @Override
+        public void stop(){
+            
+        }
+        //end of Mihir created functions
         @Override
         public void set(double driveVoltage, double steerAngle) {
             steerAngle %= (2.0 * Math.PI);
