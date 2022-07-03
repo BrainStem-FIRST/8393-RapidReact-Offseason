@@ -5,10 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.commands.DefaultDriveCommand;
@@ -25,8 +27,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  Solenoid pnuematics_0 = new Solenoid(9, PneumaticsModuleType.REVPH, 0);
-  Compressor compressorsensor = new Compressor(9, PneumaticsModuleType.REVPH);
+  DoubleSolenoid pnuematics_0 = new DoubleSolenoid(9, PneumaticsModuleType.REVPH, 0, 1);
+  Compressor compressor = new Compressor(9, PneumaticsModuleType.REVPH);
 
   private RobotContainer m_robotContainer;
   Joystick m_controller = new Joystick(0);
@@ -120,12 +122,15 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double current = compressorsensor.getPressure();
+    double current = compressor.getPressure();
 
+    compressor.enableAnalog(100, 120);
     if (m_controller.getRawButton(4)){
-      pnuematics_0.set(true);
-    } else {
-      pnuematics_0.set(false);
+      pnuematics_0.set(Value.kForward);
+    } else if (m_controller.getRawButton(1)){
+      pnuematics_0.set(Value.kReverse);
+    } else if (m_controller.getRawButton(2)){
+      pnuematics_0.set(Value.kOff);
     }
 
   }
