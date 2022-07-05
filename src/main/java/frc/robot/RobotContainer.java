@@ -67,18 +67,16 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command goforwardCommand() {
     // An ExampleCommand will run in autonomous
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
         Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(m_drivetrainSubsystem.m_kinematics);
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-        List.of(//
-            new Translation2d(3, 0),
-            new Translation2d(3, -3)),
-        new Pose2d(6, -3,
-            Rotation2d.fromDegrees(360)),
+        List.of(),
+        new Pose2d(4, 0,
+            Rotation2d.fromDegrees(0)),
         trajectoryConfig);
 
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
@@ -100,6 +98,9 @@ public class RobotContainer {
         new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
         new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
+    
+    
+
     /*
      * m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
      * m_drivetrainSubsystem,
@@ -112,6 +113,51 @@ public class RobotContainer {
      */
   }
 
+  public Command turnCommand() {
+    // An ExampleCommand will run in autonomous
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+        DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(m_drivetrainSubsystem.m_kinematics);
+
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(4, 0, new Rotation2d(0)),
+        List.of(),
+        new Pose2d(4, 0,
+            Rotation2d.fromDegrees(90)),
+        trajectoryConfig);
+
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+        Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+        trajectory,
+        m_drivetrainSubsystem::getPose,
+        Constants.kDriveKinematics,
+        xController,
+        yController,
+        thetaController,
+        m_drivetrainSubsystem::setModuleStates,
+        m_drivetrainSubsystem);
+
+    return new SequentialCommandGroup(
+        new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+        swerveControllerCommand,
+        new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
+    
+    
+
+    /*
+     * m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
+     * m_drivetrainSubsystem,
+     * () -> 30,
+     * () -> 0,
+     * () -> 0
+     * ));
+     * 
+     * return new InstantCommand();
+     */
+  }
   private static double deadband(double value, double deadband) {
     if (Math.abs(value) > deadband) {
       if (value > 0.0) {
