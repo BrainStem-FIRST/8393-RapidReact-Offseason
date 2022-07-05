@@ -4,11 +4,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 //import frc.robot.commands.DefaultDriveCommand;
 //import frc.robot.subsystems.DrivetrainSubsystem;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,8 +28,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-
+  private Command goforwardCommand;
+  private Command turnCommand;
+  private CANSparkMax m_motor;
+  private RelativeEncoder m_encoder;
+  Joystick m_controller = new Joystick(0);
   private RobotContainer m_robotContainer;
   // private DrivetrainSubsystem m_drivetrain;
 
@@ -36,6 +47,11 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_motor = new CANSparkMax(10, MotorType.kBrushless);
+    m_motor.restoreFactoryDefaults();
+    m_encoder = m_motor.getEncoder();
+
+
   }
 
   /**
@@ -76,11 +92,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    goforwardCommand = m_robotContainer.goforwardCommand();
+    turnCommand = (Command) new ChassisSpeeds(0.0, 0.0, Math.toRadians(90));
+    
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (goforwardCommand != null) {
+      goforwardCommand.schedule();;
     }
+
+    if (goforwardCommand.isFinished()) {
+      turnCommand.schedule();
+    }
+    
   }
 
   /** This function is called periodically during autonomous. */
@@ -103,15 +126,36 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (turnCommand != null) {
+      turnCommand.cancel();
     }
+    m_encoder.setPosition(0);
+
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
+    /*
+    SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+    SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+    SmartDashboard.putData("PID Controller", (Sendable) m_motor.getPIDController());
+  
+  if (m_controller.getRawButton(3)){
+      m_encoder.setPosition(0);
+      while (m_encoder.getPosition() < 200){
+      m_motor.set(0.75);
+      SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+      SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+
+    } 
+    m_motor.set(0);
+    */
   }
+    
+        
+  
 
   @Override
   public void testInit() {
