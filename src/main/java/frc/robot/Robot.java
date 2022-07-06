@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DrivetrainSubsystem;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 //import frc.robot.commands.DefaultDriveCommand;
@@ -34,7 +36,7 @@ public class Robot extends TimedRobot {
   private RelativeEncoder m_encoder;
   Joystick m_controller = new Joystick(0);
   private RobotContainer m_robotContainer;
-  // private DrivetrainSubsystem m_drivetrain;
+  private DrivetrainSubsystem m_drivetrainSubsystem;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -93,7 +95,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     goforwardCommand = m_robotContainer.goforwardCommand();
-    turnCommand = (Command) new ChassisSpeeds(0.0, 0.0, Math.toRadians(90));
     
     // schedule the autonomous command (example)
     if (goforwardCommand != null) {
@@ -101,7 +102,7 @@ public class Robot extends TimedRobot {
     }
 
     if (goforwardCommand.isFinished()) {
-      turnCommand.schedule();
+      m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, Math.toRadians(90)));
     }
     
   }
