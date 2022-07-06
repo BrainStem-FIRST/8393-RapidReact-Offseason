@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.swervelib;
-
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
@@ -55,7 +56,16 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
         public double getSteerAngle() {
             return steerController.getStateAngle();
         }
-
+        //Mihir created functions
+        @Override
+        public SwerveModuleState getState(){
+            return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getSteerAngle()));
+        }
+        @Override
+        public void stop(){
+            
+        }
+        //end of Mihir created functions
         @Override
         public void set(double driveVoltage, double steerAngle) {
             steerAngle %= (2.0 * Math.PI);
@@ -88,6 +98,12 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
 
             driveController.setReferenceVoltage(driveVoltage);
             steerController.setReferenceAngle(steerAngle);
+        }
+
+        @Override
+        public void setDesiredState() {
+            // TODO Auto-generated method stub
+            
         }
     }
 }

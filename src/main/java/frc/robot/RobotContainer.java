@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.PathCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class RobotContainer {
@@ -67,12 +68,17 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
   public Command goforwardCommand() {
     // An ExampleCommand will run in autonomous
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
         Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(m_drivetrainSubsystem.m_kinematics);
 
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+        Constants.kMaxSpeedMetersPerSecond,
+        Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.kDriveKinematics);
+        
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
         List.of(),
         new Pose2d(4, 0,
@@ -98,19 +104,19 @@ public class RobotContainer {
         new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
         new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
-    
-    
-
+        
+    // An ExampleCommand will run in autonomous
     /*
      * m_drivetrainSubsystem.setDefaultCommand(new PathCommand(
      * m_drivetrainSubsystem,
-     * () -> 30,
      * () -> 0,
-     * () -> 0
+     * () -> 0,
+     * () -> 20
      * ));
      * 
      * return new InstantCommand();
      */
+
   }
 
   public Command turnCommand() {

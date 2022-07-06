@@ -40,40 +40,41 @@ public final class Constants {
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1; // FIXME Set front left module drive motor ID
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 8; // FIXME Set front left module steer motor ID
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 11; // FIXME Set front left steer encoder ID
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(46.6); // FIXME Measure and set front
-                                                                                       // left steer offset
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(46.6); // FIXME Measure and set
+    // front left steer offset
 
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3; // FIXME Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // FIXME Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13; // FIXME Set front right steer encoder ID
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(166.5); // FIXME Measure and set front
-                                                                                         // right steer offset
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(166.5); // FIXME Measure and 
+    //set front right steer offset
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7; // FIXME Set back left drive motor ID
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6; // FIXME Set back left steer motor ID
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 17; // FIXME Set back left steer encoder ID
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(135.5); // FIXME Measure and set back
-                                                                                       // left steer offset
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(135.5); // FIXME Measure and set
+    // back left steer offset
 
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5; // FIXME Set back right drive motor ID
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4; // FIXME Set back right steer motor ID
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 15; // FIXME Set back right steer encoder ID
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(151.9); // FIXME Measure and set back
-                                                                                        // right steer offset
-    // I(Mihir) added these for auto path stuff
-    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.PI / 4;
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(151.9); // FIXME Measure and
+    // set back right steer offset
+    // I(Mihir) added these for auto path stuff 
+    public static final double kMaxAngularAccelerationRadiansPerSecondSquared =
+     DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND/16;
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-            DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+            DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND/10,
             kMaxAngularAccelerationRadiansPerSecondSquared);
-    public static final double kMaxAccelerationMetersPerSecondSquared = 5;
+            
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kPXController = 1.5;
     public static final double kPYController = 1.5;
     public static final double kPThetaController = 3;
-    public static final double kMaxSpeedMetersPerSecond = DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND * 2;
+    public static final double kMaxSpeedMetersPerSecond = DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND;
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
             new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
             new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2),
             new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
             new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2));
-
 }
