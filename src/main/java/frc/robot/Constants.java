@@ -24,6 +24,21 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+
+    public static final class PnuematicsConstants {
+        public static final int PNEUMATICS_PORT = 9;
+
+        public static final int COMPRESSOR_MIN_PRESSURE = 90;                
+        public static final int COMPRESSOR_MAX_PRESSURE = 120;
+
+        public static final int LIFT_DS_CHANNEL_1_1 = 0;
+        public static final int LIFT_DS_CHANNEL_1_2 = 1;
+
+        public static final int LIFT_DS_CHANNEL_2_1 = 3;
+        public static final int LIFT_DS_CHANNEL_2_2 = 4;
+
+}
         public final class CollectorConstants{
                 //SPARK ID
                 public static final int COLLECTOR_MOTOR_ID = 10;
@@ -52,6 +67,7 @@ public final class Constants {
                 // front left steer offset CONVERTING TO RADIANS USING MATH.PI INSTEAD OF
                 // TORADIANS CUZ IT DON'T WORK
                 public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -(Math.PI / 180) * 46.6;
+
 
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
