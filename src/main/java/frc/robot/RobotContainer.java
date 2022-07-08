@@ -22,8 +22,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.PathCommand;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class RobotContainer {
@@ -41,9 +43,9 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         m_drivetrainSubsystem,
-        () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+        () -> -modifyAxis(m_controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(m_controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(m_controller.getRightX()) * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -71,23 +73,23 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-        Constants.kMaxSpeedMetersPerSecond,
-        Constants.kMaxAccelerationMetersPerSecondSquared).setKinematics(Constants.kDriveKinematics);
+        AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(AutoConstants.kDriveKinematics);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
         List.of(new Translation2d(1, 0), new Translation2d(1, -1)),
         new Pose2d(2, -1,
             Rotation2d.fromDegrees(180)),
         trajectoryConfig);
 
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
+    PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(
-        Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+        AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
         m_drivetrainSubsystem::getPose,
-        Constants.kDriveKinematics,
+        AutoConstants.kDriveKinematics,
         xController,
         yController,
         thetaController,
