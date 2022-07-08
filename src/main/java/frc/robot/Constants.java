@@ -22,6 +22,25 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+        public static final class PnuematicsConstants {
+                public static final int PNEUMATICS_PORT = 9;
+
+                public static final int COMPRESSOR_MIN_PRESSURE = 90;                
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
+
+                public static final int LIFT_DS_CHANNEL_1_1 = 0;
+                public static final int LIFT_DS_CHANNEL_1_2 = 1;
+
+                public static final int LIFT_DS_CHANNEL_2_1 = 3;
+                public static final int LIFT_DS_CHANNEL_2_2 = 4;
+
+        }
+
+        public static final class LiftConstants {
+                public static final int INNER_HOOKS_PORT = 1;
+                public static final int OUTER_HOOKS_PORT = 1;
+        }
     /**
      * The left-to-right distance between the drivetrain wheels
      *
@@ -77,4 +96,10 @@ public final class Constants {
             new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2),
             new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
             new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2));
+
+
+    
+
+
+
 }
