@@ -22,6 +22,17 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+           public final class TransferConstants {
+                   public static final int TRANSFER_MOTOR_PORT_ID = 12;
+           }
+           public final class ShooterConstants {
+                   public static final int SHOOTER_1_MOTOR_PORT_ID = 14;
+                   public static final int SHOOTER_2_MOTOR_PORT_ID = 16;
+                   public static final int TURRET_MOTOR_PORT_ID = 18;
+                   public static final int ELEVATOR_MOTOR_PORT_ID = 20;
+                }
+
     /**
      * The left-to-right distance between the drivetrain wheels
      *

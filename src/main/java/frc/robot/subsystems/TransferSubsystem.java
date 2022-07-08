@@ -10,7 +10,7 @@ import frc.robot.Constants;
 
 public class TransferSubsystem extends SubsystemBase {
 
-    CANSparkMax transfer_motor = new CANSparkMax(transferMotorPort, MotorType.kBrushless);
+    public CANSparkMax transfer_motor = new CANSparkMax(Constants.TransferConstants.TRANSFER_MOTOR_PORT_ID, MotorType.kBrushless);
 
     public void motor_on() {}
         
