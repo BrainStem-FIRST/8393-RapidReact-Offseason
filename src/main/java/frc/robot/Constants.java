@@ -25,6 +25,15 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public final class Constants {
 
+           public final class TransferConstants {
+                   public static final int TRANSFER_MOTOR_PORT_ID = 12;
+           }
+           public final class ShooterConstants {
+                   public static final int SHOOTER_1_MOTOR_PORT_ID = 14;
+                   public static final int SHOOTER_2_MOTOR_PORT_ID = 16;
+                   public static final int TURRET_MOTOR_PORT_ID = 18;
+                   public static final int ELEVATOR_MOTOR_PORT_ID = 20;
+                }
 
     public static final class PnuematicsConstants {
         public static final int PNEUMATICS_PORT = 9;
@@ -37,8 +46,8 @@ public final class Constants {
 
         public static final int LIFT_DS_CHANNEL_2_1 = 3;
         public static final int LIFT_DS_CHANNEL_2_2 = 4;
-
 }
+
         public final class CollectorConstants{
                 //SPARK ID
                 public static final int COLLECTOR_MOTOR_ID = 10;
