@@ -27,7 +27,22 @@ public final class Constants {
      *
      * Should be measured from center to center.
      */
-    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.52705; // FIXME Measure and set trackwidth
+    public static final class PnuematicsConstants {
+        public static final int PNEUMATICS_PORT = 9;
+
+        public static final int COMPRESSOR_MIN_PRESSURE = 90;                
+        public static final int COMPRESSOR_MAX_PRESSURE = 120;
+
+        public static final int LIFT_DS_CHANNEL_1_1 = 0;
+        public static final int LIFT_DS_CHANNEL_1_2 = 1;
+
+        public static final int LIFT_DS_CHANNEL_2_1 = 3;
+        public static final int LIFT_DS_CHANNEL_2_2 = 4;
+
+}
+    
+    
+     public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.52705; // FIXME Measure and set trackwidth
     /**
      * The front-to-back distance between the drivetrain wheels.
      *
