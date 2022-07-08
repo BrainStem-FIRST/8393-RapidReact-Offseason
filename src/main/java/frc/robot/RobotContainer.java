@@ -31,7 +31,7 @@ import frc.robot.commands.AutoCommand;
 
 import frc.robot.commands.CompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.PathCommand;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.CompressorSubsytem;
 
 import frc.robot.subsystems.DrivetrainSubsystem;
