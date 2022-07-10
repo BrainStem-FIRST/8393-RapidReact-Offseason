@@ -3,16 +3,20 @@ package frc.robot.commands;
 import java.lang.reflect.Method;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
 public class ShooterCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
-    private double speed;
+    public double s_speed;
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double speed){
+    
+    
+
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, double s_speed){
         this.shooterSubsystem = shooterSubsystem;
-        this.speed = speed;
+        this.s_speed = s_speed;
         addRequirements(shooterSubsystem);
     }
 
@@ -25,6 +29,7 @@ public class ShooterCommand extends CommandBase{
     @Override
     public void execute(){
         
+        shooterSubsystem.shooter1_motor.set(speed);
 
     }
 

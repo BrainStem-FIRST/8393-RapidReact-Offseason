@@ -8,11 +8,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ElevatorCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
-    private double speed;
+    private double e_speed;
 
-    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double speed){
+    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double e_speed){
         this.shooterSubsystem = shooterSubsystem;
-        this.speed = speed;
+        this.e_speed = e_speed;
         addRequirements(shooterSubsystem);
     }
 

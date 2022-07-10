@@ -8,11 +8,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class TurretCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
-    private double speed;
+    private double t_speed;
 
-    public TurretCommand(ShooterSubsystem shooterSubsystem, double speed){
+    public TurretCommand(ShooterSubsystem shooterSubsystem, double t_speed){
         this.shooterSubsystem = shooterSubsystem;
-        this.speed = speed;
+        this.t_speed = t_speed;
         addRequirements(shooterSubsystem);
     }
 
