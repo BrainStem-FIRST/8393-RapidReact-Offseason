@@ -29,7 +29,7 @@ public class ShooterCommand extends CommandBase{
     @Override
     public void execute(){
         
-        shooterSubsystem.shooter1_motor.set(speed);
+        shooterSubsystem.shooter1_motor.set(s_speed);
 
     }
 
