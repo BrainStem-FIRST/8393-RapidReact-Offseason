@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -36,10 +37,12 @@ import frc.robot.subsystems.CompressorSubsytem;
 
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.Constants;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class RobotContainer {
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
-  private final CompressorSubsytem m_compressorSubsystem = new CompressorSubsytem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
 
   private final XboxController m_controller = new XboxController(0);
   
@@ -52,14 +55,14 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-        m_drivetrainSubsystem,
+    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+        drivetrainSubsystem,
         () -> -modifyAxis(m_controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(m_controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(m_controller.getRightX()) * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // Configure the button bindings
     configureButtonBindings();
-    new CompressorCommand(m_compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE, 
+    new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE, 
     Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);  
   }
 
@@ -75,7 +78,7 @@ public class RobotContainer {
     // Back button zeros the gyroscope
     new Button(m_controller::getBackButton)
         // No requirements because we don't need to interrupt anything
-        .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+        .whenPressed(drivetrainSubsystem::zeroGyroscope);
   }
 
   /**
@@ -101,18 +104,18 @@ public class RobotContainer {
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
-        m_drivetrainSubsystem::getPose,
+        drivetrainSubsystem::getPose,
         AutoConstants.kDriveKinematics,
         xController,
         yController,
         thetaController,
-        m_drivetrainSubsystem::setModuleStates,
-        m_drivetrainSubsystem);
+        drivetrainSubsystem::setModuleStates,
+        drivetrainSubsystem);
 
     return new SequentialCommandGroup(
-        new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+        new InstantCommand(() -> drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
         swerveControllerCommand,
-        new InstantCommand(() -> m_drivetrainSubsystem.stopModules()));
+        new InstantCommand(() -> drivetrainSubsystem.stopModules()));
 
     // An ExampleCommand will run in autonomous
     /*
