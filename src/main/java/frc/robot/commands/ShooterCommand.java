@@ -3,21 +3,23 @@ package frc.robot.commands;
 import java.lang.reflect.Method;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TransferSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 
 public class ShooterCommand extends CommandBase{
-    private TransferSubsystem transferSubsystem;
+    private ShooterSubsystem shooterSubsystem;
     private double speed;
 
-    public ShooterCommand(TransferSubsystem transferSubsystem, double speed){
-        this.transferSubsystem = transferSubsystem;
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, double speed){
+        this.shooterSubsystem = shooterSubsystem;
         this.speed = speed;
-        addRequirements(transferSubsystem);
+        addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
+        shooterSubsystem.s_encoder.setPosition(0);
+        shooterSubsystem.s_encoder2.setPosition(0);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class ShooterCommand extends CommandBase{
 
     @Override 
     public void end(boolean interrupted){
-        transferSubsystem.transfer_motor.set(0);
+        
 
     }
 
