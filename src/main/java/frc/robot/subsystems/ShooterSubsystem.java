@@ -30,10 +30,10 @@ public CANSparkMax turret_motor = new CANSparkMax(Constants.ShooterConstants.TUR
    public RelativeEncoder elevator() {
        return elevator_motor.getEncoder();
    }
-RelativeEncoder s_encoder =  shooter_1();
-RelativeEncoder s_encoder2 = shooter_2();
-RelativeEncoder t_encoder =  turret();
-RelativeEncoder e_encoder = elevator();
+public RelativeEncoder s_encoder =  shooter_1();
+public RelativeEncoder s_encoder2 = shooter_2();
+public RelativeEncoder t_encoder =  turret();
+public RelativeEncoder e_encoder = elevator();
 
     public ShooterSubsystem(){
     }
