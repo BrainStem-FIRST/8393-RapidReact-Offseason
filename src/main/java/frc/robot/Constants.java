@@ -25,8 +25,23 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public final class Constants {
 
+
+           public final class TransferConstants {
+                   public static final int TRANSFER_MOTOR_PORT_ID = 12;
+           }
+           public final class ShooterConstants {
+                
+                   public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
+                   public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
+                   public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
+                   public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
+                }
+
+     
+
         public final class TransferConstants {
                 public static final int TRANSFER_MOTOR_PORT_ID = 12;
+
         }
 
         public final class ShooterConstants {
