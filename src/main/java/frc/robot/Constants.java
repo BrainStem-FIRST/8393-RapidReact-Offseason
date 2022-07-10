@@ -25,35 +25,46 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public final class Constants {
 
-           public final class TransferConstants {
-                   public static final int TRANSFER_MOTOR_PORT_ID = 12;
-           }
-           public final class ShooterConstants {
-                   public static final int SHOOTER_1_MOTOR_PORT_ID = 14;
-                   public static final int SHOOTER_2_MOTOR_PORT_ID = 16;
-                   public static final int TURRET_MOTOR_PORT_ID = 18;
-                   public static final int ELEVATOR_MOTOR_PORT_ID = 20;
-                }
-
-    public static final class PnuematicsConstants {
-        public static final int PNEUMATICS_PORT = 9;
-
-        public static final int COMPRESSOR_MIN_PRESSURE = 90;                
-        public static final int COMPRESSOR_MAX_PRESSURE = 120;
-
-        public static final int LIFT_DS_CHANNEL_1_1 = 0;
-        public static final int LIFT_DS_CHANNEL_1_2 = 1;
-
-        public static final int LIFT_DS_CHANNEL_2_1 = 3;
-        public static final int LIFT_DS_CHANNEL_2_2 = 4;
-}
-
-        public final class CollectorConstants{
-                //SPARK ID
-                public static final int COLLECTOR_MOTOR_ID = 10;
+        public final class TransferConstants {
+                public static final int TRANSFER_MOTOR_PORT_ID = 12;
         }
 
-        //Mihir added this
+        public final class ShooterConstants {
+                public static final int SHOOTER_1_MOTOR_PORT_ID = 14;
+                public static final int SHOOTER_2_MOTOR_PORT_ID = 16;
+                public static final int TURRET_MOTOR_PORT_ID = 18;
+                public static final int ELEVATOR_MOTOR_PORT_ID = 20;
+        }
+
+        public static final class PnuematicsConstants {
+                public static final int PNEUMATICS_PORT = 9;
+
+                public static final int COMPRESSOR_MIN_PRESSURE = 90;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
+
+        }
+
+        public final class IntakeConstants {
+                // SPARK ID
+                public static final int INTAKE_MOTOR_ID = 10;
+                public static final int INTAKE_PNEUMATICS_DISTANCE = 10; //FIXME
+                public static final double INTAKE_MOTOR_SPEED = 0.5; //FIXME
+                //solonoid ports
+                public static final int INTAKE_PNEUMATICS_PORT = 10; //FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 0; //FIXME 
+                public static final int INTAKE_DS_CHANNEL_3_2 = 0; //FIXME
+        }
+
+        public final class LiftConstants {
+                public static final int LIFT_DS_CHANNEL_1_1 = 0;
+                public static final int LIFT_DS_CHANNEL_1_2 = 1;
+
+                public static final int LIFT_DS_CHANNEL_2_1 = 3;
+                public static final int LIFT_DS_CHANNEL_2_2 = 4;
+                
+        }
+
+        // Mihir added this
         public final class DrivetrainConstants {
 
                 /**
@@ -77,7 +88,6 @@ public final class Constants {
                 // TORADIANS CUZ IT DON'T WORK
                 public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -(Math.PI / 180) * 46.6;
 
-
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
                 public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2;
@@ -99,7 +109,8 @@ public final class Constants {
                 public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -(Math.PI / 180) * 151.9;// Math.toRadians(151.9);
 
         }
-        //Mihir added this
+
+        // Mihir added this
         public static final class AutoConstants {
                 // CONSTRAINTS
                 public static final double MAX_ROBOT_VOLTAGE_AUTONOMOUS = 2.0;
@@ -125,7 +136,8 @@ public final class Constants {
                                                 DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2));
 
         }
-        //Mihir added this
+
+        // Mihir added this
         public static final class ConstraintsConstants {
                 // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
                 public static final double MAX_ROBOT_VOLTAGE = 12.0;
@@ -134,8 +146,9 @@ public final class Constants {
                                 SdsModuleConfigurations.MK4_L4.getDriveReduction() *
                                 SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI;
                 // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
-                public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND /
-                        Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                        DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
+                public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
+                                /
+                                Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+                                                DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
         }
 }

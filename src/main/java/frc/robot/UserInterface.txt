@@ -1,0 +1,16 @@
+button a:
+button b:
+button x:
+button y:
+left joystick y axis:
+left joystick x axis:
+right joystick y axis:
+right joystick x axis:
+dpad right:
+dpad left:
+dpad up:
+dpad down:
+right trigger:
+left trigger:
+right bumper:
+left bumper:
