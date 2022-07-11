@@ -16,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -24,10 +25,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConstraintsConstants;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.AutoCommand;
 
 import frc.robot.commands.CompressorCommand;
@@ -38,15 +42,16 @@ import frc.robot.subsystems.CompressorSubsytem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
-  private final XboxController m_controller = new XboxController(0);
+  private final XboxController m_controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   
-
   int x = 0;
 
   public RobotContainer() {
@@ -63,7 +68,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE, 
-    Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);  
+    Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
+    new IntakeCommand(intakeSubsystem);
   }
 
   /**
@@ -79,6 +85,9 @@ public class RobotContainer {
     new Button(m_controller::getBackButton)
         // No requirements because we don't need to interrupt anything
         .whenPressed(drivetrainSubsystem::zeroGyroscope);
+        //INTAKE CONTROLS
+    new Button(m_controller::getYButton)
+      .whenActive(() -> intakeSubsystem.toggleIntake(true));
   }
 
   /**

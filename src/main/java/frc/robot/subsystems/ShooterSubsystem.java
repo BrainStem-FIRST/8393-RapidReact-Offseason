@@ -12,8 +12,6 @@ import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-   private static
-
    PIDController pid = new PIDController(0.1, 0.1, 0.1);
    private static final double setPoint = 0.5; // FIXME
 
