@@ -24,18 +24,21 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+        public final class ControllerConstants {
+                public static final int CONTROLLER_1_PORT = 0;
+        }
 
+        public final class TransferConstants {
+                public static final int TRANSFER_MOTOR_PORT_ID = 12;
+        }
 
-           public final class TransferConstants {
-                   public static final int TRANSFER_MOTOR_PORT_ID = 12;
-           }
-           public final class ShooterConstants {
-                
-                   public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
-                   public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
-                   public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
-                   public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
-                }
+        public final class ShooterConstants {
+
+                public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
+                public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
+                public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
+                public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
+        }
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
@@ -47,13 +50,14 @@ public final class Constants {
 
         public final class IntakeConstants {
                 // SPARK ID
-                public static final int INTAKE_MOTOR_ID = 10;
-                public static final int INTAKE_PNEUMATICS_DISTANCE = 10; //FIXME
-                public static final double INTAKE_MOTOR_SPEED = 0.5; //FIXME
-                //solonoid ports
-                public static final int INTAKE_PNEUMATICS_PORT = 10; //FIXME
-                public static final int INTAKE_DS_CHANNEL_3_1 = 0; //FIXME 
-                public static final int INTAKE_DS_CHANNEL_3_2 = 0; //FIXME
+                public static final int INTAKE_MOTOR_ID = 10; //FIXME
+                public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
+                public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
+                // solonoid ports
+                public static final int INTAKE_PNEUMATICS_PORT = 10; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 0; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_2 = 0; // FIXME
+                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; //FIXME
         }
 
         public final class LiftConstants {
@@ -62,7 +66,7 @@ public final class Constants {
 
                 public static final int LIFT_DS_CHANNEL_2_1 = 3;
                 public static final int LIFT_DS_CHANNEL_2_2 = 4;
-                
+
         }
 
         // Mihir added this

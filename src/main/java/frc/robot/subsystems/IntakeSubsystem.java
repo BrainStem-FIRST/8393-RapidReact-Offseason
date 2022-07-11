@@ -22,15 +22,47 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class IntakeSubsystem extends SubsystemBase {
-
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PneumaticsModuleType.REVPH,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
 
+  // PREDICATES FOR INTAKE SUBSYSTEM
+  private boolean isIntakeMotorStopped() {
+    return intakeMotor.get() == 0;
+  }
+
+  private boolean isIntakeMotorRunningAtRightSpeed() {
+    return intakeMotor.get() < IntakeConstants.INTAKE_MOTOR_SPEED + IntakeConstants.INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE
+        && intakeMotor.get() > IntakeConstants.INTAKE_MOTOR_SPEED - IntakeConstants.INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE;
+  }
+
+  private boolean isPneumaticsRetracted() {
+    return intakePneumatics.get() == DoubleSolenoid.Value.kReverse;
+  }
+
+  private boolean isPneumaticsExtended() {
+    return intakePneumatics.get() == DoubleSolenoid.Value.kForward;
+  }
+
+  public boolean isIntakeReadyToRetract() { //FIXME
+    return isPneumaticsExtended() && isIntakeMotorRunningAtRightSpeed();
+  }
+
+  public boolean isIntakeReadyToDeploy() { //FIXME
+    return isIntakeMotorStopped() && isPneumaticsRetracted();
+  }
+
   public void initialize() {
     intakeMotor.restoreFactoryDefaults();
     setOutput(0);
+  }
+
+  public void end() {
+    // HOW DO YOU RETURN WITH IF IN FRONT?
+    if (isIntakeReadyToRetract()) {
+      retractIntake();
+    }
   }
 
   public void setOutput(double speed) {
@@ -55,10 +87,10 @@ public class IntakeSubsystem extends SubsystemBase {
     setOutput(0);
   }
 
-  public void toggleIntake(boolean enabled) {
-    if (intakeMotor.get() == 0 && intakePneumatics.get() == DoubleSolenoid.Value.kReverse) {
+  public void toggleIntake(boolean deploy) {
+    if (isIntakeReadyToDeploy() && deploy) {
       deployIntake();
-    } else {
+    } else if(!deploy && isIntakeReadyToRetract()) {
       retractIntake();
     }
   }
