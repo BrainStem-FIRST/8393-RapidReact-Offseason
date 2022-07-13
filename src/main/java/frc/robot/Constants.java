@@ -24,6 +24,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
         public final class ControllerConstants {
                 public static final int CONTROLLER_1_PORT = 0;
         }
@@ -40,12 +41,13 @@ public final class Constants {
                 public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
         }
 
+
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-
+                public static final int COMPRESSOR_MIN_PRESSURE = 90;                
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
                 public static final int COMPRESSOR_MIN_PRESSURE = 90;
                 public static final int COMPRESSOR_MAX_PRESSURE = 120;
-
         }
 
         public final class IntakeConstants {
@@ -61,6 +63,9 @@ public final class Constants {
         }
 
         public final class LiftConstants {
+                public static final int INNER_HOOKS_PORT = 1;
+                public static final int OUTER_HOOKS_PORT = 1;
+                
                 public static final int LIFT_DS_CHANNEL_1_1 = 0;
                 public static final int LIFT_DS_CHANNEL_1_2 = 1;
 
