@@ -21,7 +21,7 @@ import frc.robot.Constants.IntakeConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PneumaticsModuleType.REVPH,
@@ -93,5 +93,10 @@ public class IntakeSubsystem extends SubsystemBase {
     } else if (!deploy && isIntakeReadyToRetract()) {
       retractIntake();
     }
+  }
+  @Override
+  public void close() throws Exception {
+    intakeMotor.close();
+    intakePneumatics.close();
   }
 }
