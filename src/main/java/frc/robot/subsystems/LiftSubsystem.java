@@ -38,6 +38,9 @@ public class LiftSubsystem extends SubsystemBase{
 
         tab.add("Outer Hooks Encoder Position", outerHooksEncoder.getPosition());
         tab.add("Outer Hooks Encoder Velocity", outerHooksEncoder.getVelocity());   
+
+        tab.add("Pneumatics 1 State", pneumatics_1.get());
+        tab.add("Pneumatics 2 State", pneumatics_2.get());
     }
 
     //PREDICATES
