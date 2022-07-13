@@ -32,6 +32,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.TransferCommand;
 import frc.robot.commands.AutoCommand;
 
 import frc.robot.commands.CompressorCommand;
@@ -43,12 +44,14 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TransferSubsystem;
 
 public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final TransferSubsystem transferSubsystem = new TransferSubsystem();
 
   private final XboxController m_controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   
@@ -70,6 +73,7 @@ public class RobotContainer {
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE, 
     Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
+    new TransferCommand(transferSubsystem);
   }
 
   /**
@@ -88,6 +92,8 @@ public class RobotContainer {
         //INTAKE CONTROLS
     new Button(m_controller::getYButton)
       .whenActive(() -> intakeSubsystem.toggleIntake(true));
+    new Button(m_controller::getXButton)
+      .whenActive(() -> transferSubsystem.toggleTransfer(true));
   }
 
   /**
