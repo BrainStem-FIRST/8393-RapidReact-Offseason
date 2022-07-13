@@ -3,7 +3,6 @@ import edu.wpi.first.wpilibj.simulation.PWMSim;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import org.junit.Test;
-import org.junit.Before;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
