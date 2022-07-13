@@ -1,11 +1,37 @@
+import static org.junit.Assert.*;
+import edu.wpi.first.wpilibj.simulation.PWMSim;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import org.junit.Test;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.simulation.PWMSim;
+import org.junit.*;
 
 public class IntakeSubsystemTest {
-    @Test
-    public void testDeployIntake() {
+    IntakeSubsystem intakeSubsystem;
+    CANSparkMax simMotor;
+    
+   @Before
+    public void setup(){
+       intakeSubsystem = new IntakeSubsystem();
+       simMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+    }
 
+    // this method will run after each test
+    public void shutdown() throws Exception {
+      intakeSubsystem.close(); // destroy our intake object
+    }
+
+    @Test
+    public void worksWhenOpen() {
+        assertEquals(1, 1);
+    }
+
+    /*@Test
+    public void testDeployIntake() {
+        
     }
 
     @Test
@@ -51,5 +77,5 @@ public class IntakeSubsystemTest {
     @Test
     public void testToggleIntake() {
 
-    }
+    }*/
 }
