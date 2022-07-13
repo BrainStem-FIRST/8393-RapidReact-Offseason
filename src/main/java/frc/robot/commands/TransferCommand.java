@@ -36,5 +36,4 @@ public class TransferCommand extends CommandBase{
     public boolean isFinished(){
         return false;
     }
-    
 }

@@ -26,7 +26,6 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PneumaticsModuleType.REVPH,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
-
   // PREDICATES FOR INTAKE SUBSYSTEM
   private boolean isIntakeMotorStopped() {
     return intakeMotor.get() == 0;

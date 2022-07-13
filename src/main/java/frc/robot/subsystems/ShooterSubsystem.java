@@ -10,7 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    PIDController pid = new PIDController(0.1, 0.1, 0.1);
    private static final double setPoint = 0.5; // FIXME
@@ -54,4 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
    }
 
+   @Override
+   public void close() {
+   }
 }

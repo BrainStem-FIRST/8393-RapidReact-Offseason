@@ -7,12 +7,9 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
-public class ShooterCommand extends CommandBase{
+public class ShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
     public double s_speed;
-
-    
-    
 
     public ShooterCommand(ShooterSubsystem shooterSubsystem, double s_speed){
         this.shooterSubsystem = shooterSubsystem;

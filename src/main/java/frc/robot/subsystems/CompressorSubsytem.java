@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PnuematicsConstants;
 
-public class CompressorSubsytem extends SubsystemBase{
+public class CompressorSubsytem extends SubsystemBase implements AutoCloseable{
 
     Compressor compressor = new Compressor(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH);
 
@@ -31,6 +31,8 @@ public class CompressorSubsytem extends SubsystemBase{
          return pressure;
     }
 
+    @Override
+    public void close(){}
     
     
 }

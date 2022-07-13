@@ -8,15 +8,19 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class TransferSubsystem extends SubsystemBase {
+public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
-    public CANSparkMax transfer_motor = new CANSparkMax(Constants.TransferConstants.TRANSFER_MOTOR_PORT_ID, MotorType.kBrushless);
+    public CANSparkMax transfer_motor = new CANSparkMax(Constants.TransferConstants.TRANSFER_MOTOR_PORT_ID,
+            MotorType.kBrushless);
 
-    public void motor_on() {}
-        
-   
-    public TransferSubsystem(){
+    public void motor_on() {
     }
 
-    
+    public TransferSubsystem() {
+    }
+
+    @Override
+    public void close() {
+    }
+
 }
