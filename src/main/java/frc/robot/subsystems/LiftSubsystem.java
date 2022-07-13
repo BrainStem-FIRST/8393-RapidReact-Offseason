@@ -25,10 +25,10 @@ public class LiftSubsystem extends SubsystemBase{
     private RelativeEncoder outerHooksEncoder; 
 
     DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
-        PnuematicsConstants.LIFT_DS_CHANNEL_1_1, PnuematicsConstants.LIFT_DS_CHANNEL_1_2);
+        LiftConstants.LIFT_DS_CHANNEL_1_1, LiftConstants.LIFT_DS_CHANNEL_1_2);
 
     DoubleSolenoid pneumatics_2 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
-        PnuematicsConstants.LIFT_DS_CHANNEL_2_1, PnuematicsConstants.LIFT_DS_CHANNEL_2_2);
+        LiftConstants.LIFT_DS_CHANNEL_2_1, LiftConstants.LIFT_DS_CHANNEL_2_2);
 
 
     public LiftSubsystem(){
