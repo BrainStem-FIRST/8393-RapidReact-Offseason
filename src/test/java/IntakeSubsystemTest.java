@@ -3,6 +3,7 @@ import edu.wpi.first.wpilibj.simulation.PWMSim;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import org.junit.Test;
+import org.junit.Before;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,10 +14,10 @@ public class IntakeSubsystemTest {
     IntakeSubsystem intakeSubsystem;
     CANSparkMax simMotor;
     
-   @Before
+    @Before
     public void setup(){
        intakeSubsystem = new IntakeSubsystem();
-       simMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+      // simMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
     }
 
     // this method will run after each test
