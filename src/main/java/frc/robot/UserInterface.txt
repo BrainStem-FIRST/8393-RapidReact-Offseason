@@ -1,0 +1,32 @@
+button a:
+button b:
+button x:
+button y:
+left joystick y axis:
+left joystick x axis:
+right joystick y axis:
+right joystick x axis:
+dpad right:
+dpad left:
+dpad up:
+dpad down:
+right trigger:
+left trigger:
+right bumper:
+left bumper:
+
+
+- We should eventually conver this into a function to map the controls within robot container and configure button bindings so that instead of checking the y button we are checking a button associated with an action. 
+
+something like
+
+
+public class driver 1{
+private boolean ....
+}
+
+public controls(Driver1 driver1, Driver2 driver2) {
+  driver1.somethingintake = button y
+  etc. 
+  etc. 
+}
