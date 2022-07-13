@@ -46,8 +46,6 @@ public final class Constants {
                 public static final int PNEUMATICS_PORT = 9;
                 public static final int COMPRESSOR_MIN_PRESSURE = 90;                
                 public static final int COMPRESSOR_MAX_PRESSURE = 120;
-                public static final int COMPRESSOR_MIN_PRESSURE = 90;
-                public static final int COMPRESSOR_MAX_PRESSURE = 120;
         }
 
         public final class IntakeConstants {
