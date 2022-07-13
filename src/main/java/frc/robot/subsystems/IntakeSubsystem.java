@@ -45,11 +45,11 @@ public class IntakeSubsystem extends SubsystemBase {
     return intakePneumatics.get() == DoubleSolenoid.Value.kForward;
   }
 
-  public boolean isIntakeReadyToRetract() { //FIXME
+  public boolean isIntakeReadyToRetract() { // FIXME
     return isPneumaticsExtended() && isIntakeMotorRunningAtRightSpeed();
   }
 
-  public boolean isIntakeReadyToDeploy() { //FIXME
+  public boolean isIntakeReadyToDeploy() { // FIXME
     return isIntakeMotorStopped() && isPneumaticsRetracted();
   }
 
@@ -90,7 +90,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void toggleIntake(boolean deploy) {
     if (isIntakeReadyToDeploy() && deploy) {
       deployIntake();
-    } else if(!deploy && isIntakeReadyToRetract()) {
+    } else if (!deploy && isIntakeReadyToRetract()) {
       retractIntake();
     }
   }
