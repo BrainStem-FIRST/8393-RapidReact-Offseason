@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
-public class DrivetrainSubsystem extends SubsystemBase {
+public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable {
         /**
          * The maximum voltage that will be delivered to the drive motors.
          * <p>
@@ -253,5 +253,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 setModuleStates(states);
         }
+        @Override
+    public void close(){}
 
 }

@@ -37,5 +37,4 @@ public class ElevatorCommand extends CommandBase{
     public boolean isFinished(){
         return false;
     }
-    
 }
