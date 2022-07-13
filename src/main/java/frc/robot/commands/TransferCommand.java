@@ -8,28 +8,24 @@ import frc.robot.subsystems.TransferSubsystem;
 
 public class TransferCommand extends CommandBase{
     private TransferSubsystem transferSubsystem;
-    private double speed;
 
-    public TransferCommand(TransferSubsystem transferSubsystem, double speed){
+    public TransferCommand(TransferSubsystem transferSubsystem){
         this.transferSubsystem = transferSubsystem;
-        this.speed = speed;
         addRequirements(transferSubsystem);
     }
 
     @Override
     public void initialize(){
+        transferSubsystem.turnOff();
     }
 
     @Override
     public void execute(){
-        transferSubsystem.transfer_motor.set(speed);
-
     }
 
     @Override 
     public void end(boolean interrupted){
-        transferSubsystem.transfer_motor.set(0);
-
+        transferSubsystem.turnOff();
     }
 
     @Override 

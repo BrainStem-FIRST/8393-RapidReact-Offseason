@@ -18,9 +18,7 @@ import frc.robot.Constants.PnuematicsConstants;
 public class LiftSubsystem extends SubsystemBase{
 
     private final CANSparkMax innerHooksMotor = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT, MotorType.kBrushless);
-    private RelativeEncoder innerHooksEncoder; 
-    
-
+    private RelativeEncoder innerHooksEncoder;
     private final CANSparkMax outerHooksMotor = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT, MotorType.kBrushless);
     private RelativeEncoder outerHooksEncoder; 
 

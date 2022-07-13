@@ -30,7 +30,8 @@ public final class Constants {
         }
 
         public final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 12;
+                public static final int TRANSFER_MOTOR_PORT_ID = 12; //FIXME
+                public static final double TRANSFER_MOTOR_SPEED = 0.5; //FIXME
         }
 
         public final class ShooterConstants {
