@@ -24,10 +24,10 @@ public class LiftSubsystem extends SubsystemBase{
     private final CANSparkMax outerHooksMotor = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT, MotorType.kBrushless);
     private RelativeEncoder outerHooksEncoder; 
 
-    DoubleSolenoid pnuematics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
+    DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         PnuematicsConstants.LIFT_DS_CHANNEL_1_1, PnuematicsConstants.LIFT_DS_CHANNEL_1_2);
 
-    DoubleSolenoid pnuematics_2 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
+    DoubleSolenoid pneumatics_2 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         PnuematicsConstants.LIFT_DS_CHANNEL_2_1, PnuematicsConstants.LIFT_DS_CHANNEL_2_2);
 
 
@@ -38,11 +38,48 @@ public class LiftSubsystem extends SubsystemBase{
 
         tab.add("Outer Hooks Encoder Position", outerHooksEncoder.getPosition());
         tab.add("Outer Hooks Encoder Velocity", outerHooksEncoder.getVelocity());   
-        
-       
-
     }
 
+    //PREDICATES
+    private boolean arePneumaticsExtended(){
+        boolean pneumatics1check = false;
+        boolean pneumatics2check = false;
+        if (pneumatics_1.get() == DoubleSolenoid.Value.kForward){
+            pneumatics1check = true;
+        }
+
+        if (pneumatics_2.get() == DoubleSolenoid.Value.kForward){
+            pneumatics2check = true;
+        }
+
+        if (pneumatics1check && pneumatics2check){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean arePneumaticsRetracted(){
+        boolean pneumatics1check = false;
+        boolean pneumatics2check = false;
+        if (pneumatics_1.get() == DoubleSolenoid.Value.kReverse){
+            pneumatics1check = true;
+        }
+
+        if (pneumatics_2.get() == DoubleSolenoid.Value.kReverse){
+            pneumatics2check = true;
+        }
+
+        if (pneumatics1check && pneumatics2check){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    // ENCODERS
     public void initEncoder(){
         innerHooksEncoder = innerHooksMotor.getEncoder();
         outerHooksEncoder = outerHooksMotor.getEncoder();
@@ -105,32 +142,21 @@ public class LiftSubsystem extends SubsystemBase{
     }
 
 
-    public void pnuematics1Forward(){
-        pnuematics_1.set(Value.kForward);
+    //PNEUMATICS
+    public void pnuematicsForward(){
+        pneumatics_1.set(Value.kForward);
+        pneumatics_2.set(Value.kForward);
     }
 
-    public void pnuematics1Reverse(){
-        pnuematics_1.set(Value.kReverse);
+    public void pnuematicsReverse(){
+        pneumatics_1.set(Value.kReverse);
+        pneumatics_2.set(Value.kReverse);
     }
 
-    public void pnuematics1Off(){
-        pnuematics_1.set(Value.kOff);
+    public void pnuematicsOff(){
+        pneumatics_1.set(Value.kOff);
+        pneumatics_2.set(Value.kOff);
     }
-
-
-    public void pnuematics2Forward(){
-        pnuematics_2.set(Value.kForward);
-    }
-
-    public void pnuematics2Reverse(){
-        pnuematics_2.set(Value.kReverse);
-    }
-
-    public void pnuematics2Off(){
-        pnuematics_2.set(Value.kOff);
-    }
-
-    
 
     
 }
