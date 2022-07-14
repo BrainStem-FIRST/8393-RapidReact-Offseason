@@ -41,11 +41,6 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    public RelativeEncoder returnTurretMotorEncoder() {
       return turretMotor.getEncoder();
    }
-   
-   public void stopShooterMotors(){
-      shooterMotor1.set(0);
-      shooterMotor2.set(0);
-   }
 
    public RelativeEncoder returnElevatorMotorEncoder() {
       return elevatorMotor.getEncoder();
@@ -63,7 +58,13 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    public void setElevatorSpeed(double speed){
       elevatorMotor.set(speed);
    }
-   public void resetShooterMotorEncoders() {
+
+   public void setAllMotorSpeeds(double shooterSpeed, double elevatorSpeed, double turretSpeed){
+      setShooterSpeed(shooterSpeed);
+      setElevatorSpeed(elevatorSpeed);
+      setTurretSpeed(turretSpeed);
+   }
+   public void resetAllMotorEncoders() {
       shooterMotor1Encoder.setPosition(0);
       shooterMotor2Encoder.setPosition(0);
    }
@@ -78,8 +79,27 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    public void resetAllShooterEncoders(){
       resetElevatorMotorEncoder();
-      resetShooterMotorEncoders();
+      resetAllMotorEncoders();
       resetTurretMotorEncoder();
+   }
+
+   public void stopElevatorMotor(){
+      elevatorMotor.set(0);
+   }
+
+   public void stopShooterMotors(){
+      shooterMotor1.set(0);
+      shooterMotor2.set(0);
+   }
+
+   public void stopTurretMotor(){
+      turretMotor.set(0);
+   }
+
+   public void stopAllMotors(){
+      stopShooterMotors();
+      stopTurretMotor();
+      stopElevatorMotor();
    }
 
    double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), ShooterConstants.SET_PID_LOCATION);

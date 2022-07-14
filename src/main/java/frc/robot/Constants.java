@@ -27,6 +27,7 @@ public final class Constants {
 
         public final class ControllerConstants {
                 public static final int CONTROLLER_1_PORT = 0;
+                public static final int CONTROLLER_2_PORT = 1;
         }
 
         public final class TransferConstants {

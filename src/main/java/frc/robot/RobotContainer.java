@@ -53,9 +53,8 @@ public class RobotContainer {
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
 
-  private final XboxController m_controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
-  
-  int x = 0;
+  private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
+  private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
@@ -65,13 +64,21 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
-        () -> -modifyAxis(m_controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
-        () -> -modifyAxis(m_controller.getRightX()) * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+        () -> -modifyAxis(driver1Controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driver1Controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driver1Controller.getRightX())
+            * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+    // default command for shooter
+    shooterSubsystem.setDefaultCommand(new ShooterCommand(
+        shooterSubsystem,
+        () -> -modifyAxis(driver2Controller.getLeftY()),
+        () -> -modifyAxis(driver2Controller.getRightY()),
+        () -> -modifyAxis(driver2Controller.getRightX())));
     // Configure the button bindings
     configureButtonBindings();
-    new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE, 
-    Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
+    //COMMANDS
+    new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
+        Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
     new TransferCommand(transferSubsystem);
   }
@@ -86,14 +93,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Back button zeros the gyroscope
-    new Button(m_controller::getBackButton)
-        // No requirements because we don't need to interrupt anything
+    new Button(driver1Controller::getBackButton)
         .whenPressed(drivetrainSubsystem::zeroGyroscope);
-        //INTAKE CONTROLS
-    new Button(m_controller::getYButton)
-      .whenActive(() -> intakeSubsystem.toggleIntake(true));
-    new Button(m_controller::getXButton)
-      .whenActive(() -> transferSubsystem.toggleTransfer(true));
+    // INTAKE CONTROLS
+    new Button(driver1Controller::getYButton)
+        .whenActive(() -> intakeSubsystem.toggleIntake(true));
+    // TRANSFER CONTROLS
+    new Button(driver1Controller::getXButton)
+        .whenActive(() -> transferSubsystem.toggleTransfer(true));
   }
 
   /**

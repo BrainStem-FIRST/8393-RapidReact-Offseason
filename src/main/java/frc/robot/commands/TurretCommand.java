@@ -20,7 +20,7 @@ public class TurretCommand extends CommandBase{
     public void initialize(){
         shooterSubsystem.resetTurretMotorEncoder();
     }
-
+    
     @Override
     public void execute(){
         shooterSubsystem.setTurretSpeed(turretSpeed);
