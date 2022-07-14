@@ -6,8 +6,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -20,7 +22,8 @@ public class LiftSubsystem extends SubsystemBase{
     private final CANSparkMax innerHooksMotor = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT, MotorType.kBrushless);
     private RelativeEncoder innerHooksEncoder;
     private final CANSparkMax outerHooksMotor = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT, MotorType.kBrushless);
-    private RelativeEncoder outerHooksEncoder; 
+    private RelativeEncoder outerHooksEncoder;  
+    PIDController innerHooksPIDController = new PIDController(1.17, 0.0017, 0);
 
     DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         LiftConstants.LIFT_DS_CHANNEL_1_1, LiftConstants.LIFT_DS_CHANNEL_1_2);
@@ -86,32 +89,21 @@ public class LiftSubsystem extends SubsystemBase{
         outerHooksEncoder = outerHooksMotor.getEncoder();
     }
 
-    public void moveInnerHooks(double encoderTicks, double power){
-        double targetpos = innerHooksEncoder.getPosition() + encoderTicks;
-        while (innerHooksEncoder.getPosition() < targetpos){
-            if (innerHooksEncoder.getPosition() > targetpos){
-                innerHooksMotor.set(-power); 
-            }
-            if (innerHooksEncoder.getPosition() < targetpos){
-                innerHooksMotor.set(power); 
-            }
-      } 
-      innerHooksMotor.set(0);
+
+    public double getInnerPos(){
+        return innerHooksEncoder.getPosition();
+    }
+
+    public void InnerHooksSetOuput(double output){
+        innerHooksMotor.set(output);
     }
 
 
-    public void moveOuterHooks(double encoderTicks, double power){
-        double targetpos = outerHooksEncoder.getPosition() + encoderTicks;
-        while (outerHooksEncoder.getPosition() < targetpos){
-            if (outerHooksEncoder.getPosition() > targetpos){
-                outerHooksMotor.set(-power); 
-            }
-            if (outerHooksEncoder.getPosition() < targetpos){
-                outerHooksMotor.set(power); 
-            }
-      } 
-      outerHooksMotor.set(0);
-        }
+    public void moveInnerHooks(double targetPos, double tolerance){
+        innerHooksPIDController.setTolerance(tolerance);
+        double speed =  innerHooksPIDController.calculate(innerHooksEncoder.getPosition(), targetPos);
+        innerHooksMotor.set(speed);
+    }
 
     public void moveOuterHooksToPos(double pos, double power){
         while (outerHooksEncoder.getPosition() < pos){
@@ -137,9 +129,12 @@ public class LiftSubsystem extends SubsystemBase{
           innerHooksMotor.set(0);
     }
 
+
+
     public void resetEncoders(){
         innerHooksEncoder.setPosition(0);
         outerHooksEncoder.setPosition(0);
+
     }
 
 

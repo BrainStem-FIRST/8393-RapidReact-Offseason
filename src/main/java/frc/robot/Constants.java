@@ -71,6 +71,14 @@ public final class Constants {
                 public static final int LIFT_DS_CHANNEL_2_1 = 3;
                 public static final int LIFT_DS_CHANNEL_2_2 = 4;
 
+                public static final double INNER_HOOKS_P = 1.17;
+                public static final double INNER_HOOKS_I = 0.0017;
+                public static final double INNER_HOOKS_D = 0;
+
+                public static final double INNER_HOOKS_PID_TOLERANCE = 5;
+                public static final double INNER_HOOKS_PID_TURN_RATE_TOLERANCE = 10;
+
+
         }
 
         // Mihir added this
