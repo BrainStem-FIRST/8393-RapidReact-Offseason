@@ -8,29 +8,26 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class TurretCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
-    private double t_speed;
+    private double turretSpeed;
 
-    public TurretCommand(ShooterSubsystem shooterSubsystem, double t_speed){
+    public TurretCommand(ShooterSubsystem shooterSubsystem, double turretSpeed){
         this.shooterSubsystem = shooterSubsystem;
-        this.t_speed = t_speed;
+        this.turretSpeed = turretSpeed;
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-        shooterSubsystem.t_encoder.setPosition(0);
+        shooterSubsystem.resetTurretMotorEncoder();
     }
 
     @Override
     public void execute(){
-        
-
+        shooterSubsystem.setTurretSpeed(turretSpeed);
     }
 
     @Override 
     public void end(boolean interrupted){
-        
-
     }
 
     @Override 

@@ -9,31 +9,27 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
-    public double s_speed;
+    public double speed;
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double s_speed){
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, double speed){
         this.shooterSubsystem = shooterSubsystem;
-        this.s_speed = s_speed;
+        this.speed = speed;
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-        shooterSubsystem.s_encoder.setPosition(0);
-        shooterSubsystem.s_encoder2.setPosition(0);
+        shooterSubsystem.resetShooterMotorEncoders();
     }
 
     @Override
     public void execute(){
-        
-        shooterSubsystem.shooter1_motor.set(s_speed);
-
+        shooterSubsystem.setShooterSpeed(speed);
     }
 
     @Override 
     public void end(boolean interrupted){
-        
-
+        shooterSubsystem.stopShooterMotors();
     }
 
     @Override 

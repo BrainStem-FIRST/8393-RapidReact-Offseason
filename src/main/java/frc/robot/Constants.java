@@ -5,7 +5,7 @@
 package frc.robot;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-
+import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -35,7 +35,10 @@ public final class Constants {
         }
 
         public final class ShooterConstants {
-
+                public static final double PROPORTIONAL = 1.17; //FIXME
+                public static final double INTREGRAL = 0.0017; //FIXME
+                public static final double DERIVATIVE = 0; //FIXME
+                public static final double SET_PID_LOCATION = 0.5; //FIXME
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
                 public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME

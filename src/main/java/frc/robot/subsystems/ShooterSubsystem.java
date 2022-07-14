@@ -9,52 +9,88 @@ import edu.wpi.first.math.controller.PIDController;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
-   PIDController pid = new PIDController(0.1, 0.1, 0.1);
-   private static final double setPoint = 0.5; // FIXME
+   PIDController pidController = new PIDController(ShooterConstants.PROPORTIONAL, ShooterConstants.INTREGRAL,
+         ShooterConstants.DERIVATIVE);
 
-   public CANSparkMax shooter2_motor = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
+   private CANSparkMax shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
          MotorType.kBrushless);
-   public CANSparkMax shooter1_motor = new CANSparkMax(Constants.ShooterConstants.SHOOTER_1_MOTOR_PORT_ID,
+   private CANSparkMax shooterMotor1 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_1_MOTOR_PORT_ID,
          MotorType.kBrushless);
-   public CANSparkMax elevator_motor = new CANSparkMax(Constants.ShooterConstants.ELEVATOR_MOTOR_PORT_ID,
+   private CANSparkMax elevatorMotor = new CANSparkMax(Constants.ShooterConstants.ELEVATOR_MOTOR_PORT_ID,
          MotorType.kBrushless);
-   public CANSparkMax turret_motor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
+   private CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
          MotorType.kBrushless);
 
-   public RelativeEncoder shooter_1() {
-      return shooter1_motor.getEncoder();
+   public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
+   public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
+   public RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
+   public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
+
+   public RelativeEncoder returnShooterMotor2Encoder() {
+      return shooterMotor1.getEncoder();
    }
 
-   public RelativeEncoder shooter_2() {
-      return shooter2_motor.getEncoder();
+   public RelativeEncoder returnShooterMotor1Encoder() {
+      return shooterMotor2.getEncoder();
    }
 
-   public RelativeEncoder turret() {
-      return turret_motor.getEncoder();
+   public RelativeEncoder returnTurretMotorEncoder() {
+      return turretMotor.getEncoder();
+   }
+   
+   public void stopShooterMotors(){
+      shooterMotor1.set(0);
+      shooterMotor2.set(0);
    }
 
-   public RelativeEncoder elevator() {
-      return elevator_motor.getEncoder();
+   public RelativeEncoder returnElevatorMotorEncoder() {
+      return elevatorMotor.getEncoder();
    }
 
-   public RelativeEncoder s_encoder = shooter_1();
-   public RelativeEncoder s_encoder2 = shooter_2();
-   public RelativeEncoder t_encoder = turret();
-   public RelativeEncoder e_encoder = elevator();
-
-   double s_speed = pid.calculate(s_encoder.getPosition(), setPoint);
-   double e_speed = pid.calculate(e_encoder.getPosition(), setPoint);
-   double t_speed = pid.calculate(t_encoder.getPosition(), setPoint);
-
-   public ShooterSubsystem() {
-      shooter2_motor.follow(shooter1_motor);
-
+   public void setShooterSpeed(double speed) {
+      shooterMotor2.follow(shooterMotor1);
+      shooterMotor1.set(speed);
    }
+
+   public void setTurretSpeed(double speed){
+      turretMotor.set(speed);
+   }
+
+   public void setElevatorSpeed(double speed){
+      elevatorMotor.set(speed);
+   }
+   public void resetShooterMotorEncoders() {
+      shooterMotor1Encoder.setPosition(0);
+      shooterMotor2Encoder.setPosition(0);
+   }
+
+   public void resetElevatorMotorEncoder(){
+      elevatorMotorEncoder.setPosition(0);
+   }
+
+   public void resetTurretMotorEncoder(){
+      turretMotorEncoder.setPosition(0);
+   }
+
+   public void resetAllShooterEncoders(){
+      resetElevatorMotorEncoder();
+      resetShooterMotorEncoders();
+      resetTurretMotorEncoder();
+   }
+
+   double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
+   double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
+   double turretSpeed = pidController.calculate(turretMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
 
    @Override
    public void close() {
+      shooterMotor1.close();
+      shooterMotor2.close();
+      elevatorMotor.close();
+      turretMotor.close();
    }
 }
