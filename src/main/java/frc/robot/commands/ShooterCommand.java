@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import java.lang.reflect.Method;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -9,31 +10,32 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
-    public double s_speed;
+    private double shooterSpeed;
+    private double elevatorSpeed;
+    private double turretSpeed;
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double s_speed){
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeed, DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed){
         this.shooterSubsystem = shooterSubsystem;
-        this.s_speed = s_speed;
+        this.shooterSpeed = shooterSpeed.getAsDouble();
+        this.elevatorSpeed=elevatorSpeed.getAsDouble();
+        this.turretSpeed = turretSpeed.getAsDouble();
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-        shooterSubsystem.s_encoder.setPosition(0);
-        shooterSubsystem.s_encoder2.setPosition(0);
+        shooterSubsystem.resetAllMotorEncoders();
+        shooterSubsystem.stopAllMotors();
     }
 
     @Override
     public void execute(){
-        
-        shooterSubsystem.shooter1_motor.set(s_speed);
-
+        shooterSubsystem.setAllMotorSpeeds(shooterSpeed, elevatorSpeed, turretSpeed);
     }
 
     @Override 
     public void end(boolean interrupted){
-        
-
+        shooterSubsystem.stopAllMotors();
     }
 
     @Override 
