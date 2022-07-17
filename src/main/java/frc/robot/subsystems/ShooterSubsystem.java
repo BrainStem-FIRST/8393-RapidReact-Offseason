@@ -64,10 +64,6 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       setElevatorSpeed(elevatorSpeed);
       setTurretSpeed(turretSpeed);
    }
-   public void resetAllMotorEncoders() {
-      shooterMotor1Encoder.setPosition(0);
-      shooterMotor2Encoder.setPosition(0);
-   }
 
    public void resetElevatorMotorEncoder(){
       elevatorMotorEncoder.setPosition(0);
@@ -78,6 +74,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    public void resetAllShooterEncoders(){
+      shooterMotor1Encoder.setPosition(0);
+      shooterMotor2Encoder.setPosition(0);
+   }
+
+   public void resetAllMotorEncoders() {
       resetElevatorMotorEncoder();
       resetAllMotorEncoders();
       resetTurretMotorEncoder();
