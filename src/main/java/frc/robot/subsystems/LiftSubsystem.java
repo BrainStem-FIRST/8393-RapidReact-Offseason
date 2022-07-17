@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,24 +10,17 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
-
 import frc.robot.Constants.LiftConstants;
 import frc.robot.Constants.PnuematicsConstants;
 
-public class LiftSubsystem extends SubsystemBase{
+public class LiftSubsystem extends SubsystemBase implements AutoCloseable{
 
     private final CANSparkMax innerHooksMotor1 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_1, MotorType.kBrushless);
     private RelativeEncoder innerHooksEncoder1;
     private final CANSparkMax innerHooksMotor2 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_2, MotorType.kBrushless);
     private RelativeEncoder innerHooksEncoder2;
-    private final CANSparkMax outerHooksMotor1 = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT_1, MotorType.kBrushless);
-    private RelativeEncoder outerHooksEncoder1; 
-    private final CANSparkMax outerHooksMotor2 = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT_1, MotorType.kBrushless);
-    private RelativeEncoder outerHooksEncoder2; 
 
     PIDController innerHooksPIDController = new PIDController(LiftConstants.INNER_HOOKS_P, LiftConstants.INNER_HOOKS_I, LiftConstants.INNER_HOOKS_D);
-    PIDController outerHooksPIDController = new PIDController(LiftConstants.OUTER_HOOKS_P, LiftConstants.OUTER_HOOKS_I, LiftConstants.OUTER_HOOKS_D);
 
     DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         LiftConstants.LIFT_DS_CHANNEL_1_1, LiftConstants.LIFT_DS_CHANNEL_1_2);
@@ -42,8 +34,6 @@ public class LiftSubsystem extends SubsystemBase{
         tab.add("Inner Hooks Encoder Position", innerHooksEncoder1.getPosition());
         tab.add("Inner Hooks Encoder Velocity", innerHooksEncoder1.getVelocity());
 
-        tab.add("Outer Hooks Encoder Position", outerHooksEncoder1.getPosition());
-        tab.add("Outer Hooks Encoder Velocity", outerHooksEncoder1.getVelocity());   
 
         tab.add("Pneumatics 1 State", pneumatics_1.get());
         tab.add("Pneumatics 2 State", pneumatics_2.get());
@@ -91,46 +81,30 @@ public class LiftSubsystem extends SubsystemBase{
     // ENCODERS
     public void initEncoderandMotors(){
         innerHooksMotor2.follow(innerHooksMotor1);
-        outerHooksMotor2.follow(outerHooksMotor2);
 
         innerHooksEncoder1 = innerHooksMotor1.getEncoder();
-        outerHooksEncoder1 = outerHooksMotor1.getEncoder();
         innerHooksEncoder2 = innerHooksMotor2.getEncoder();
-        outerHooksEncoder2 = outerHooksMotor2.getEncoder();
     }
 
     public void resetEncoders(){
         innerHooksEncoder1.setPosition(0);
-        outerHooksEncoder1.setPosition(0);
-
     }
 
     public double getInnerPos(){
         return innerHooksEncoder1.getPosition();
     }
 
-    public double getOuterPos(){
-        return outerHooksEncoder1.getPosition();
-    }
 
     public void innerHooksSetOuput(double output){
         innerHooksMotor1.set(output);
     }
 
-    public void outerHooksSetOutput(double output){
-        outerHooksMotor1.set(output);
-    }
 
-    public void moveInnerHooks(double targetPos, double tolerance){
+    public Object moveInnerHooks(double targetPos, double tolerance){
         innerHooksPIDController.setTolerance(tolerance);
         double speed =  innerHooksPIDController.calculate(innerHooksEncoder1.getPosition(), targetPos);
         innerHooksMotor1.set(speed);
-    }
-
-    public void moveOuterHooks(double targetPos, double tolerance){
-        outerHooksPIDController.setTolerance(tolerance);
-        double speed = outerHooksPIDController.calculate(outerHooksEncoder1.getPosition(), targetPos);
-        outerHooksMotor1.set(speed);
+        return null;
     }
 
 
@@ -141,14 +115,21 @@ public class LiftSubsystem extends SubsystemBase{
         pneumatics_2.set(Value.kForward);
     }
 
-    public void pnuematicsReverse(){
+    public Object pnuematicsReverse(){
         pneumatics_1.set(Value.kReverse);
         pneumatics_2.set(Value.kReverse);
+        return null;
     }
 
     public void pnuematicsOff(){
         pneumatics_1.set(Value.kOff);
         pneumatics_2.set(Value.kOff);
+    }
+
+    @Override
+    public void close(){
+        innerHooksMotor1.close();
+        innerHooksMotor2.close();
     }
 
     
