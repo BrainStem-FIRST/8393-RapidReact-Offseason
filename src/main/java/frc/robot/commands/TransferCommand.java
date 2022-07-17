@@ -21,6 +21,7 @@ public class TransferCommand extends CommandBase{
 
     @Override
     public void execute(){
+        transferSubsystem.turnOn();
     }
 
     @Override 
