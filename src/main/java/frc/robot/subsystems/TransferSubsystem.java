@@ -12,7 +12,7 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
     public CANSparkMax transferMotor = new CANSparkMax(TransferConstants.TRANSFER_MOTOR_PORT_ID,
             MotorType.kBrushless);
 
-    public void turnOn() {
+    public void turnOnTransfer() {
         transferMotor.set(TransferConstants.TRANSFER_MOTOR_SPEED);
     }
     public void turnOff(){
