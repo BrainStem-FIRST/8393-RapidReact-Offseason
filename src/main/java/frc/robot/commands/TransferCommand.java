@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TransferSubsystem;
 
 
+
 public class TransferCommand extends CommandBase{
     private TransferSubsystem transferSubsystem;
 
@@ -21,7 +22,7 @@ public class TransferCommand extends CommandBase{
 
     @Override
     public void execute(){
-        transferSubsystem.turnOn();
+        transferSubsystem.turnOnTransfer();
     }
 
     @Override 
