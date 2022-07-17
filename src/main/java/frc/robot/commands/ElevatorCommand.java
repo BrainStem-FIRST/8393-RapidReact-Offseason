@@ -34,6 +34,7 @@ public class ElevatorCommand extends CommandBase {
     @Override 
     public void end(boolean interrupted){
        shooterSubsystem.stopElevatorMotor();
+       shooterSubsystem.close();
     }
 
     @Override 

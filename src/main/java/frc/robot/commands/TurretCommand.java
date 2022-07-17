@@ -10,7 +10,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class TurretCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
- private double elevatorSpeed;
+ private double turretSpeed;
    
 
     public TurretCommand(ShooterSubsystem shooterSubsystem, double turretSpeed){
@@ -34,6 +34,7 @@ public class TurretCommand extends CommandBase {
     @Override 
     public void end(boolean interrupted){
        shooterSubsystem.stopTurretMotor();
+       shooterSubsystem.close();
     }
 
     @Override 

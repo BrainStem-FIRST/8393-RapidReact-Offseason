@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
-public class ShooterSubsystem extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    PIDController pidController = new PIDController(ShooterConstants.PROPORTIONAL, ShooterConstants.INTREGRAL,
          ShooterConstants.DERIVATIVE);
@@ -99,10 +99,20 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       stopTurretMotor();
       stopElevatorMotor();
    }
+   @Override
+   public void close() {
+      shooterMotor1.close();
+      shooterMotor2.close();
+      turretMotor.close();
+      elevatorMotor.close();
+   }
     
    double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
    double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
    double turretSpeed = pidController.calculate(turretMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
+
+
+  
 
   
   

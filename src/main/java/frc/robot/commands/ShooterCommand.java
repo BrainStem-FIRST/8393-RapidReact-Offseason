@@ -33,6 +33,7 @@ public class ShooterCommand extends CommandBase {
     @Override 
     public void end(boolean interrupted){
        shooterSubsystem.stopShooterMotors();
+       shooterSubsystem.close();
     }
 
     @Override 
