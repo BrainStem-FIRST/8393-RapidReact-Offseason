@@ -42,6 +42,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
+import java.util.function.DoubleSupplier;
 
 public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -69,9 +70,7 @@ public class RobotContainer {
     // default command for shooter
     shooterSubsystem.setDefaultCommand(new ShooterCommand(
         shooterSubsystem,
-        () -> -modifyAxis(driver2Controller.getLeftX()),
-        () -> -modifyAxis(driver2Controller.getRightX()),
-        () -> -modifyAxis(driver2Controller.getRightY())));
+
 
     // Configure the button bindings
     configureButtonBindings();
