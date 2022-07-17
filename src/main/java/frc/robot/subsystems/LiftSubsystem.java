@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.math.controller.PIDController;
@@ -28,8 +27,8 @@ public class LiftSubsystem extends SubsystemBase{
     private final CANSparkMax outerHooksMotor2 = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT_1, MotorType.kBrushless);
     private RelativeEncoder outerHooksEncoder2; 
 
-    PIDController innerHooksPIDController = new PIDController(1.17, 0.0017, 0);
-    PIDController outerHooksPIDController = new PIDController(1.17, 0.0017, 0);
+    PIDController innerHooksPIDController = new PIDController(LiftConstants.INNER_HOOKS_P, LiftConstants.INNER_HOOKS_I, LiftConstants.INNER_HOOKS_D);
+    PIDController outerHooksPIDController = new PIDController(LiftConstants.OUTER_HOOKS_P, LiftConstants.OUTER_HOOKS_I, LiftConstants.OUTER_HOOKS_D);
 
     DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         LiftConstants.LIFT_DS_CHANNEL_1_1, LiftConstants.LIFT_DS_CHANNEL_1_2);
