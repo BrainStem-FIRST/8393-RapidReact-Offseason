@@ -72,6 +72,7 @@ public class RobotContainer {
         () -> -modifyAxis(driver2Controller.getLeftX()),
         () -> -modifyAxis(driver2Controller.getRightX()),
         () -> -modifyAxis(driver2Controller.getRightY())));
+
     // Configure the button bindings
     configureButtonBindings();
     // COMMANDS

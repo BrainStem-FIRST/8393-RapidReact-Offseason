@@ -36,11 +36,11 @@ public final class Constants {
                 public static final double TRANSFER_MOTOR_SPEED = 0.5; // FIXME
         }
 
-        public static final class ShooterConstants {
-                public static final double PROPORTIONAL = 1.17; // FIXME
-                public static final double INTREGRAL = 0.0017; // FIXME
-                public static final double DERIVATIVE = 0; // FIXME
-                public static final double SET_PID_LOCATION = 0.5; // FIXME
+        public final class ShooterConstants {
+                public static final double PROPORTIONAL = 1.17; //FIXME
+                public static final double INTREGRAL = 0.0017; //FIXME
+                public static final double DERIVATIVE = 0; //FIXME
+
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
                 public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
@@ -65,15 +65,31 @@ public final class Constants {
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
         }
 
-        public static final class LiftConstants {
-                public static final int INNER_HOOKS_PORT = 1;
-                public static final int OUTER_HOOKS_PORT = 1;
 
+        public final class LiftConstants {
+                public static final int INNER_HOOKS_PORT_1 = 1;
+                public static final int OUTER_HOOKS_PORT_1 = 1;
+
+                public static final int INNER_HOOKS_PORT_2 = 2;
+                public static final int OUTER_HOOKS_PORT_2 = 2;
+                
                 public static final int LIFT_DS_CHANNEL_1_1 = 0;
                 public static final int LIFT_DS_CHANNEL_1_2 = 1;
 
                 public static final int LIFT_DS_CHANNEL_2_1 = 3;
                 public static final int LIFT_DS_CHANNEL_2_2 = 4;
+
+                public static final double INNER_HOOKS_P = 1.17;
+                public static final double INNER_HOOKS_I = 0.0017;
+                public static final double INNER_HOOKS_D = 0;
+
+                public static final double OUTER_HOOKS_P = 1.17;
+                public static final double OUTER_HOOKS_I = 0.0017;
+                public static final double OUTER_HOOKS_D = 0;
+
+                public static final double INNER_HOOKS_PID_TOLERANCE = 5;
+                public static final double INNER_HOOKS_PID_TURN_RATE_TOLERANCE = 10;
+
 
         }
 

@@ -7,38 +7,39 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCommand extends CommandBase {
+
+public class TurretCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
-    private double shooterSpeed;
-    
+ private double turretSpeed;
+   
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed){
+    public TurretCommand(ShooterSubsystem shooterSubsystem, double turretSpeed){
         this.shooterSubsystem = shooterSubsystem;
-        this.shooterSpeed = shooterSpeed;
-
+        this.turretSpeed = turretSpeed;
+        
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-       shooterSubsystem.resetAllShooterMotorEncoders();
-       shooterSubsystem.stopShooterMotors();
+        shooterSubsystem.stopTurretMotor();
+        shooterSubsystem.resetTurretMotorEncoder();
     }
 
     @Override
     public void execute(){
-        shooterSubsystem.setShooterSpeed();
+       shooterSubsystem.setTurretSpeed();
     }
 
     @Override 
     public void end(boolean interrupted){
-       shooterSubsystem.stopShooterMotors();
+       shooterSubsystem.stopTurretMotor();
        shooterSubsystem.close();
     }
 
-    @Override
-    public boolean isFinished() {
+    @Override 
+    public boolean isFinished(){
         return false;
     }
-
+    
 }
