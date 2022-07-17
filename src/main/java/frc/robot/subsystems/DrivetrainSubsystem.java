@@ -30,35 +30,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable {
-        /**
-         * The maximum voltage that will be delivered to the drive motors.
-         * <p>
-         * This can be reduced to cap the robot's maximum speed. Typically, this is
-         * useful during initial testing of the robot.
-         */
-        // The formula for calculating the theoretical maximum velocity is:
-        // <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> *
-        // pi
-        // By default this value is setup for a Mk3 standard module using Falcon500s to
-        // drive.
-        // An example of this constant for a Mk4 L1 module with NEOs to drive is:
-        // 5880.0 / 60.0 / SdsModuleConfigurations.MK4_L1.getDriveReduction() *
-        // SdsModuleConfigurations.MK4_L1.getWheelDiameter() * Math.PI
-        /**
-         * The maximum velocity of the robot in meters per second.
-         * <p>
-         * This is a measure of how fast the robot should be able to drive in a straight
-         * line.
-         */
-        /**
-         * The maximum angular velocity of the robot in radians per second.
-         * <p>
-         * This is a measure of how fast the robot can rotate in place.
-         */
-        // Here we calculate the theoretical maximum angular velocity. You can also
-        // replace this with a measured amount.
 
-        private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+        private final AHRS navx = new AHRS(SPI.Port.kMXP, (byte) 200);
+        private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
                         // Front left
                         new Translation2d(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
                                         DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
@@ -71,27 +45,27 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                         // Back right
                         new Translation2d(-DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
                                         -DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0));
-
-        private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
-
-        // These are our modules. We initialize them in the constructor.
-        private final SwerveModule m_frontLeftModule;
-        private final SwerveModule m_frontRightModule;
-        private final SwerveModule m_backLeftModule;
-        private final SwerveModule m_backRightModule;
+        //private final SwerveModule frontLeftModule;
+        //private final SwerveModule frontRightModule;
+        //private final SwerveModule backLeftModule;
+        //private final SwerveModule backRightModule;
+        private final SwerveModuleSubsystem frontLeftModule;
+        private final SwerveModuleSubsystem frontRightModule;
+        private final SwerveModuleSubsystem backLeftModule;
+        private final SwerveModuleSubsystem backRightModule;
 
         // ALL DRIVETRAIN FUNCTIONS:
-        private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(AutoConstants.kDriveKinematics,
+        private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(AutoConstants.autoDriveKinematics,
                         new Rotation2d(0));
 
         // resets heading
         public void zeroHeading() {
-                m_navx.reset();
+                navx.reset();
         }
 
         // returns heading
         public double getHeading() {
-                return Math.IEEEremainder(m_navx.getAngle(), 360);
+                return Math.IEEEremainder(navx.getAngle(), 360);
         }
 
         // returns heading
@@ -111,15 +85,15 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
 
         // sets gyro to zero
         public void zeroGyroscope() {
-                m_navx.zeroYaw();
+                navx.zeroYaw();
         }
 
         // sets voltage as zero for drive motors and keeps turning motors in place
         public void stopModules() {
-                m_backLeftModule.set(0, m_backLeftModule.getSteerAngle());
-                m_frontLeftModule.set(0, m_frontLeftModule.getSteerAngle());
-                m_backRightModule.set(0, m_backRightModule.getSteerAngle());
-                m_frontRightModule.set(0, m_frontRightModule.getSteerAngle());
+                backLeftModule.set(0, backLeftModule.getSteerAngle());
+                frontLeftModule.set(0, frontLeftModule.getSteerAngle());
+                backRightModule.set(0, backRightModule.getSteerAngle());
+                frontRightModule.set(0, frontRightModule.getSteerAngle());
         }
 
         public Rotation2d getGyroscopeRotation() {
@@ -130,7 +104,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
 
                 // We have to invert the angle of the NavX so that rotating the robot
                 // counter-clockwise makes the angle increase.
-                return Rotation2d.fromDegrees(180 - m_navx.getYaw());
+                return Rotation2d.fromDegrees(180 - navx.getYaw());
         }
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
@@ -138,30 +112,6 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
 
         public DrivetrainSubsystem() {
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
-                // There are 4 methods you can call to create your swerve modules.
-                // The method you use depends on what motors you are using.
-                //
-                // Mk3SwerveModuleHelper.createFalcon500(...)
-                // Your module has two Falcon 500s on it. One for steering and one for driving.
-                //
-                // Mk3SwerveModuleHelper.createNeo(...)
-                // Your module has two NEOs on it. One for steering and one for driving.
-                //
-                // Mk3SwerveModuleHelper.createFalcon500Neo(...)
-                // Your module has a Falcon 500 and a NEO on it. The Falcon 500 is for driving
-                // and the NEO is for steering.
-                //
-                // Mk3SwerveModuleHelper.createNeoFalcon500(...)
-                // Your module has a NEO and a Falcon 500 on it. The NEO is for driving and the
-                // Falcon 500 is for steering.
-                //
-                // Similar helpers also exist for Mk4 modules using the Mk4SwerveModuleHelper
-                // class.
-
-                // By default we will use Falcon 500s in standard configuration. But if you use
-                // a different configuration or motors
-                // you MUST change it. If you do not, your code will crash on startup.
 
                 // Mihir added code here too
                 new Thread(() -> {
@@ -172,7 +122,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                         }
                 }).start();
 
-                m_frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
                                 // This parameter is optional, but will allow you to see the current state of
                                 // the module on the dashboard.
                                 tab.getLayout("Front Left Module", BuiltInLayouts.kList)
@@ -190,8 +140,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                                 // zero is facing straight forward)
                                 DrivetrainConstants.FRONT_LEFT_MODULE_STEER_OFFSET);
 
+                
+
                 // We will do the same for the other modules
-                m_frontRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                frontRightModule = Mk4SwerveModuleHelper.createFalcon500(
                                 tab.getLayout("Front Right Module", BuiltInLayouts.kList)
                                                 .withSize(2, 4)
                                                 .withPosition(2, 0),
@@ -201,7 +153,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                                 DrivetrainConstants.FRONT_RIGHT_MODULE_STEER_ENCODER,
                                 DrivetrainConstants.FRONT_RIGHT_MODULE_STEER_OFFSET);
 
-                m_backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
+                backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
                                 tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                                                 .withSize(2, 4)
                                                 .withPosition(4, 0),
@@ -211,7 +163,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                                 DrivetrainConstants.BACK_LEFT_MODULE_STEER_ENCODER,
                                 DrivetrainConstants.BACK_LEFT_MODULE_STEER_OFFSET);
 
-                m_backRightModule = Mk4SwerveModuleHelper.createFalcon500(
+                backRightModule = Mk4SwerveModuleHelper.createFalcon500(
                                 tab.getLayout("Back Right Module", BuiltInLayouts.kList)
                                                 .withSize(2, 4)
                                                 .withPosition(6, 0),
@@ -222,38 +174,77 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                                 DrivetrainConstants.BACK_RIGHT_MODULE_STEER_OFFSET);
         }
 
-        public void drive(ChassisSpeeds chassisSpeeds) {
-                m_chassisSpeeds = chassisSpeeds;
-        }
+        // public void drive(ChassisSpeeds chassisSpeeds) {
+        // m_chassisSpeeds = chassisSpeeds;
+        // }
 
         public void setModuleStates(SwerveModuleState[] desiredStates) {
-                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
-                m_frontLeftModule.set(
-                                desiredStates[0].speedMetersPerSecond / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
-                                 ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
+                                ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
+                frontLeftModule.set(
+                                desiredStates[0].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
                                 desiredStates[0].angle.getRadians());
-                m_frontRightModule.set(
-                                desiredStates[1].speedMetersPerSecond / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND * 
-                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                frontRightModule.set(
+                                desiredStates[1].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
                                 desiredStates[1].angle.getRadians());
-                m_backLeftModule.set(
-                                desiredStates[2].speedMetersPerSecond / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND * 
-                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                backLeftModule.set(
+                                desiredStates[2].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
                                 desiredStates[2].angle.getRadians());
-                m_backRightModule.set(
-                                desiredStates[3].speedMetersPerSecond / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND * 
-                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                backRightModule.set(
+                                desiredStates[3].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
                                 desiredStates[3].angle.getRadians());
+        }
+
+        public void setModuleStates(ChassisSpeeds chassisSpeeds) {
+                SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassisSpeeds);
+                SwerveDriveKinematics.desaturateWheelSpeeds(states,
+                                ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
+                frontLeftModule.set(
+                                states[0].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                                states[0].angle.getRadians());
+                frontRightModule.set(
+                                states[1].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                                states[1].angle.getRadians());
+                backLeftModule.set(
+                                states[2].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                                states[2].angle.getRadians());
+                backRightModule.set(
+                                states[3].speedMetersPerSecond
+                                                / ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND *
+                                                ConstraintsConstants.MAX_ROBOT_VOLTAGE,
+                                states[3].angle.getRadians());
+        }
+
+        public void stopAllMotors(){
+                setModuleStates(new ChassisSpeeds(0, 0, 0));
         }
 
         @Override
         public void periodic() {
-                odometer.update(getRotation2d(), m_frontLeftModule.getState(), m_frontRightModule.getState(),
-                                m_backLeftModule.getState(), m_backRightModule.getState());
-                SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-                setModuleStates(states);
+                odometer.update(getRotation2d(), frontLeftModule.getState(), frontRightModule.getState(),
+                                backLeftModule.getState(), backRightModule.getState());
+                // SwerveModuleState[] states =
+                // m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                // setModuleStates(states);
         }
+
         @Override
-    public void close(){}
+        public void close() {
+
+        }
 
 }

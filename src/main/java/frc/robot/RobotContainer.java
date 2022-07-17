@@ -33,16 +33,13 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TransferCommand;
-import frc.robot.commands.AutoCommand;
-
 import frc.robot.commands.CompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.CompressorSubsytem;
-
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
 
@@ -52,6 +49,7 @@ public class RobotContainer {
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
+  private final LiftSubsystem liftSubsystem = new LiftSubsystem();
 
   private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
@@ -64,19 +62,20 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
-        () -> -modifyAxis(driver1Controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driver1Controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND, 
         () -> -modifyAxis(driver1Controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(driver1Controller.getRightX())
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // default command for shooter
-    //shooterSubsystem.setDefaultCommand(new ShooterCommand(
-      //  shooterSubsystem,
-       // () -> -modifyAxis(driver2Controller.getLeftY()),
-       // () -> -modifyAxis(driver2Controller.getRightY()),
-       // () -> -modifyAxis(driver2Controller.getRightX())));
+    shooterSubsystem.setDefaultCommand(new ShooterCommand(
+        shooterSubsystem,
+        () -> -modifyAxis(driver2Controller.getLeftX()),
+        () -> -modifyAxis(driver2Controller.getRightX()),
+        () -> -modifyAxis(driver2Controller.getRightY())));
+
     // Configure the button bindings
     configureButtonBindings();
-    //COMMANDS
+    // COMMANDS
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
@@ -111,23 +110,23 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(AutoConstants.kDriveKinematics);
+        AutoConstants.autoMaxSpeedMetersPerSecond,
+        AutoConstants.autoMaxAccelerationMetersPerSecondSquared).setKinematics(AutoConstants.autoDriveKinematics);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
         List.of(new Translation2d(1, 0), new Translation2d(1, -1)),
         new Pose2d(2, -1,
             Rotation2d.fromDegrees(180)),
         trajectoryConfig);
 
-    PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
-    PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
+    PIDController xController = new PIDController(AutoConstants.autoXController, 0, 0);
+    PIDController yController = new PIDController(AutoConstants.autoYController, 0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+        AutoConstants.autoThetaController, 0, 0, Constants.AutoConstants.autoThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
         drivetrainSubsystem::getPose,
-        AutoConstants.kDriveKinematics,
+        AutoConstants.autoDriveKinematics,
         xController,
         yController,
         thetaController,

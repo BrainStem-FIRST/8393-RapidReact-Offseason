@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
@@ -25,44 +26,45 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public final class Constants {
 
-        public final class ControllerConstants {
+        public static final class ControllerConstants {
                 public static final int CONTROLLER_1_PORT = 0;
                 public static final int CONTROLLER_2_PORT = 1;
         }
 
-        public final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 12; //FIXME
-                public static final double TRANSFER_MOTOR_SPEED = 0.5; //FIXME
+        public static final class TransferConstants {
+                public static final int TRANSFER_MOTOR_PORT_ID = 12; // FIXME
+                public static final double TRANSFER_MOTOR_SPEED = 0.5; // FIXME
         }
 
         public final class ShooterConstants {
                 public static final double PROPORTIONAL = 1.17; //FIXME
                 public static final double INTREGRAL = 0.0017; //FIXME
                 public static final double DERIVATIVE = 0; //FIXME
+
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
                 public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
                 public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
         }
 
-
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 90;                
+                public static final int COMPRESSOR_MIN_PRESSURE = 90;
                 public static final int COMPRESSOR_MAX_PRESSURE = 120;
         }
 
-        public final class IntakeConstants {
+        public static final class IntakeConstants {
                 // SPARK ID
-                public static final int INTAKE_MOTOR_ID = 10; //FIXME
+                public static final int INTAKE_MOTOR_ID = 10; // FIXME
                 public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 10; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 0; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 0; // FIXME
-                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; //FIXME
+                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
         }
+
 
         public final class LiftConstants {
                 public static final int INNER_HOOKS_PORT_1 = 1;
@@ -91,8 +93,22 @@ public final class Constants {
 
         }
 
-        // Mihir added this
-        public final class DrivetrainConstants {
+        public static final class SwerveModuleConstants{
+                public static final double WHEEL_DIAMETER_METERS = 0.10033;
+                public static final double DRIVE_MOTOR_GEAR_RATIO = (16.0 / 48.0) * (28.0 / 16.0) * (15.0 / 45.0);
+                public static final double TURNING_MOTOR_GEAR_RATIO = (15.0 / 32.0) * (10.0 / 60.0)*0.66;
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS = (DRIVE_MOTOR_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS)/2048;
+                public static final double TURNING_ENCODER_TICKS_TO_RADIANS = (TURNING_MOTOR_GEAR_RATIO * Math.PI * 2)/2048; 
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS_PER_SECOND = (DRIVE_ENCODER_TICKS_TO_METERS/60)/2048; 
+                public static final double TURNING_ENCODER_TICKS_TO_METERS_PER_SECOND = (TURNING_ENCODER_TICKS_TO_RADIANS/60)/2048;
+
+                //PID
+                public static final double PROPORTIONAL = 0.5; //FIXME
+                public static final double INTEGRAL = 0; 
+                public static final double DERIVATIVE = 0; 
+        }
+
+        public static final class DrivetrainConstants {
 
                 /**
                  * The left-to-right distance between the drivetrain wheels
@@ -113,27 +129,27 @@ public final class Constants {
                 public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 11;
                 // front left steer offset CONVERTING TO RADIANS USING MATH.PI INSTEAD OF
                 // TORADIANS CUZ IT DON'T WORK
-                public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -(Math.PI / 180) * 46.6;
+                public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(46.6);
 
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
                 public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2;
                 public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
                 // front right steer offset
-                public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -(Math.PI / 180) * (166.5);
+                public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(166.5);
 
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
                 public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6;
                 public static final int BACK_LEFT_MODULE_STEER_ENCODER = 17;
-                public static final double BACK_LEFT_MODULE_STEER_OFFSET = -(Math.PI / 180) * (135.5);
+                public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(135.5);
 
                 // BACK RIGHT MODULE
                 public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5;
                 public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4;
                 public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 15;
                 // back right steer offset
-                public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -(Math.PI / 180) * 151.9;// Math.toRadians(151.9);
+                public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(151.9);
 
         }
 
@@ -144,15 +160,15 @@ public final class Constants {
                 // MEASURED IN RADIANS PER SECOND SQUARED FOR AUTONOMOUS
                 public static final double MAX_ANGULAR_ACCELERATION = ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
                                 / 16;
-                public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+                public static final TrapezoidProfile.Constraints autoThetaControllerConstraints = new TrapezoidProfile.Constraints(
                                 ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 10,
                                 MAX_ANGULAR_ACCELERATION);
-                public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-                public static final double kPXController = 1.5;
-                public static final double kPYController = 1.5;
-                public static final double kPThetaController = 3;
-                public static final double kMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
-                public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+                public static final double autoMaxAccelerationMetersPerSecondSquared = 3;
+                public static final double autoXController = 1.5;
+                public static final double autoYController = 1.5;
+                public static final double autoThetaController = 3;
+                public static final double autoMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
+                public static final SwerveDriveKinematics autoDriveKinematics = new SwerveDriveKinematics(
                                 new Translation2d(DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
                                                 -DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2),
                                 new Translation2d(DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
@@ -169,6 +185,9 @@ public final class Constants {
                 // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
                 public static final double MAX_ROBOT_VOLTAGE = 12.0;
                 // ABSOLUTE MAXIUMUM VELOCITY OF ROBOT
+                // The formula for calculating the theoretical maximum velocity is:
+                // <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> *
+                // pi
                 public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
                                 SdsModuleConfigurations.MK4_L4.getDriveReduction() *
                                 SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI;

@@ -82,6 +82,11 @@ public RelativeEncoder returnShooterMotor2Encoder() {
    }
 
    public void resetAllShooterEncoders(){
+      shooterMotor1Encoder.setPosition(0);
+      shooterMotor2Encoder.setPosition(0);
+   }
+
+   public void resetAllMotorEncoders() {
       resetElevatorMotorEncoder();
       resetAllShooterMotorEncoders();
       resetTurretMotorEncoder();
@@ -112,13 +117,6 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       turretMotor.close();
       elevatorMotor.close();
    }
-   
-   
-   
-
-
-  
-
   
   
 }
