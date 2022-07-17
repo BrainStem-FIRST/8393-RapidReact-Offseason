@@ -31,6 +31,9 @@ import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LiftCommand_Step1;
+import frc.robot.commands.LiftCommand_Step2;
+import frc.robot.commands.LiftCommand_Step3;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TransferCommand;
 import frc.robot.commands.CompressorCommand;
@@ -54,6 +57,12 @@ public class RobotContainer {
 
   private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
+
+  public enum hangingSteps{
+    STEP1, 
+    STEP2, 
+    STEP3
+  }
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
@@ -79,7 +88,21 @@ public class RobotContainer {
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
     new TransferCommand(transferSubsystem);
+
+    hangingSteps currentStep = hangingSteps.STEP1;
+
+    switch(currentStep) {
+      case STEP1:
+        new LiftCommand_Step1(liftSubsystem);
+        break;
+      case STEP2:
+        new LiftCommand_Step2(liftSubsystem);
+        break;
+      case STEP3:
+        new LiftCommand_Step3(liftSubsystem);
+        break;
   }
+}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
