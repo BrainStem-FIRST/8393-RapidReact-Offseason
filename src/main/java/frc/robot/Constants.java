@@ -66,14 +66,25 @@ public final class Constants {
         }
 
         public final class LiftConstants {
-                public static final int INNER_HOOKS_PORT = 1;
-                public static final int OUTER_HOOKS_PORT = 1;
+                public static final int INNER_HOOKS_PORT_1 = 1;
+                public static final int OUTER_HOOKS_PORT_1 = 1;
+
+                public static final int INNER_HOOKS_PORT_2 = 2;
+                public static final int OUTER_HOOKS_PORT_2 = 2;
                 
                 public static final int LIFT_DS_CHANNEL_1_1 = 0;
                 public static final int LIFT_DS_CHANNEL_1_2 = 1;
 
                 public static final int LIFT_DS_CHANNEL_2_1 = 3;
                 public static final int LIFT_DS_CHANNEL_2_2 = 4;
+
+                public static final double INNER_HOOKS_P = 1.17;
+                public static final double INNER_HOOKS_I = 0.0017;
+                public static final double INNER_HOOKS_D = 0;
+
+                public static final double INNER_HOOKS_PID_TOLERANCE = 5;
+                public static final double INNER_HOOKS_PID_TURN_RATE_TOLERANCE = 10;
+
 
         }
 
