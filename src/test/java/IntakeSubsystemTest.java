@@ -5,7 +5,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import org.junit.Test;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.simulation.PWMSim;
 import org.junit.*;
 
@@ -77,5 +76,7 @@ public class IntakeSubsystemTest {
     @Test
     public void testToggleIntake() {
 
-    }*/
+    }
+    
+    */
 }

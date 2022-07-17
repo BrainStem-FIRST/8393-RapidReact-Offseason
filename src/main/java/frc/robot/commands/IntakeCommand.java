@@ -9,6 +9,7 @@ public class IntakeCommand extends CommandBase  {
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
     }
+    
     @Override 
     public void initialize(){
         intakeSubsystem.initialize();
@@ -16,12 +17,10 @@ public class IntakeCommand extends CommandBase  {
 
     @Override
     public void execute(){
-        
     }
 
     @Override
     public void end(boolean interrupted){
-        //HOW DO I DO THE RETURN FUNCTION THEN IF?
         if(interrupted){
             intakeSubsystem.end();
         }
