@@ -69,7 +69,7 @@ public class RobotContainer {
         () -> -modifyAxis(driver1Controller.getRightX())
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // default command for shooter
-    //shooterSubsystem.setDefaultCommand(new ShooterCommand(
+    //shooterSubsystem.setDefaultCommand(new TurretCommand(
       //  shooterSubsystem,
        // () -> -modifyAxis(driver2Controller.getLeftY()),
        // () -> -modifyAxis(driver2Controller.getRightY()),
