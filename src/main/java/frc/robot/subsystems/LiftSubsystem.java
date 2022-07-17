@@ -19,10 +19,15 @@ import frc.robot.Constants.PnuematicsConstants;
 
 public class LiftSubsystem extends SubsystemBase{
 
-    private final CANSparkMax innerHooksMotor = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT, MotorType.kBrushless);
-    private RelativeEncoder innerHooksEncoder;
-    private final CANSparkMax outerHooksMotor = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT, MotorType.kBrushless);
-    private RelativeEncoder outerHooksEncoder;  
+    private final CANSparkMax innerHooksMotor1 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_1, MotorType.kBrushless);
+    private RelativeEncoder innerHooksEncoder1;
+    private final CANSparkMax innerHooksMotor2 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_2, MotorType.kBrushless);
+    private RelativeEncoder innerHooksEncoder2;
+    private final CANSparkMax outerHooksMotor1 = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT_1, MotorType.kBrushless);
+    private RelativeEncoder outerHooksEncoder1; 
+    private final CANSparkMax outerHooksMotor2 = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT_1, MotorType.kBrushless);
+    private RelativeEncoder outerHooksEncoder2; 
+
     PIDController innerHooksPIDController = new PIDController(1.17, 0.0017, 0);
     PIDController outerHooksPIDController = new PIDController(1.17, 0.0017, 0);
 
@@ -35,11 +40,11 @@ public class LiftSubsystem extends SubsystemBase{
 
     public LiftSubsystem(){
         ShuffleboardTab tab = Shuffleboard.getTab("Lift");
-        tab.add("Inner Hooks Encoder Position", innerHooksEncoder.getPosition());
-        tab.add("Inner Hooks Encoder Velocity", innerHooksEncoder.getVelocity());
+        tab.add("Inner Hooks Encoder Position", innerHooksEncoder1.getPosition());
+        tab.add("Inner Hooks Encoder Velocity", innerHooksEncoder1.getVelocity());
 
-        tab.add("Outer Hooks Encoder Position", outerHooksEncoder.getPosition());
-        tab.add("Outer Hooks Encoder Velocity", outerHooksEncoder.getVelocity());   
+        tab.add("Outer Hooks Encoder Position", outerHooksEncoder1.getPosition());
+        tab.add("Outer Hooks Encoder Velocity", outerHooksEncoder1.getVelocity());   
 
         tab.add("Pneumatics 1 State", pneumatics_1.get());
         tab.add("Pneumatics 2 State", pneumatics_2.get());
@@ -85,43 +90,48 @@ public class LiftSubsystem extends SubsystemBase{
 
 
     // ENCODERS
-    public void initEncoder(){
-        innerHooksEncoder = innerHooksMotor.getEncoder();
-        outerHooksEncoder = outerHooksMotor.getEncoder();
+    public void initEncoderandMotors(){
+        innerHooksMotor2.follow(innerHooksMotor1);
+        outerHooksMotor2.follow(outerHooksMotor2);
+
+        innerHooksEncoder1 = innerHooksMotor1.getEncoder();
+        outerHooksEncoder1 = outerHooksMotor1.getEncoder();
+        innerHooksEncoder2 = innerHooksMotor2.getEncoder();
+        outerHooksEncoder2 = outerHooksMotor2.getEncoder();
     }
 
     public void resetEncoders(){
-        innerHooksEncoder.setPosition(0);
-        outerHooksEncoder.setPosition(0);
+        innerHooksEncoder1.setPosition(0);
+        outerHooksEncoder1.setPosition(0);
 
     }
 
     public double getInnerPos(){
-        return innerHooksEncoder.getPosition();
+        return innerHooksEncoder1.getPosition();
     }
 
     public double getOuterPos(){
-        return outerHooksEncoder.getPosition();
+        return outerHooksEncoder1.getPosition();
     }
 
     public void innerHooksSetOuput(double output){
-        innerHooksMotor.set(output);
+        innerHooksMotor1.set(output);
     }
 
     public void outerHooksSetOutput(double output){
-        outerHooksMotor.set(output);
+        outerHooksMotor1.set(output);
     }
 
     public void moveInnerHooks(double targetPos, double tolerance){
         innerHooksPIDController.setTolerance(tolerance);
-        double speed =  innerHooksPIDController.calculate(innerHooksEncoder.getPosition(), targetPos);
-        innerHooksMotor.set(speed);
+        double speed =  innerHooksPIDController.calculate(innerHooksEncoder1.getPosition(), targetPos);
+        innerHooksMotor1.set(speed);
     }
 
     public void moveOuterHooks(double targetPos, double tolerance){
         outerHooksPIDController.setTolerance(tolerance);
-        double speed = outerHooksPIDController.calculate(outerHooksEncoder.getPosition(), targetPos);
-        outerHooksMotor.set(speed);
+        double speed = outerHooksPIDController.calculate(outerHooksEncoder1.getPosition(), targetPos);
+        outerHooksMotor1.set(speed);
     }
 
 

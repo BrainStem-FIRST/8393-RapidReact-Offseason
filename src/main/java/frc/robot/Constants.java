@@ -62,8 +62,11 @@ public final class Constants {
         }
 
         public final class LiftConstants {
-                public static final int INNER_HOOKS_PORT = 1;
-                public static final int OUTER_HOOKS_PORT = 1;
+                public static final int INNER_HOOKS_PORT_1 = 1;
+                public static final int OUTER_HOOKS_PORT_1 = 1;
+
+                public static final int INNER_HOOKS_PORT_2 = 2;
+                public static final int OUTER_HOOKS_PORT_2 = 2;
                 
                 public static final int LIFT_DS_CHANNEL_1_1 = 0;
                 public static final int LIFT_DS_CHANNEL_1_2 = 1;
