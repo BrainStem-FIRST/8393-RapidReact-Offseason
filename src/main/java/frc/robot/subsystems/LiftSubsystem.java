@@ -24,6 +24,7 @@ public class LiftSubsystem extends SubsystemBase{
     private final CANSparkMax outerHooksMotor = new CANSparkMax(LiftConstants.OUTER_HOOKS_PORT, MotorType.kBrushless);
     private RelativeEncoder outerHooksEncoder;  
     PIDController innerHooksPIDController = new PIDController(1.17, 0.0017, 0);
+    PIDController outerHooksPIDController = new PIDController(1.17, 0.0017, 0);
 
     DoubleSolenoid pneumatics_1 = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT, PneumaticsModuleType.REVPH, 
         LiftConstants.LIFT_DS_CHANNEL_1_1, LiftConstants.LIFT_DS_CHANNEL_1_2);
@@ -89,15 +90,27 @@ public class LiftSubsystem extends SubsystemBase{
         outerHooksEncoder = outerHooksMotor.getEncoder();
     }
 
+    public void resetEncoders(){
+        innerHooksEncoder.setPosition(0);
+        outerHooksEncoder.setPosition(0);
+
+    }
 
     public double getInnerPos(){
         return innerHooksEncoder.getPosition();
     }
 
-    public void InnerHooksSetOuput(double output){
+    public double getOuterPos(){
+        return outerHooksEncoder.getPosition();
+    }
+
+    public void innerHooksSetOuput(double output){
         innerHooksMotor.set(output);
     }
 
+    public void outerHooksSetOutput(double output){
+        outerHooksMotor.set(output);
+    }
 
     public void moveInnerHooks(double targetPos, double tolerance){
         innerHooksPIDController.setTolerance(tolerance);
@@ -105,37 +118,12 @@ public class LiftSubsystem extends SubsystemBase{
         innerHooksMotor.set(speed);
     }
 
-    public void moveOuterHooksToPos(double pos, double power){
-        while (outerHooksEncoder.getPosition() < pos){
-            if (outerHooksEncoder.getPosition() > pos){
-                outerHooksMotor.set(-power); 
-            }
-            if (outerHooksEncoder.getPosition() < pos){
-                outerHooksMotor.set(power); 
-            }
-          } 
-          outerHooksMotor.set(0);
+    public void moveOuterHooks(double targetPos, double tolerance){
+        outerHooksPIDController.setTolerance(tolerance);
+        double speed = outerHooksPIDController.calculate(outerHooksEncoder.getPosition(), targetPos);
+        outerHooksMotor.set(speed);
     }
 
-    public void moveInnerHooksToPos(double pos, double power){
-        while (innerHooksEncoder.getPosition() < pos){
-            if (innerHooksEncoder.getPosition() > pos){
-                innerHooksMotor.set(-power); 
-            }
-            if (innerHooksEncoder.getPosition() < pos){
-                innerHooksMotor.set(power); 
-            }
-          } 
-          innerHooksMotor.set(0);
-    }
-
-
-
-    public void resetEncoders(){
-        innerHooksEncoder.setPosition(0);
-        outerHooksEncoder.setPosition(0);
-
-    }
 
 
     //PNEUMATICS
