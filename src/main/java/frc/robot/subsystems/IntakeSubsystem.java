@@ -8,6 +8,11 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
+
+
 
 public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
@@ -38,6 +43,15 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
 
   public boolean isIntakeReadyToDeploy() { // FIXME - More may need to be added
     return isIntakeMotorStopped() && isPneumaticsRetracted();
+  }
+
+  // Color Sensor 
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final ColorSensorV3 Intake_ColorSensor = new ColorSensorV3(i2cPort);
+
+  public boolean isTheBallOurColor(){
+    Color detectedColor = Intake_ColorSensor.getColor();
+    return false; // FIXME
   }
 
   public void initialize() {
