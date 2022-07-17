@@ -39,7 +39,6 @@ public final class Constants {
                 public static final double PROPORTIONAL = 1.17; //FIXME
                 public static final double INTREGRAL = 0.0017; //FIXME
                 public static final double DERIVATIVE = 0; //FIXME
-                public static final double SET_PID_LOCATION = 0.5; //FIXME
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
                 public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
