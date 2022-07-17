@@ -34,6 +34,7 @@ public final class Constants {
                 public static final int TRANSFER_MOTOR_PORT_ID = 12; //FIXME
                 public static final double TRANSFER_MOTOR_SPEED = 0.5; //FIXME
                 public static final double TRANSFER_COLOR_SENSOR_LIGHT_INTENSITY = 450; //FIXME
+                public static final double I2C_PORT = 1; // FIXME
         }
 
         public final class ShooterConstants {
@@ -44,6 +45,7 @@ public final class Constants {
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
                 public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
                 public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
+        
         }
 
 
