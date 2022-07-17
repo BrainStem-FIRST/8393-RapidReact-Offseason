@@ -45,14 +45,14 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                         // Back right
                         new Translation2d(-DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
                                         -DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0));
-        //private final SwerveModule frontLeftModule;
-        //private final SwerveModule frontRightModule;
-        //private final SwerveModule backLeftModule;
-        //private final SwerveModule backRightModule;
-        private final SwerveModuleSubsystem frontLeftModule;
-        private final SwerveModuleSubsystem frontRightModule;
-        private final SwerveModuleSubsystem backLeftModule;
-        private final SwerveModuleSubsystem backRightModule;
+        private final SwerveModule frontLeftModule;
+        private final SwerveModule frontRightModule;
+        private final SwerveModule backLeftModule;
+        private final SwerveModule backRightModule;
+        //private final SwerveModuleSubsystem frontLeftModule;
+        //private final SwerveModuleSubsystem frontRightModule;
+        //private final SwerveModuleSubsystem backLeftModule;
+        //private final SwerveModuleSubsystem backRightModule;
 
         // ALL DRIVETRAIN FUNCTIONS:
         private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(AutoConstants.autoDriveKinematics,

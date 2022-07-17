@@ -12,12 +12,12 @@ public class ShooterCommand extends CommandBase {
     private double shooterSpeed;
     
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed){
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeed){
         this.shooterSubsystem = shooterSubsystem;
-        this.shooterSpeed = shooterSpeed;
-
+        this.shooterSpeed = shooterSpeed.getAsDouble();
         addRequirements(shooterSubsystem);
     }
+
 
     @Override
     public void initialize(){
