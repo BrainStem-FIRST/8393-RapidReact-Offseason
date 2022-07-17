@@ -70,6 +70,7 @@ public class RobotContainer {
     // default command for shooter
     shooterSubsystem.setDefaultCommand(new ShooterCommand(
         shooterSubsystem,
+        () -> -modifyAxis(driver2Controller.getLeftX())));
 
 
     // Configure the button bindings
