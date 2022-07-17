@@ -48,16 +48,22 @@ public RelativeEncoder returnShooterMotor2Encoder() {
    }
 
    public void setShooterSpeed() {
+      pidController.setTolerance(3);
+      double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
       shooterMotor1.set(shooterSpeed);
       shooterMotor2.follow(shooterMotor1);
-      
+   
    }
 
    public void setTurretSpeed(){
+      pidController.setTolerance(3);
+      double turretSpeed = pidController.calculate(turretMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
       turretMotor.set(turretSpeed); 
    }
 
    public void setElevatorSpeed(){
+      pidController.setTolerance(3);
+  double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
       elevatorMotor.set(elevatorSpeed);
    }
 
@@ -106,10 +112,9 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       turretMotor.close();
       elevatorMotor.close();
    }
-    
-   double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
-   double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
-   double turretSpeed = pidController.calculate(turretMotorEncoder.getPosition(), ShooterConstants.SET_PID_LOCATION);
+   
+   
+   
 
 
   
