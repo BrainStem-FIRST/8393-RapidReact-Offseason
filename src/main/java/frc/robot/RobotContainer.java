@@ -25,6 +25,9 @@ import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LiftCommand_Step1;
+import frc.robot.commands.LiftCommand_Step2;
+import frc.robot.commands.LiftCommand_Step3;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TransferCommand;
 import frc.robot.commands.CompressorCommand;
@@ -34,24 +37,35 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
+import frc.robot.subsystems.LiftCommandButton;
+import frc.robot.subsystems.HangingSteps;
+import java.util.function.DoubleSupplier;
 
 public class RobotContainer {
+
+  HangingSteps currenthangingstep = HangingSteps.STEP3;
+
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final LiftSubsystem liftSubsystem = new LiftSubsystem();
+  private final LiftCommandButton liftCommandButton = new LiftCommandButton(currenthangingstep);
+
+  
 
   private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
+
+  
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
-    // Right stick X axis -> rotation
+    // Right stick X axis -> rotation 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> -modifyAxis(driver1Controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND, 
@@ -71,7 +85,12 @@ public class RobotContainer {
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
     new TransferCommand(transferSubsystem);
-  }
+
+    
+
+
+    
+}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -91,6 +110,9 @@ public class RobotContainer {
     // TRANSFER CONTROLS
     new Button(driver1Controller::getXButton)
         .whenActive(() -> transferSubsystem.toggleTransfer(true));
+
+    new Button(driver1Controller::getAButton)
+        .whenActive(() -> liftCommandButton.buttonHit());
   }
 
   /**
