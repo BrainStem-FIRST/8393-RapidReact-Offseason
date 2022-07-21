@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LiftSubsystem;
 
@@ -20,9 +21,7 @@ public class LiftCommand_Step2 extends CommandBase{
 
     @Override
     public void execute(){
-        liftSubsystem.moveInnerHooks(0, 3); //FIXME - target pos
-        // some wait function until this is finished
-        liftSubsystem.moveInnerHooks(600, 3); // FIXME - target pos
+        ((Command) liftSubsystem.moveInnerHooks(0, 3)).andThen(() -> liftSubsystem.moveInnerHooks(600, 3)); //FIXME - target pos
         liftSubsystem.pnuematicsForward();
     }
 

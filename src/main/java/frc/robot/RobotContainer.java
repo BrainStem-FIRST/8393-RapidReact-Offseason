@@ -45,24 +45,29 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
+import frc.robot.subsystems.LiftCommandButton;
+import frc.robot.subsystems.HangingSteps;
 import java.util.function.DoubleSupplier;
 
+
 public class RobotContainer {
+
+  HangingSteps currenthangingstep = HangingSteps.STEP3;
+
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final LiftSubsystem liftSubsystem = new LiftSubsystem();
+  private final LiftCommandButton liftCommandButton = new LiftCommandButton(currenthangingstep);
+
+  
 
   private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
   private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
 
-  public enum hangingSteps{
-    STEP1, 
-    STEP2, 
-    STEP3
-  }
+  
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
@@ -89,19 +94,10 @@ public class RobotContainer {
     new IntakeCommand(intakeSubsystem);
     new TransferCommand(transferSubsystem);
 
-    hangingSteps currentStep = hangingSteps.STEP1;
+    
 
-    switch(currentStep) {
-      case STEP1:
-        new LiftCommand_Step1(liftSubsystem);
-        break;
-      case STEP2:
-        new LiftCommand_Step2(liftSubsystem);
-        break;
-      case STEP3:
-        new LiftCommand_Step3(liftSubsystem);
-        break;
-  }
+
+    
 }
 
   /**
@@ -122,6 +118,9 @@ public class RobotContainer {
     // TRANSFER CONTROLS
     new Button(driver1Controller::getXButton)
         .whenActive(() -> transferSubsystem.toggleTransfer(true));
+
+    new Button(driver1Controller::getAButton)
+        .whenActive(() -> liftCommandButton.buttonHit());
   }
 
   /**
