@@ -5,12 +5,10 @@
 package frc.robot;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-import frc.robot.subsystems.DrivetrainSubsystem;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -63,6 +61,7 @@ public final class Constants {
                 public static final int INTAKE_DS_CHANNEL_3_1 = 0; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 0; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
+
         }
 
 
