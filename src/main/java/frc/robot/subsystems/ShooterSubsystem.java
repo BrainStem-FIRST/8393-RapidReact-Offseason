@@ -6,10 +6,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ColorSensorConstants;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
@@ -64,6 +64,12 @@ public RelativeEncoder returnShooterMotor2Encoder() {
    public void setElevatorSpeed(){
       pidController.setTolerance(3);
   double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), 500);
+      elevatorMotor.set(elevatorSpeed);
+   }
+
+   public void setElevatorToRemoveFreight(){
+      pidController.setTolerance(3);
+  double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), Constants.ColorSensorConstants.ELEVATOR_EJECT_POSITION); 
       elevatorMotor.set(elevatorSpeed);
    }
 
