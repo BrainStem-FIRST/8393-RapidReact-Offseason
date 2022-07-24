@@ -48,7 +48,6 @@ public class DefaultDriveCommand extends CommandBase {
 
     @Override
     public void initialize() {
-
     }
 
     @Override
@@ -70,9 +69,9 @@ public class DefaultDriveCommand extends CommandBase {
             chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         }
 
-        SwerveModuleState[] moduleStates = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    
 
-        drivetrainSubsystem.setModuleStates(moduleStates);
+        drivetrainSubsystem.setModuleStates(chassisSpeeds);
 
         // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of
         // field-oriented movement

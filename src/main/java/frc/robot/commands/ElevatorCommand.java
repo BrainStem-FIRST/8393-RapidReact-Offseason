@@ -10,12 +10,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ElevatorCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
- private double elevatorSpeed;
+ private double elevatorSetPoint;
    
 
-    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double elevatorSpeed){
+    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double goToThisPosition){
         this.shooterSubsystem = shooterSubsystem;
-        this.elevatorSpeed = elevatorSpeed;
+        this.elevatorSetPoint = goToThisPosition;
         
         addRequirements(shooterSubsystem);
     }
@@ -28,13 +28,13 @@ public class ElevatorCommand extends CommandBase {
 
     @Override
     public void execute(){
-       shooterSubsystem.setElevatorSpeed();
+       shooterSubsystem.setElevatorSpeed(elevatorSetPoint);
     }
 
     @Override 
     public void end(boolean interrupted){
        shooterSubsystem.stopElevatorMotor();
-       shooterSubsystem.close();
+       shooterSubsystem.resetElevatorMotorEncoder();
     }
 
     @Override 

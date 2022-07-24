@@ -11,23 +11,25 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
-    
+
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 transfer_colorSensor = new ColorSensorV3(i2cPort);
+    private final ColorSensorV3 transfer_colorSensor = new ColorSensorV3(i2cPort);
     public CANSparkMax transferMotor = new CANSparkMax(TransferConstants.TRANSFER_MOTOR_PORT_ID,
             MotorType.kBrushless);
-           Color ballColor = transfer_colorSensor.getColor();
-    public void turnOnTransfer() {
+    Color ballColor = transfer_colorSensor.getColor();
 
+    public void turnOnTransfer() {
         transferMotor.set(TransferConstants.TRANSFER_MOTOR_SPEED);
     }
-    public void turnOff(){
+
+    public void turnOff() {
         transferMotor.set(0);
     }
-    public void toggleTransfer(boolean enabled){
-        if(transferMotor.get() != 0 && enabled){
+
+    public void toggleTransfer(boolean enabled) {
+        if (transferMotor.get() != 0 && enabled) {
             turnOff();
-        }else{
+        } else {
             turnOnTransfer();
         }
     }

@@ -50,9 +50,21 @@ public final class Constants {
         }
 
         public final class ShooterConstants {
-                public static final double PROPORTIONAL = 1.17; //FIXME
-                public static final double INTREGRAL = 0.0017; //FIXME
-                public static final double DERIVATIVE = 0; //FIXME
+                //TURRET PID VALUES
+                public static final double TURRET_PROPORTIONAL = 1.17; //FIXME
+                public static final double TURRET_INTREGRAL = 0.0017; //FIXME
+                public static final double TURRET_DERIVATIVE = 0; //FIXME
+                public static final double TURRET_PID_TOLERANCE = 3; //FIXME
+                //ELEVATOR PID VALUES
+                public static final double ELEVATOR_PROPORTIONAL = 1.17; //FIXME
+                public static final double ELEVATOR_INTEGRAL = 0.0017; //FIXME
+                public static final double ELEVATOR_DERIVATIVE = 0; //FIXME
+                public static final double ELEVATOR_PID_TOLERANCE = 3; //FIXME
+                //SHOOTER PID VALUES
+                public static final double SHOOTER_PROPORTIONAL = 1.17; //FIXME
+                public static final double SHOOTER_INTEGRAL = 0.0017; //FIXME
+                public static final double SHOOTER_DERIVATIVE = 0; //FIXME
+                public static final double SHOOTER_PID_TOLERANCE = 3; //FIXME
 
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME

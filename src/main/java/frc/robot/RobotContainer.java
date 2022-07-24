@@ -76,7 +76,7 @@ public class RobotContainer {
         () -> -modifyAxis(driver1Controller.getRightX())
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));*/
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(drivetrainSubsystem, 
-    () -> -driver1Controller.getLeftY(), 
+    () -> driver1Controller.getLeftY(), 
     () -> driver1Controller.getLeftX(), 
     () -> driver1Controller.getRightY(),
     () -> !driver1Controller.getLeftBumper()));
@@ -94,11 +94,6 @@ public class RobotContainer {
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem);
     new TransferCommand(transferSubsystem);
-
-    
-
-
-    
 }
 
   /**
@@ -121,7 +116,7 @@ public class RobotContainer {
         .whenActive(() -> transferSubsystem.toggleTransfer(true));
 
     new Button(driver1Controller::getAButton)
-        .whenActive(() -> liftCommandButton.buttonHit());
+        .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to whenpressed
   }
 
   /**

@@ -134,8 +134,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                 return Rotation2d.fromDegrees(navx.getYaw()); // IF DOESN'T WORK DO 180 - navx.getYaw()
         }
 
-        private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
-                        0.0);
+        //private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
+                //        0.0);
 
         public DrivetrainSubsystem() {
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
