@@ -41,6 +41,7 @@ import frc.robot.subsystems.TransferSubsystem;
 import frc.robot.subsystems.LiftCommandButton;
 import frc.robot.subsystems.HangingSteps;
 import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.ColorSensorSubsystem;
 
 public class RobotContainer {
 
@@ -94,6 +95,7 @@ public class RobotContainer {
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem, 0, false);
     new TransferCommand(transferSubsystem);
+    new ColorSensorSubsystem();
 }
 
   /**
