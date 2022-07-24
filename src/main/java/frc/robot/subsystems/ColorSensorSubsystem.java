@@ -7,11 +7,11 @@ import frc.robot.Constants.ColorSensorConstants;
 public class ColorSensorSubsystem {
 
     private final I2C.Port ColorSensorI2C = I2C.Port.kOnboard;
-    private final ColorSensorV3 TransferColorSensor = new ColorSensorV3(ColorSensorI2C);
+    private final ColorSensorV3 transferColorSensor = new ColorSensorV3(ColorSensorI2C);
 
-    private final int currentRValue = TransferColorSensor.getRed();
-    private final int currentGValue = TransferColorSensor.getGreen(); 
-    private final int currentBValue = TransferColorSensor.getBlue();
+    private final int currentRValue = transferColorSensor.getRed();
+    private final int currentGValue = transferColorSensor.getGreen(); 
+    private final int currentBValue = transferColorSensor.getBlue();
 
     public boolean isCargoRed() {
         if ( (ColorSensorConstants.RED_ALLIANCE_R_VALUE < currentRValue) && 
