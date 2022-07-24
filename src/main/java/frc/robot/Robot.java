@@ -19,7 +19,7 @@ import frc.robot.commands.LiftCommand_Step2;
 import frc.robot.commands.LiftCommand_Step3;
 //import frc.robot.commands.DefaultDriveCommand;
 //import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.AllianceColor;
+import frc.robot.subsystems.AllianceColorPresets;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -119,11 +119,11 @@ public class Robot extends TimedRobot {
     }
     Alliance alliance = DriverStation.getAlliance();
     if (alliance == DriverStation.Alliance.Blue){
-      AllianceColor color = AllianceColor.BLUE;
+      AllianceColorPresets color = AllianceColorPresets.BLUE;
     } else if ( alliance == DriverStation.Alliance.Red){
-      AllianceColor color = AllianceColor.RED;
+      AllianceColorPresets color = AllianceColorPresets.RED;
     } else if ( alliance == DriverStation.Alliance.Invalid){
-      AllianceColor color1 = AllianceColor.NULL;
+      AllianceColorPresets color1 = AllianceColorPresets.NULL;
     }
 
   }

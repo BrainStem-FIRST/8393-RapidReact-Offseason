@@ -35,7 +35,7 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     @Override
-    public void close() {
+    public void close() throws Exception{
         transferMotor.close();
     }
 

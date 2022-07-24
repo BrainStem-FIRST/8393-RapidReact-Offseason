@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-public enum AllianceColor {
+public enum AllianceColorPresets {
     RED,
     BLUE,
     NULL

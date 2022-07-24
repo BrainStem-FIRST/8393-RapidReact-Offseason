@@ -45,21 +45,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
     return isIntakeMotorStopped() && isPneumaticsRetracted();
   }
 
-  // Color Sensor 
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 Intake_ColorSensor = new ColorSensorV3(i2cPort);
-
-  public boolean isTheBallOurColor(){
-    Color detectedColor = Intake_ColorSensor.getColor();
-    return false; // FIXME
-  }
-
-  public void initialize() {
-    intakeMotor.restoreFactoryDefaults();
+  public void startingCommands() {
     setOutput(0);
   }
 
-  public void end() {
+  public void endingCommands() {
     if (isIntakeReadyToRetract()) {
       retractIntake();
     }

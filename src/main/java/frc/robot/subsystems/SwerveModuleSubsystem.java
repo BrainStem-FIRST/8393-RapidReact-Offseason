@@ -106,6 +106,6 @@ public class SwerveModuleSubsystem implements AutoCloseable {
     }
 
     @Override
-    public void close() {
+    public void close() throws Exception {
     }
 }

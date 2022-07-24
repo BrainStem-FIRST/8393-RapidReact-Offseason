@@ -92,7 +92,7 @@ public class RobotContainer {
     // COMMANDS
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
-    new IntakeCommand(intakeSubsystem);
+    new IntakeCommand(intakeSubsystem, 0, false);
     new TransferCommand(transferSubsystem);
 }
 
@@ -110,13 +110,13 @@ public class RobotContainer {
         .whenPressed(drivetrainSubsystem::zeroHeading);
     // INTAKE CONTROLS
     new Button(driver1Controller::getYButton)
-        .whenActive(() -> intakeSubsystem.toggleIntake(true));
+        .whenActive(() -> intakeSubsystem.toggleIntake(true)); //FIXME//FIGURE OUT HOW TO PASS IN DIFFERENT PARAMETERS WHEN ACTIVE IS FALSE
     // TRANSFER CONTROLS
     new Button(driver1Controller::getXButton)
-        .whenActive(() -> transferSubsystem.toggleTransfer(true));
+        .whenActive(() -> transferSubsystem.toggleTransfer(true)); //FIXME
 
     new Button(driver1Controller::getAButton)
-        .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to whenpressed
+        .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to whenpressed //FIXME
   }
 
   /**

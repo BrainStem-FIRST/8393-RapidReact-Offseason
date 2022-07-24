@@ -120,7 +120,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    @Override
-   public void close() {
+   public void close() throws Exception{
       shooterMotor1.close();
       shooterMotor2.close();
       turretMotor.close();
