@@ -32,6 +32,7 @@ import static frc.robot.Constants.*;
 public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable {
 
         private final AHRS navx = new AHRS(SPI.Port.kMXP, (byte) 200);
+        
         /*
          * private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
          * // Front left
@@ -51,6 +52,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
         // private final SwerveModule frontRightModule;
         // private final SwerveModule backLeftModule;
         // private final SwerveModule backRightModule;
+
 
         // ALL DRIVETRAIN FUNCTIONS:
         private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(AutoConstants.autoDriveKinematics,
