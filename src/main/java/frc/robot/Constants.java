@@ -38,6 +38,17 @@ public final class Constants {
                 public static final double TRANSFER_MOTOR_SPEED = 0.5; // FIXME
         }
 
+        public static final class ColorSensorConstants { // FIXME for all
+                public static double ELEVATOR_EJECT_POSITION = 400; 
+
+                public static double RED_ALLIANCE_R_VALUE = 100;
+                public static double RED_ALLIANCE_G_VALUE = 100;
+                public static double RED_ALLIANCE_B_VALUE = 100;
+                public static double BLUE_ALLIANCE_R_VALUE = 100;
+                public static double BLUE_ALLIANCE_G_VALUE = 100;
+                public static double BLUE_ALLIANCE_B_VALUE = 100;
+        }
+
         public final class ShooterConstants {
                 public static final double PROPORTIONAL = 1.17; //FIXME
                 public static final double INTREGRAL = 0.0017; //FIXME

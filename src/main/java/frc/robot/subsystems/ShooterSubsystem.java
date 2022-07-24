@@ -6,10 +6,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ColorSensorConstants;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
@@ -30,14 +30,13 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    public RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
    public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
 
-  
-public RelativeEncoder returnShooterMotor1Encoder() {
-   return shooterMotor1.getEncoder();
-}
-public RelativeEncoder returnShooterMotor2Encoder() {
-   return shooterMotor2.getEncoder();
-} 
+   public RelativeEncoder returnShooterMotor1Encoder() {
+      return shooterMotor1.getEncoder();
+   }
 
+   public RelativeEncoder returnShooterMotor2Encoder() {
+      return shooterMotor2.getEncoder();
+   }
 
    public RelativeEncoder returnTurretMotorEncoder() {
       return turretMotor.getEncoder();
@@ -52,36 +51,42 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       double shooterSpeed = pidController.calculate(shooterMotor1Encoder.getPosition(), 500);
       shooterMotor1.set(shooterSpeed);
       shooterMotor2.follow(shooterMotor1);
-   
+
    }
 
-   public void setTurretSpeed(){
+   public void setTurretSpeed() {
       pidController.setTolerance(3);
       double turretSpeed = pidController.calculate(turretMotorEncoder.getPosition(), 500);
-      turretMotor.set(turretSpeed); 
+      turretMotor.set(turretSpeed);
    }
 
-   public void setElevatorSpeed(){
+   public void setElevatorSpeed() {
       pidController.setTolerance(3);
-  double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), 500);
+      double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(), 500);
       elevatorMotor.set(elevatorSpeed);
    }
 
-  
+   public void setElevatorToRemoveFreight() {
+      pidController.setTolerance(3);
+      double elevatorSpeed = pidController.calculate(elevatorMotorEncoder.getPosition(),
+            Constants.ColorSensorConstants.ELEVATOR_EJECT_POSITION);
+      elevatorMotor.set(elevatorSpeed);
+   }
+
    public void resetAllShooterMotorEncoders() {
       shooterMotor1Encoder.setPosition(0);
       shooterMotor2Encoder.setPosition(0);
    }
 
-   public void resetElevatorMotorEncoder(){
+   public void resetElevatorMotorEncoder() {
       elevatorMotorEncoder.setPosition(0);
    }
 
-   public void resetTurretMotorEncoder(){
+   public void resetTurretMotorEncoder() {
       turretMotorEncoder.setPosition(0);
    }
 
-   public void resetAllShooterEncoders(){
+   public void resetAllShooterEncoders() {
       shooterMotor1Encoder.setPosition(0);
       shooterMotor2Encoder.setPosition(0);
    }
@@ -92,24 +97,25 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       resetTurretMotorEncoder();
    }
 
-   public void stopElevatorMotor(){
+   public void stopElevatorMotor() {
       elevatorMotor.set(0);
    }
 
-   public void stopShooterMotors(){
+   public void stopShooterMotors() {
       shooterMotor1.set(0);
       shooterMotor2.set(0);
    }
 
-   public void stopTurretMotor(){
+   public void stopTurretMotor() {
       turretMotor.set(0);
    }
 
-   public void stopAllMotors(){
+   public void stopAllMotors() {
       stopShooterMotors();
       stopTurretMotor();
       stopElevatorMotor();
    }
+
    @Override
    public void close() {
       shooterMotor1.close();
@@ -117,6 +123,5 @@ public RelativeEncoder returnShooterMotor2Encoder() {
       turretMotor.close();
       elevatorMotor.close();
    }
-  
-  
+
 }

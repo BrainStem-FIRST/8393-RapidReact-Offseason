@@ -4,11 +4,22 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.LiftCommand_Step1;
+import frc.robot.commands.LiftCommand_Step2;
+import frc.robot.commands.LiftCommand_Step3;
 //import frc.robot.commands.DefaultDriveCommand;
 //import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.AllianceColor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -106,6 +117,15 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    Alliance alliance = DriverStation.getAlliance();
+    if (alliance == DriverStation.Alliance.Blue){
+      AllianceColor color = AllianceColor.BLUE;
+    } else if ( alliance == DriverStation.Alliance.Red){
+      AllianceColor color = AllianceColor.RED;
+    } else if ( alliance == DriverStation.Alliance.Invalid){
+      AllianceColor color1 = AllianceColor.NULL;
+    }
+
   }
 
   /** This function is called periodically during operator control. */
