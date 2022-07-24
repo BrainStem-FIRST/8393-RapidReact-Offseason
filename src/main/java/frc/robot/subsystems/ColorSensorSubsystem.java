@@ -9,14 +9,14 @@ public class ColorSensorSubsystem {
     private final I2C.Port ColorSensorI2C = I2C.Port.kOnboard;
     private final ColorSensorV3 TransferColorSensor = new ColorSensorV3(ColorSensorI2C);
 
-    private final int CurrentRValue = TransferColorSensor.getRed();
-    private final int CurrentGValue = TransferColorSensor.getGreen(); 
-    private final int CurrentBValue = TransferColorSensor.getBlue();
+    private final int currentRValue = TransferColorSensor.getRed();
+    private final int currentGValue = TransferColorSensor.getGreen(); 
+    private final int currentBValue = TransferColorSensor.getBlue();
 
     public boolean isCargoRed() {
-        if ( (ColorSensorConstants.RED_ALLIANCE_R_VALUE < CurrentRValue) && 
-             (ColorSensorConstants.RED_ALLIANCE_G_VALUE < CurrentGValue) &&  
-             (ColorSensorConstants.RED_ALLIANCE_B_VALUE < CurrentBValue)
+        if ( (ColorSensorConstants.RED_ALLIANCE_R_VALUE < currentRValue) && 
+             (ColorSensorConstants.RED_ALLIANCE_G_VALUE < currentGValue) &&  
+             (ColorSensorConstants.RED_ALLIANCE_B_VALUE < currentBValue)
             ) {
             return true;
         } else {
@@ -25,9 +25,9 @@ public class ColorSensorSubsystem {
     }
 
     public boolean isCargoBlue() {
-        if ( (ColorSensorConstants.BLUE_ALLIANCE_R_VALUE < CurrentRValue) && 
-             (ColorSensorConstants.BLUE_ALLIANCE_G_VALUE < CurrentGValue) &&  
-             (ColorSensorConstants.BLUE_ALLIANCE_B_VALUE < CurrentBValue)
+        if ( (ColorSensorConstants.BLUE_ALLIANCE_R_VALUE < currentRValue) && 
+             (ColorSensorConstants.BLUE_ALLIANCE_G_VALUE < currentGValue) &&  
+             (ColorSensorConstants.BLUE_ALLIANCE_B_VALUE < currentBValue)
             ) {
             return true;
         } else {
