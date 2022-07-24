@@ -5,43 +5,31 @@ import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.AnalogInput;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants.ConstraintsConstants;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.SwerveModuleConstants;
 
-public class SwerveModuleSubsystem {
+public class SwerveModuleSubsystem implements AutoCloseable {
     TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
     private final TalonFX driveMotor;
     private final TalonFX turningMotor;
-
     private final TalonFXSensorCollection driveMotorEncoder;
     private final TalonFXSensorCollection turningMotorEncoder;
-
     private final PIDController turningPIDController;
-
     private final CANCoder turningMotorAbsoluteEncoder;
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
-    private final CANSparkMax deleteThis;
-    private final RelativeEncoder deleteThisToo;
+    private final ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Swerve module");
 
-    public SwerveModuleSubsystem(int driveMotorID, int turningMotorID, boolean driveMotorReversed, boolean turningMotorReversed,
+    public SwerveModuleSubsystem(int driveMotorID, int turningMotorID, boolean driveMotorReversed,
+            boolean turningMotorReversed,
             int absoluteEncoderID, double absoluteEncoderOffsetRad, boolean absoluteEncoderReversed) {
         this.absoluteEncoderOffsetRad = absoluteEncoderOffsetRad;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
-        deleteThis = new CANSparkMax(1, MotorType.kBrushless);
-        deleteThisToo = deleteThis.getEncoder();
-
         // creating motors
         this.driveMotor = new TalonFX(driveMotorID);
         this.turningMotor = new TalonFX(turningMotorID);
@@ -115,5 +103,9 @@ public class SwerveModuleSubsystem {
     public void stop() {
         driveMotor.set(ControlMode.PercentOutput, 0);
         turningMotor.set(ControlMode.PercentOutput, 0);
+    }
+
+    @Override
+    public void close() {
     }
 }

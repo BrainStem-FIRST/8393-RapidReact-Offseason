@@ -28,7 +28,8 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConstraintsConstants;
-import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.Driver1ControllerConstants;
+import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
@@ -51,8 +52,8 @@ public class RobotContainer {
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final LiftSubsystem liftSubsystem = new LiftSubsystem();
 
-  private final XboxController driver1Controller = new XboxController(ControllerConstants.CONTROLLER_1_PORT);
-  private final XboxController driver2Controller = new XboxController(ControllerConstants.CONTROLLER_2_PORT);
+  private final XboxController driver1Controller = new XboxController(Driver1ControllerConstants.CONTROLLER_PORT);
+  private final XboxController driver2Controller = new XboxController(Driver2ControllerConstants.CONTROLLER_PORT);
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
@@ -60,12 +61,18 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+    /*drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> -modifyAxis(driver1Controller.getLeftY()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND, 
         () -> -modifyAxis(driver1Controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(driver1Controller.getRightX())
-            * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+            * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));*/
+    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(drivetrainSubsystem, 
+    () -> -driver1Controller.getLeftY(), 
+    () -> driver1Controller.getLeftX(), 
+    () -> driver1Controller.getRightY(),
+    () -> !driver1Controller.getLeftBumper()));
+
     // default command for shooter
     shooterSubsystem.setDefaultCommand(new ShooterCommand(
         shooterSubsystem,
@@ -92,7 +99,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Back button zeros the gyroscope
     new Button(driver1Controller::getBackButton)
-        .whenPressed(drivetrainSubsystem::zeroGyroscope);
+        .whenPressed(drivetrainSubsystem::zeroHeading);
     // INTAKE CONTROLS
     new Button(driver1Controller::getYButton)
         .whenActive(() -> intakeSubsystem.toggleIntake(true));
