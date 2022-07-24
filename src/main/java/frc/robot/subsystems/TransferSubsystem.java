@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import java.lang.reflect.Method;
-
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.I2C;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
