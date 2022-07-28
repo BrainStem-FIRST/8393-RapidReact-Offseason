@@ -108,15 +108,14 @@ public class RobotContainer {
     // Back button zeros the gyroscope
     new Button(driver1Controller::getBackButton)
         .whenPressed(drivetrainSubsystem::zeroHeading);
-    // INTAKE CONTROLS
-    new Button(driver1Controller::getYButton)
-        .whenActive(() -> intakeSubsystem.toggleIntake(true)); //FIXME//FIGURE OUT HOW TO PASS IN DIFFERENT PARAMETERS WHEN ACTIVE IS FALSE
-    // TRANSFER CONTROLS
-    new Button(driver1Controller::getXButton)
-        .whenActive(() -> transferSubsystem.toggleTransfer(true)); //FIXME
 
     new Button(driver1Controller::getAButton)
         .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to whenpressed //FIXME
+
+    new Button(driver1Controller::getRightBumper)
+        .whenActive(() -> intakeSubsystem.toggleIntake(true));
+
+  
   }
 
   /**
