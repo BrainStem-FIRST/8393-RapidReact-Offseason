@@ -44,6 +44,7 @@ public final class Constants {
                 public static double RED_ALLIANCE_R_VALUE = 100;
                 public static double RED_ALLIANCE_G_VALUE = 100;
                 public static double RED_ALLIANCE_B_VALUE = 100;
+                
                 public static double BLUE_ALLIANCE_R_VALUE = 100;
                 public static double BLUE_ALLIANCE_G_VALUE = 100;
                 public static double BLUE_ALLIANCE_B_VALUE = 100;
