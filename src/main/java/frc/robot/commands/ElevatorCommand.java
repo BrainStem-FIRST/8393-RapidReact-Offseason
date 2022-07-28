@@ -13,28 +13,26 @@ public class ElevatorCommand extends CommandBase {
  private double elevatorSetPoint;
    
 
-    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double goToThisPosition){
+    public ElevatorCommand(ShooterSubsystem shooterSubsystem, double elevatorSetPoint){
         this.shooterSubsystem = shooterSubsystem;
-        this.elevatorSetPoint = goToThisPosition;
+        this.elevatorSetPoint = elevatorSetPoint;
         
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-        shooterSubsystem.stopElevatorMotor();
-        shooterSubsystem.resetElevatorMotorEncoder();
+        shooterSubsystem.initElevator();
     }
 
     @Override
     public void execute(){
-       shooterSubsystem.setElevatorSpeed(elevatorSetPoint);
+        shooterSubsystem.executeElevator(elevatorSetPoint);
     }
 
     @Override 
     public void end(boolean interrupted){
-       shooterSubsystem.stopElevatorMotor();
-       shooterSubsystem.resetElevatorMotorEncoder();
+       shooterSubsystem.endElevator();
     }
 
     @Override 

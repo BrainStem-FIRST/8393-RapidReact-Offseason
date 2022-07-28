@@ -82,9 +82,7 @@ public class RobotContainer {
     () -> !driver1Controller.getLeftBumper()));
 
     // default command for shooter
-    shooterSubsystem.setDefaultCommand(new ShooterCommand(
-        shooterSubsystem,
-        () -> -modifyAxis(driver2Controller.getLeftX())));
+   
 
 
     // Configure the button bindings
@@ -93,7 +91,7 @@ public class RobotContainer {
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem, 0, false);
-    new TransferCommand(transferSubsystem);
+    
 }
 
   /**

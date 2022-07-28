@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransferConstants;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
@@ -17,7 +19,8 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
             MotorType.kBrushless);
     Color ballColor = transfer_colorSensor.getColor();
 
-    public void turnOnTransfer() {
+    public void turnOnTransferColorSensor() {
+          
         transferMotor.set(TransferConstants.TRANSFER_MOTOR_SPEED);
     }
 
@@ -29,13 +32,16 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
         if (transferMotor.get() != 0 && enabled) {
             turnOff();
         } else {
-            turnOnTransfer();
+            turnOnTransferColorSensor();
         }
     }
+
 
     @Override
     public void close() throws Exception{
         transferMotor.close();
     }
+
+
 
 }

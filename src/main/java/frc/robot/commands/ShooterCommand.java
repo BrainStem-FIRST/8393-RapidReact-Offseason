@@ -9,27 +9,25 @@ public class ShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
     private double shooterSpeed;
 
-    public ShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeed) {
+    public ShooterCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed) {
         this.shooterSubsystem = shooterSubsystem;
-        this.shooterSpeed = shooterSpeed.getAsDouble();
+        this.shooterSpeed = shooterSpeed;
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize() {
-        shooterSubsystem.resetBothShooterMotorEncoders();
-        shooterSubsystem.stopShooterMotors();
+        shooterSubsystem.initShooter();
     }
 
     @Override
     public void execute() {
-        shooterSubsystem.setShooterSpeed(shooterSpeed);
+        shooterSubsystem.executeShooter(shooterSpeed);
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterSubsystem.stopShooterMotors();
-        shooterSubsystem.resetBothShooterMotorEncoders();
+        shooterSubsystem.endShooter();
     }
 
     @Override
