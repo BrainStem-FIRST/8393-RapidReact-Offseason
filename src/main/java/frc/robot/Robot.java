@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    Alliance alliance = DriverStation.getAlliance();
+   Alliance alliance = DriverStation.getAlliance();
     if (alliance == DriverStation.Alliance.Blue){
       AllianceColorPresets color = AllianceColorPresets.BLUE;
     } else if ( alliance == DriverStation.Alliance.Red){

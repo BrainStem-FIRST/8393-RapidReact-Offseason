@@ -9,8 +9,9 @@ import frc.robot.subsystems.TransferSubsystem;
 
 public class TransferCommand extends CommandBase{
     private TransferSubsystem transferSubsystem;
+    private double transferSpeed;
 
-    public TransferCommand(TransferSubsystem transferSubsystem){
+    public TransferCommand(TransferSubsystem transferSubsystem, double transferSpeed){
         this.transferSubsystem = transferSubsystem;
         addRequirements(transferSubsystem);
     }
@@ -22,7 +23,7 @@ public class TransferCommand extends CommandBase{
 
     @Override
     public void execute(){
-        transferSubsystem.turnOnTransfer();
+        transferSubsystem.turnOnTransferColorSensor();
     }
 
     @Override 
