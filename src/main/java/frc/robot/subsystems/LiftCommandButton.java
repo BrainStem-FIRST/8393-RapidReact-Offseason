@@ -1,8 +1,5 @@
 package frc.robot.subsystems;
 
-
-
-
 public class LiftCommandButton {
     
    HangingSteps currentStep; 
