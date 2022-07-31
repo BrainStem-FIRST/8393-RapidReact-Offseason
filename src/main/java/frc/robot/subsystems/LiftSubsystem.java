@@ -58,6 +58,11 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
         } else {
             return false;
         }
+        // HERE'S ANOTHER WAY TO WRITE THE SAME CODE FASTER & SIMPLER; JUST A SUGGESTION
+        // TO WORK ON CONCISENESS (COMMENT OUT OTHER CODE IF YOU WANT TO USE THIS
+        // INSTEAD)
+
+        // return (pneumatics_1.get() == DoubleSolenoid.Value.kReverse) && (pneumatics_2.get() == DoubleSolenoid.Value.kReverse);
     }
 
     private boolean arePneumaticsRetracted() {
@@ -76,6 +81,11 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
         } else {
             return false;
         }
+        // HERE'S ANOTHER WAY TO WRITE THE SAME CODE FASTER & SIMPLER; JUST A SUGGESTION
+        // TO WORK ON CONCISENESS (COMMENT OUT OTHER CODE IF YOU WANT TO USE THIS
+        // INSTEAD)
+
+        // return (pneumatics_1.get() == DoubleSolenoid.Value.kReverse) && (pneumatics_2.get() == DoubleSolenoid.Value.kReverse);
     }
 
     // ENCODERS
@@ -95,12 +105,15 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public void innerHooksSetOuput(double output) {
+        innerHooksMotor2.follow(innerHooksMotor1);
         innerHooksMotor1.set(output);
+
     }
 
     public Object moveInnerHooks(double targetPos, double tolerance) {
         innerHooksPIDController.setTolerance(tolerance);
         double speed = innerHooksPIDController.calculate(innerHooksEncoder1.getPosition(), targetPos);
+        innerHooksMotor2.follow(innerHooksMotor1);
         innerHooksMotor1.set(speed);
         return null;
     }
