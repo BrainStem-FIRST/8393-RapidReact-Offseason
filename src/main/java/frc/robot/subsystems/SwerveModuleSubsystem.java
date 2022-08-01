@@ -100,6 +100,15 @@ public class SwerveModuleSubsystem implements AutoCloseable {
                 turningPIDController.calculate(getTurningMotorPosition(), state.angle.getRadians()));
     }
 
+    public void setTurningMotorSpeed(double turningMotorSpeed){
+        turningMotor.set(ControlMode.PercentOutput, 
+            turningMotorSpeed);
+    }
+
+    public void setDrivingMotorSpeed(double driveMotorSpeed){
+        driveMotor.set(ControlMode.PercentOutput, driveMotorSpeed);
+    }
+
     public void stop() {
         driveMotor.set(ControlMode.PercentOutput, 0);
         turningMotor.set(ControlMode.PercentOutput, 0);

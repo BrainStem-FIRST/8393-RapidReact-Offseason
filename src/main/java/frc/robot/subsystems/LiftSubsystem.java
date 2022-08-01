@@ -97,12 +97,15 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public void innerHooksSetOuput(double output) {
+        innerHooksMotor2.follow(innerHooksMotor1);
         innerHooksMotor1.set(output);
+
     }
 
     public Object moveInnerHooks(double targetPos, double tolerance) {
         innerHooksPIDController.setTolerance(tolerance);
         double speed = innerHooksPIDController.calculate(innerHooksEncoder1.getPosition(), targetPos);
+        innerHooksMotor2.follow(innerHooksMotor1);
         innerHooksMotor1.set(speed);
         return null;
     }

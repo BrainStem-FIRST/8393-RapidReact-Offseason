@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
+import frc.robot.TimerCanceller;
 import frc.robot.Constants.DrivetrainConstants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,10 +21,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
+import java.util.Timer;
+
 public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable {
 
+        private TimerCanceller motorTimer;
         private final AHRS navx = new AHRS(SPI.Port.kMXP, (byte) 200);
-        
+
         /*
          * private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
          * // Front left
@@ -43,7 +47,6 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
         // private final SwerveModule frontRightModule;
         // private final SwerveModule backLeftModule;
         // private final SwerveModule backRightModule;
-
 
         // ALL DRIVETRAIN FUNCTIONS:
         private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(AutoConstants.autoDriveKinematics,
@@ -88,20 +91,73 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
         }
 
         public void setModuleStates(SwerveModuleState[] desiredStates) {
-                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
+                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
+                                ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
                 frontLeftModule.setDesiredState(desiredStates[0]);
                 frontRightModule.setDesiredState(desiredStates[1]);
                 backLeftModule.setDesiredState(desiredStates[2]);
                 backRightModule.setDesiredState(desiredStates[3]);
         }
 
-        public void setModuleStates(ChassisSpeeds chassisSpeeds){
-                SwerveModuleState[] desiredStates = Constants.DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
+        public void setModuleStates(ChassisSpeeds chassisSpeeds) {
+                SwerveModuleState[] desiredStates = Constants.DrivetrainConstants.DRIVE_KINEMATICS
+                                .toSwerveModuleStates(chassisSpeeds);
+                SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
+                                ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
                 frontLeftModule.setDesiredState(desiredStates[0]);
                 frontRightModule.setDesiredState(desiredStates[1]);
                 backLeftModule.setDesiredState(desiredStates[2]);
                 backRightModule.setDesiredState(desiredStates[3]);
+        }
+
+        public void setFrontLeftDriveMotorSpeed(double speed) {
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        frontLeftModule.setDrivingMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        frontLeftModule.setDrivingMotorSpeed(0);
+                }
+        }
+
+        public void setFrontRightDriveMotorSpeed(double speed) {
+                frontRightModule.setDrivingMotorSpeed(speed);
+        }
+
+        public void setBackRightDriveMotorSpeed(double speed) {
+                backRightModule.setDrivingMotorSpeed(speed);
+        }
+
+        public void setBackLeftDriveMotorSpeed(double speed) {
+                backLeftModule.setDrivingMotorSpeed(speed);
+        }
+
+        public void setFrontLeftTurningMotorSpeed(double speed) {
+                frontLeftModule.setTurningMotorSpeed(speed);
+        }
+
+        public void setBackLeftTurningMotorSpeed(double speed) {
+                backLeftModule.setTurningMotorSpeed(speed);
+        }
+
+        public void setFrontRightTurningMotorSpeed(double speed) {
+                frontRightModule.setTurningMotorSpeed(speed);
+        }
+
+        public void setBackRightTurningMotorSpeed(double speed) {
+                backRightModule.setTurningMotorSpeed(speed);
+        }
+
+        public void resetAllDrivetrainMotors() {
+                frontLeftModule.resetEncoders();
+                frontRightModule.resetEncoders();
+                backLeftModule.resetEncoders();
+                backRightModule.resetEncoders();
+        }
+
+        public void initialize() {
+                stopModules();
+                resetAllDrivetrainMotors();
         }
 
         // sets voltage as zero for drive motors and keeps turning motors in place
@@ -125,10 +181,11 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
                 return Rotation2d.fromDegrees(navx.getYaw()); // IF DOESN'T WORK DO 180 - navx.getYaw()
         }
 
-        //private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
-                //        0.0);
+        // private ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0.0, 0.0,
+        // 0.0);
 
         public DrivetrainSubsystem() {
+                motorTimer = new TimerCanceller(1000);
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
                 new Thread(() -> {
@@ -302,7 +359,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
 
         @Override
         public void close() {
-                
+
         }
 
 }
