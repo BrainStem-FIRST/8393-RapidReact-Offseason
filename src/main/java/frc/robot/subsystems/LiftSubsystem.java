@@ -58,11 +58,6 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
         } else {
             return false;
         }
-        // HERE'S ANOTHER WAY TO WRITE THE SAME CODE FASTER & SIMPLER; JUST A SUGGESTION
-        // TO WORK ON CONCISENESS (COMMENT OUT OTHER CODE IF YOU WANT TO USE THIS
-        // INSTEAD)
-
-        // return (pneumatics_1.get() == DoubleSolenoid.Value.kReverse) && (pneumatics_2.get() == DoubleSolenoid.Value.kReverse);
     }
 
     private boolean arePneumaticsRetracted() {
@@ -81,11 +76,6 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
         } else {
             return false;
         }
-        // HERE'S ANOTHER WAY TO WRITE THE SAME CODE FASTER & SIMPLER; JUST A SUGGESTION
-        // TO WORK ON CONCISENESS (COMMENT OUT OTHER CODE IF YOU WANT TO USE THIS
-        // INSTEAD)
-
-        // return (pneumatics_1.get() == DoubleSolenoid.Value.kReverse) && (pneumatics_2.get() == DoubleSolenoid.Value.kReverse);
     }
 
     // ENCODERS
