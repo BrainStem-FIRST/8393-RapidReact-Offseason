@@ -18,6 +18,8 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
     private final CANSparkMax innerHooksMotor1 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_1,
             MotorType.kBrushless);
     private RelativeEncoder innerHooksEncoder1;
+    public boolean hitButton;
+
 
     private final CANSparkMax innerHooksMotor2 = new CANSparkMax(LiftConstants.INNER_HOOKS_PORT_2,
             MotorType.kBrushless);
