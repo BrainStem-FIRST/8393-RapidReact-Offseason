@@ -169,8 +169,8 @@ public final class Constants {
                 public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(46.6);
 
                 // FRONT RIGHT MODULE
-                public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
-                public static final int FRONT_RIGHT_MODULE_TURNING_MOTOR = 2;
+                public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 2;
+                public static final int FRONT_RIGHT_MODULE_TURNING_MOTOR = 3;
                 public static final int FRONT_RIGHT_MODULE_TURNING_ABSOLUTE_ENCODER = 13;
                 public static final boolean FRONT_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME

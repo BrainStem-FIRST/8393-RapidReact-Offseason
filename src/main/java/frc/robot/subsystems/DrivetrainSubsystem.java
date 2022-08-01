@@ -121,31 +121,73 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
         }
 
         public void setFrontRightDriveMotorSpeed(double speed) {
-                frontRightModule.setDrivingMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        frontRightModule.setDrivingMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        frontRightModule.setDrivingMotorSpeed(0);
+                }
         }
 
         public void setBackRightDriveMotorSpeed(double speed) {
-                backRightModule.setDrivingMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        backRightModule.setDrivingMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        backRightModule.setDrivingMotorSpeed(0);
+                }
         }
 
         public void setBackLeftDriveMotorSpeed(double speed) {
-                backLeftModule.setDrivingMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        backLeftModule.setDrivingMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        backLeftModule.setDrivingMotorSpeed(0);
+                }
         }
 
         public void setFrontLeftTurningMotorSpeed(double speed) {
-                frontLeftModule.setTurningMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        frontLeftModule.setTurningMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        frontLeftModule.setTurningMotorSpeed(0);
+                }
         }
 
         public void setBackLeftTurningMotorSpeed(double speed) {
-                backLeftModule.setTurningMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        backLeftModule.setTurningMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        backLeftModule.setTurningMotorSpeed(0);
+                }
         }
 
         public void setFrontRightTurningMotorSpeed(double speed) {
-                frontRightModule.setTurningMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        frontRightModule.setTurningMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        frontRightModule.setTurningMotorSpeed(0);
+                }
         }
 
         public void setBackRightTurningMotorSpeed(double speed) {
-                backRightModule.setTurningMotorSpeed(speed);
+                motorTimer.run();
+                if (!motorTimer.isDone()) {
+                        backRightModule.setTurningMotorSpeed(speed);
+                } else {
+                        motorTimer.resetTime();
+                        backRightModule.setTurningMotorSpeed(0);
+                }
         }
 
         public void resetAllDrivetrainMotors() {

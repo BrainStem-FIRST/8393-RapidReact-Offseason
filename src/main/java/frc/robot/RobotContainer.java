@@ -25,6 +25,7 @@ import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.DrivetrainTestCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand_Step1;
 import frc.robot.commands.LiftCommand_Step2;
@@ -126,7 +127,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+   /*  TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         AutoConstants.autoMaxSpeedMetersPerSecond,
         AutoConstants.autoMaxAccelerationMetersPerSecondSquared).setKinematics(AutoConstants.autoDriveKinematics);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
@@ -166,6 +167,9 @@ public class RobotContainer {
      * 
      * return new InstantCommand();
      */
+    drivetrainSubsystem.setDefaultCommand(new DrivetrainTestCommand(drivetrainSubsystem, 1000));
+
+      return new InstantCommand();
 
   }
 
