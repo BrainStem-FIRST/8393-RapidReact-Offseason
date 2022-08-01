@@ -34,6 +34,7 @@ public class LiftCommand_Step3 extends ParallelCommandGroup{
 
     @Override
     public void end(boolean interrupted){
+        liftSubsystem.hitButton = false;
 
     }
 

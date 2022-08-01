@@ -28,6 +28,7 @@ public class LiftCommand_Step2 extends CommandBase{
 
     @Override
     public void end(boolean interrupted){
+        liftSubsystem.hitButton = false;
 
     }
 
