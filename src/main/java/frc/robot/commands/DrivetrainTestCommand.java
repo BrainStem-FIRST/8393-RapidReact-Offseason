@@ -23,7 +23,18 @@ public class DrivetrainTestCommand extends CommandBase{
 
     @Override
     public void execute(){
+        //FRONT LEFT
+        drivetrainSubsystem.setFrontLeftDriveMotorSpeed(speed);
+        drivetrainSubsystem.setFrontLeftTurningMotorSpeed(speed);
+        //FRONT RIGHT
+        drivetrainSubsystem.setFrontRightDriveMotorSpeed(speed);
+        drivetrainSubsystem.setFrontRightTurningMotorSpeed(speed);
+        //BACK LEFT
         drivetrainSubsystem.setBackLeftDriveMotorSpeed(speed);
+        drivetrainSubsystem.setBackLeftTurningMotorSpeed(speed);
+        //BACK RIGHT
+        drivetrainSubsystem.setBackRightDriveMotorSpeed(speed);
+        drivetrainSubsystem.setBackRightTurningMotorSpeed(speed);
     }
 
     @Override
