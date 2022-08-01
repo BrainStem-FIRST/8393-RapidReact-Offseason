@@ -5,12 +5,9 @@
 package frc.robot;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
-import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -26,9 +23,14 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public final class Constants {
 
-        public static final class ControllerConstants {
-                public static final int CONTROLLER_1_PORT = 0;
-                public static final int CONTROLLER_2_PORT = 1;
+        public static final class Driver1ControllerConstants {
+                public static final int CONTROLLER_PORT = 0;
+                public static final double CONTROLLER_DEADZONE = 0.05; //FIXME
+        }
+
+        public static final class Driver2ControllerConstants {
+                public static final int CONTROLLER_PORT = 1;
+                public static final double CONTROLLER_DEADZONE = 0.05; //FIXME
         }
 
         public static final class TransferConstants {
@@ -36,10 +38,33 @@ public final class Constants {
                 public static final double TRANSFER_MOTOR_SPEED = 0.5; // FIXME
         }
 
+        public static final class ColorSensorConstants { // FIXME for all
+                public static double ELEVATOR_EJECT_POSITION = 400; 
+
+                public static double RED_ALLIANCE_R_VALUE = 100;
+                public static double RED_ALLIANCE_G_VALUE = 100;
+                public static double RED_ALLIANCE_B_VALUE = 100;
+                public static double BLUE_ALLIANCE_R_VALUE = 100;
+                public static double BLUE_ALLIANCE_G_VALUE = 100;
+                public static double BLUE_ALLIANCE_B_VALUE = 100;
+        }
+
         public final class ShooterConstants {
-                public static final double PROPORTIONAL = 1.17; //FIXME
-                public static final double INTREGRAL = 0.0017; //FIXME
-                public static final double DERIVATIVE = 0; //FIXME
+                //TURRET PID VALUES
+                public static final double TURRET_PROPORTIONAL = 1.17; //FIXME
+                public static final double TURRET_INTREGRAL = 0.0017; //FIXME
+                public static final double TURRET_DERIVATIVE = 0; //FIXME
+                public static final double TURRET_PID_TOLERANCE = 3; //FIXME
+                //ELEVATOR PID VALUES
+                public static final double ELEVATOR_PROPORTIONAL = 1.17; //FIXME
+                public static final double ELEVATOR_INTEGRAL = 0.0017; //FIXME
+                public static final double ELEVATOR_DERIVATIVE = 0; //FIXME
+                public static final double ELEVATOR_PID_TOLERANCE = 3; //FIXME
+                //SHOOTER PID VALUES
+                public static final double SHOOTER_PROPORTIONAL = 1.17; //FIXME
+                public static final double SHOOTER_INTEGRAL = 0.0017; //FIXME
+                public static final double SHOOTER_DERIVATIVE = 0; //FIXME
+                public static final double SHOOTER_PID_TOLERANCE = 3; //FIXME
 
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
@@ -63,6 +88,7 @@ public final class Constants {
                 public static final int INTAKE_DS_CHANNEL_3_1 = 0; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 0; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
+
         }
 
 
@@ -93,19 +119,23 @@ public final class Constants {
 
         }
 
-        public static final class SwerveModuleConstants{
+        public static final class SwerveModuleConstants {
                 public static final double WHEEL_DIAMETER_METERS = 0.10033;
                 public static final double DRIVE_MOTOR_GEAR_RATIO = (16.0 / 48.0) * (28.0 / 16.0) * (15.0 / 45.0);
-                public static final double TURNING_MOTOR_GEAR_RATIO = (15.0 / 32.0) * (10.0 / 60.0)*0.66;
-                public static final double DRIVE_ENCODER_TICKS_TO_METERS = (DRIVE_MOTOR_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS)/2048;
-                public static final double TURNING_ENCODER_TICKS_TO_RADIANS = (TURNING_MOTOR_GEAR_RATIO * Math.PI * 2)/2048; 
-                public static final double DRIVE_ENCODER_TICKS_TO_METERS_PER_SECOND = (DRIVE_ENCODER_TICKS_TO_METERS/60)/2048; 
-                public static final double TURNING_ENCODER_TICKS_TO_METERS_PER_SECOND = (TURNING_ENCODER_TICKS_TO_RADIANS/60)/2048;
+                public static final double TURNING_MOTOR_GEAR_RATIO = (15.0 / 32.0) * (10.0 / 60.0) * 0.66;
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS = (DRIVE_MOTOR_GEAR_RATIO * Math.PI
+                                * WHEEL_DIAMETER_METERS) / 2048;
+                public static final double TURNING_ENCODER_TICKS_TO_RADIANS = (TURNING_MOTOR_GEAR_RATIO * Math.PI * 2)
+                                / 2048;
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS_PER_SECOND = (DRIVE_ENCODER_TICKS_TO_METERS
+                                / 60) / 2048;
+                public static final double TURNING_ENCODER_TICKS_TO_METERS_PER_SECOND = (TURNING_ENCODER_TICKS_TO_RADIANS
+                                / 60) / 2048;
 
-                //PID
-                public static final double PROPORTIONAL = 0.5; //FIXME
-                public static final double INTEGRAL = 0; 
-                public static final double DERIVATIVE = 0; 
+                // PID
+                public static final double PROPORTIONAL = 0.5; // FIXME
+                public static final double INTEGRAL = 0;
+                public static final double DERIVATIVE = 0;
         }
 
         public static final class DrivetrainConstants {
@@ -122,38 +152,52 @@ public final class Constants {
                  * Should be measured from center to center.
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
+                // KINEMATICS
+                public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+                                new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
+                                new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2),
+                                new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
+                                new Translation2d(-DRIVETRAIN_WHEELBASE_METERS / 2, DRIVETRAIN_TRACKWIDTH_METERS / 2));
 
                 // FRONT LEFT MODULE
                 public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
-                public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 8;
-                public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 11;
-                // front left steer offset CONVERTING TO RADIANS USING MATH.PI INSTEAD OF
-                // TORADIANS CUZ IT DON'T WORK
-                public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(46.6);
+                public static final int FRONT_LEFT_MODULE_TURNING_MOTOR = 8;
+                public static final int FRONT_LEFT_MODULE_TURNING_ABSOLUTE_ENCODER = 11;
+                public static final boolean FRONT_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
+                public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = false; // FIXME
+                // front left TURNING offset
+                public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(46.6);
 
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
-                public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2;
-                public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
-                // front right steer offset
-                public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(166.5);
+                public static final int FRONT_RIGHT_MODULE_TURNING_MOTOR = 2;
+                public static final int FRONT_RIGHT_MODULE_TURNING_ABSOLUTE_ENCODER = 13;
+                public static final boolean FRONT_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
+                public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
+                // front right TURNING offset
+                public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(166.5);
 
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
-                public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6;
-                public static final int BACK_LEFT_MODULE_STEER_ENCODER = 17;
-                public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(135.5);
+                public static final int BACK_LEFT_MODULE_TURNING_MOTOR = 6;
+                public static final int BACK_LEFT_MODULE_TURNING_ABSOLUTE_ENCODER = 17;
+                public static final boolean BACK_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
+                public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = false; // FIXME
+                // back left TURNING offset
+                public static final double BACK_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(135.5);
 
                 // BACK RIGHT MODULE
                 public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5;
-                public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4;
-                public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 15;
-                // back right steer offset
-                public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(151.9);
+                public static final int BACK_RIGHT_MODULE_TURNING_MOTOR = 4;
+                public static final int BACK_RIGHT_MODULE_TURNING_ABSOLUTE_ENCODER = 15;
+                public static final boolean BACK_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
+                public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
+                // back right TURNING offset
+                public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(151.9);
 
         }
-
-        // Mihir added this
+        
+        
         public static final class AutoConstants {
                 // CONSTRAINTS
                 public static final double MAX_ROBOT_VOLTAGE_AUTONOMOUS = 2.0;

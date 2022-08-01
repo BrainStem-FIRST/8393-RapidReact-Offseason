@@ -8,6 +8,11 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
+
+
 
 public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
@@ -40,12 +45,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
     return isIntakeMotorStopped() && isPneumaticsRetracted();
   }
 
-  public void initialize() {
-    intakeMotor.restoreFactoryDefaults();
+  public void startingCommands() {
     setOutput(0);
   }
 
-  public void end() {
+  public void endingCommands() {
     if (isIntakeReadyToRetract()) {
       retractIntake();
     }
