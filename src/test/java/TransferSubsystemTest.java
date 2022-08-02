@@ -8,7 +8,7 @@ public class TransferSubsystemTest {
     @Test
     public void testTransferMotor() {
         
-        assertEquals();
+        
     }
 
 }
