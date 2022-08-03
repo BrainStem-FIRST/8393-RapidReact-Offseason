@@ -77,6 +77,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    
 
    public void setShooterSpeed(double desiredSpeed) {
+      
       shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
       double shooterSpeed = shooterPIDController.calculate(shooterMotor1Encoder.getVelocity(), desiredSpeed);
       shooterMotor2.follow(shooterMotor1);
@@ -95,10 +96,10 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       elevatorMotor.set(elevatorSpeed);
    }
 
-   public void setElevatorToRemoveFreight() {
+   public void setElevatorToRemoveFreight(double setPoint) {
       elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
       double elevatorSpeed = elevatorPIDController.calculate(elevatorMotorEncoder.getPosition(),
-            Constants.ColorSensorConstants.ELEVATOR_EJECT_POSITION);
+            setPoint);
       elevatorMotor.set(elevatorSpeed);
    }
 
@@ -132,7 +133,7 @@ public void executeElevator (double elevatorSetPoint) {
    setElevatorSpeed(elevatorSetPoint);
 }
 else {
-   setElevatorToRemoveFreight();
+   setElevatorToRemoveFreight(elevatorSetPoint);
 }
 }
 public void endShooter () {
