@@ -34,7 +34,7 @@ public final class Constants {
         }
 
         public static final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 12; // FIXME
+                public static final int TRANSFER_MOTOR_PORT_ID = 24;
                 public static final double TRANSFER_MOTOR_SPEED = 0.5; // FIXME
         }
 
@@ -66,10 +66,10 @@ public final class Constants {
                 public static final double SHOOTER_DERIVATIVE = 0; //FIXME
                 public static final double SHOOTER_PID_TOLERANCE = 3; //FIXME
 
-                public static final int SHOOTER_1_MOTOR_PORT_ID = 14; // FIXME
-                public static final int SHOOTER_2_MOTOR_PORT_ID = 16; // FIXME
-                public static final int TURRET_MOTOR_PORT_ID = 18; // FIXME
-                public static final int ELEVATOR_MOTOR_PORT_ID = 20; // FIXME
+                public static final int SHOOTER_1_MOTOR_PORT_ID = 19;
+                public static final int SHOOTER_2_MOTOR_PORT_ID = 20; // FIXME
+                public static final int TURRET_MOTOR_PORT_ID = 22; 
+                public static final int ELEVATOR_MOTOR_PORT_ID = -5; // FIXME
         }
 
         public static final class PnuematicsConstants {
@@ -80,7 +80,7 @@ public final class Constants {
 
         public static final class IntakeConstants {
                 // SPARK ID
-                public static final int INTAKE_MOTOR_ID = 10; // FIXME
+                public static final int INTAKE_MOTOR_ID = 21;
                 public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
