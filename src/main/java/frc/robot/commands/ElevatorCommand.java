@@ -25,7 +25,8 @@ public class ElevatorCommand extends CommandBase {
 
     @Override
     public void execute(){
-        shooterSubsystem.executeElevator(elevatorSetPoint);
+        //shooterSubsystem.executeElevator(elevatorSetPoint); //get rid of color sensor in execute elevator b4 uncommenting if color
+                                                              //sensor hasn't been added
     }
 
     @Override 
