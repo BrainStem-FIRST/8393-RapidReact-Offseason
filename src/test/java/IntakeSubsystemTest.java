@@ -12,20 +12,20 @@ public class IntakeSubsystemTest {
     IntakeSubsystem intakeSubsystem;
     CANSparkMax simMotor;
     
-    @Before
-    public void setup(){
-       intakeSubsystem = new IntakeSubsystem();
+   // @Before
+    //public void setup(){
+    //   intakeSubsystem = new IntakeSubsystem();
       // simMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
-    }
+   // }
 
     // this method will run after each test
-    public void shutdown() throws Exception {
-      intakeSubsystem.close(); // destroy our intake object
-    }
+    //public void shutdown() throws Exception {
+    //  intakeSubsystem.close(); // destroy our intake object
+   // }
 
     @Test
     public void worksWhenOpen() {
-        assertEquals(1, 1);
+       
     }
 
     /*@Test
