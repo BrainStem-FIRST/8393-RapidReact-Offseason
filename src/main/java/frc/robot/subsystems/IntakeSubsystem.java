@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.util.Color;
 
 
 
-/*public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
-  private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
+public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
+  private final CANSparkMax intakeMotor = new CANSparkMax(21, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PneumaticsModuleType.REVPH,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
@@ -91,4 +91,4 @@ import edu.wpi.first.wpilibj.util.Color;
     intakePneumatics.close();
   }
   
-}*/
+}

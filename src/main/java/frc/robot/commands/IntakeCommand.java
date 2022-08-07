@@ -1,18 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-/*import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase  {
 
     private final IntakeSubsystem intakeSubsystem;
     private double intakeAutoSpeed;
-    private final boolean isAuto;
+
     
-    public IntakeCommand(IntakeSubsystem intakeSubsystem, double setAutoIntakeSpeed, boolean isAuto){
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, double setAutoIntakeSpeed){
         this.intakeSubsystem = intakeSubsystem;
         this.intakeAutoSpeed = setAutoIntakeSpeed;
-        this.isAuto = isAuto;
         addRequirements(intakeSubsystem);
     }
     
@@ -23,7 +22,7 @@ public class IntakeCommand extends CommandBase  {
 
     @Override
     public void execute(){
-        if(isAuto) intakeSubsystem.setOutput(intakeAutoSpeed);
+        intakeSubsystem.setOutput(intakeAutoSpeed);
     }
 
     @Override
@@ -33,4 +32,4 @@ public class IntakeCommand extends CommandBase  {
         }
     }
 
-}*/
+}
