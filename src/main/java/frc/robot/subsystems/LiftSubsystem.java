@@ -35,12 +35,12 @@ public class LiftSubsystem extends SubsystemBase implements AutoCloseable {
             LiftConstants.LIFT_DS_CHANNEL_2_1, LiftConstants.LIFT_DS_CHANNEL_2_2);
 
     public LiftSubsystem() {
-        ShuffleboardTab tab = Shuffleboard.getTab("Lift");
+       /*  ShuffleboardTab tab = Shuffleboard.getTab("Lift");
         tab.add("Inner Hooks Encoder Position", innerHooksEncoder1.getPosition());
         tab.add("Inner Hooks Encoder Velocity", innerHooksEncoder1.getVelocity());
 
         tab.add("Pneumatics 1 State", pneumatics_1.get());
-        tab.add("Pneumatics 2 State", pneumatics_2.get());
+        tab.add("Pneumatics 2 State", pneumatics_2.get());*/
     }
 
     // PREDICATES

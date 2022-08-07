@@ -67,9 +67,9 @@ public final class Constants {
                 public static final double SHOOTER_PID_TOLERANCE = 3; //FIXME
 
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 19;
-                public static final int SHOOTER_2_MOTOR_PORT_ID = 20; // FIXME
+                public static final int SHOOTER_2_MOTOR_PORT_ID = 20; 
                 public static final int TURRET_MOTOR_PORT_ID = 22; 
-                public static final int ELEVATOR_MOTOR_PORT_ID = -5; // FIXME
+                public static final int ELEVATOR_MOTOR_PORT_ID = 27; // FIXME
         }
 
         public static final class PnuematicsConstants {
@@ -80,24 +80,22 @@ public final class Constants {
 
         public static final class IntakeConstants {
                 // SPARK ID
-                public static final int INTAKE_MOTOR_ID = 21;
+             //   public static final int INTAKE_MOTOR_ID = 21;
                 public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 10; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_1 = 0; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_2 = 0; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 5; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
 
         }
 
 
         public final class LiftConstants {
-                public static final int INNER_HOOKS_PORT_1 = 1;
-                public static final int OUTER_HOOKS_PORT_1 = 1;
+                public static final int INNER_HOOKS_PORT_1 = 26;
 
-                public static final int INNER_HOOKS_PORT_2 = 2;
-                public static final int OUTER_HOOKS_PORT_2 = 2;
+                public static final int INNER_HOOKS_PORT_2 = 18;
                 
                 public static final int LIFT_DS_CHANNEL_1_1 = 0;
                 public static final int LIFT_DS_CHANNEL_1_2 = 1;
@@ -109,9 +107,6 @@ public final class Constants {
                 public static final double INNER_HOOKS_I = 0.0017;
                 public static final double INNER_HOOKS_D = 0;
 
-                public static final double OUTER_HOOKS_P = 1.17;
-                public static final double OUTER_HOOKS_I = 0.0017;
-                public static final double OUTER_HOOKS_D = 0;
 
                 public static final double INNER_HOOKS_PID_TOLERANCE = 5;
                 public static final double INNER_HOOKS_PID_TURN_RATE_TOLERANCE = 10;

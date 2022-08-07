@@ -26,16 +26,17 @@ import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DrivetrainTestCommand;
-import frc.robot.commands.IntakeCommand;
+//import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand_Step1;
 import frc.robot.commands.LiftCommand_Step2;
 import frc.robot.commands.LiftCommand_Step3;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.TransferCommand;
+import frc.robot.commands.CanSparkMaxMotorCommand;
 import frc.robot.commands.CompressorCommand;
 import frc.robot.subsystems.CompressorSubsytem;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+//import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
@@ -49,13 +50,13 @@ public class RobotContainer {
 
    
 
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+ // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  /*private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final CompressorSubsytem compressorSubsystem = new CompressorSubsytem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final LiftSubsystem liftSubsystem = new LiftSubsystem();
-  private final LiftCommandButton liftCommandButton = new LiftCommandButton(currenthangingstep);
+  private final LiftCommandButton liftCommandButton = new LiftCommandButton(currenthangingstep);*/
 
   
 
@@ -78,7 +79,7 @@ public class RobotContainer {
         () -> -modifyAxis(driver1Controller.getLeftX()) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(driver1Controller.getRightX())
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));*/
-    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(drivetrainSubsystem, 
+    /*drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(drivetrainSubsystem, 
     () -> driver1Controller.getLeftY(), 
     () -> driver1Controller.getLeftX(), 
     () -> driver1Controller.getRightY(),
@@ -94,7 +95,7 @@ public class RobotContainer {
     new CompressorCommand(compressorSubsystem, Constants.PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         Constants.PnuematicsConstants.COMPRESSOR_MAX_PRESSURE);
     new IntakeCommand(intakeSubsystem, 0, false);
-    
+    */
 }
 
   /**
@@ -105,7 +106,7 @@ public class RobotContainer {
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  /*private void configureButtonBindings() {
     // Back button zeros the gyroscope
     new Button(driver1Controller::getBackButton)
         .whenPressed(drivetrainSubsystem::zeroHeading);
@@ -118,7 +119,7 @@ public class RobotContainer {
 
     new Button(driver1Controller::getAButton)
         .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to whenpressed //FIXME
-  }
+  }*/
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -167,10 +168,11 @@ public class RobotContainer {
      * 
      * return new InstantCommand();
      */
-    drivetrainSubsystem.setDefaultCommand(new DrivetrainTestCommand(drivetrainSubsystem, 1000));
+    /*drivetrainSubsystem.setDefaultCommand(new DrivetrainTestCommand(drivetrainSubsystem, 1000));
 
-      return new InstantCommand();
-
+      return new InstantCommand();*/
+    new CanSparkMaxMotorCommand(0.5, 21);
+    return new InstantCommand();
   }
 
   private static double deadband(double value, double deadband) {

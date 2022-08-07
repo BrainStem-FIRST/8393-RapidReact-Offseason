@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
   private final LiftSubsystem liftSubsystem = new LiftSubsystem();
   private RobotContainer m_robotContainer;
   HangingSteps HangingSteps;
-  private final LiftCommandButton liftCommandButton = new LiftCommandButton(HangingSteps);
+  //private final LiftCommandButton liftCommandButton = new LiftCommandButton(HangingSteps);
 
   // private DrivetrainSubsystem m_drivetrain;
 
@@ -137,7 +137,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
+    /* 
     if (liftCommandButton.getState() == HangingSteps.STEP1){
       new LiftCommand_Step1(liftSubsystem); 
     }
@@ -147,6 +147,7 @@ public class Robot extends TimedRobot {
     if (liftCommandButton.getState() == HangingSteps.STEP3){
       new LiftCommand_Step3(liftSubsystem); 
     }
+    */
     
   }
 

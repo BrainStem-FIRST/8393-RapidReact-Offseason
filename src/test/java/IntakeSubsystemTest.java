@@ -1,7 +1,7 @@
 import static org.junit.Assert.*;
 import edu.wpi.first.wpilibj.simulation.PWMSim;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.IntakeSubsystem;
+//import frc.robot.subsystems.IntakeSubsystem;
 import org.junit.Test;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.simulation.PWMSim;
 import org.junit.*;
 
 public class IntakeSubsystemTest {
-    IntakeSubsystem intakeSubsystem;
+   // IntakeSubsystem intakeSubsystem;
     CANSparkMax simMotor;
     
    // @Before
