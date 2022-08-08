@@ -8,18 +8,13 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
 
-
-
-public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
-  private final CANSparkMax intakeMotor = new CANSparkMax(21, MotorType.kBrushless);
+public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
+  private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PneumaticsModuleType.REVPH,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
-  // PREDICATES FOR INTAKE SUBSYSTEM
+
   private boolean isIntakeMotorStopped() {
     return intakeMotor.get() == 0;
   }
@@ -78,11 +73,24 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
   }
 
   public void toggleIntake(boolean deploy) {
-    if (isIntakeReadyToDeploy() && deploy) {
+    if (deploy) {
       deployIntake();
-    } else if (!deploy && isIntakeReadyToRetract()) {
+    } else if (!deploy) {
       retractIntake();
     }
+  }
+
+  public void initializeIntakeMotor(){
+    setOutput(0);
+  }
+
+  public void executeIntake(boolean deploy){
+    toggleIntake(deploy);
+  }
+
+  public void endIntake(){
+    //retractIntake();
+    setOutput(0);
   }
 
   @Override
@@ -90,5 +98,5 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable{
     intakeMotor.close();
     intakePneumatics.close();
   }
-  
+
 }

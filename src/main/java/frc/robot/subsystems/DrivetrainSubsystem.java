@@ -21,8 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
-import java.util.Timer;
-
 public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable {
 
         private TimerCanceller motorTimer;
@@ -100,7 +98,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements AutoCloseable 
         }
 
         public void setModuleStates(ChassisSpeeds chassisSpeeds) {
-                SwerveModuleState[] desiredStates = Constants.DrivetrainConstants.DRIVE_KINEMATICS
+                SwerveModuleState[] desiredStates = DrivetrainConstants.DRIVE_KINEMATICS
                                 .toSwerveModuleStates(chassisSpeeds);
                 SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
                                 ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
