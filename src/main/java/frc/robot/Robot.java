@@ -4,11 +4,27 @@
 
 package frc.robot;
 
+<<<<<<< Updated upstream
+=======
+import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DriverStation;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+<<<<<<< Updated upstream
 //import frc.robot.commands.DefaultDriveCommand;
 //import frc.robot.subsystems.DrivetrainSubsystem;
+=======
+
+
+//import frc.robot.commands.DefaultDriveCommand;
+//import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.AllianceColorPresets;
+>>>>>>> Stashed changes
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,9 +38,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+<<<<<<< Updated upstream
 
   //private final LiftCommandButton liftCommandButton = new LiftCommandButton(HangingSteps);
 
+=======
+ 
+ CANSparkMax shooter1 = new CANSparkMax(21, MotorType.kBrushless);
+>>>>>>> Stashed changes
   // private DrivetrainSubsystem m_drivetrain;
 
   /**
@@ -105,6 +126,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -114,6 +136,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+<<<<<<< Updated upstream
+=======
+   
+   
+    
+>>>>>>> Stashed changes
   }
 
   @Override
@@ -125,5 +153,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    shooter1.set(1);
   }
 }
