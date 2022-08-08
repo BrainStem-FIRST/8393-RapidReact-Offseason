@@ -79,7 +79,7 @@ public final class Constants {
         }
 
         public static final class IntakeConstants {
-
+                public static final boolean INTAKE_MOTOR_REVERSED = true;
                 public static final int INTAKE_MOTOR_ID = 20;
                 public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME

@@ -51,6 +51,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void setOutput(double speed) {
+    speed = IntakeConstants.INTAKE_MOTOR_REVERSED ? -speed : speed;
     intakeMotor.set(speed);
   }
 

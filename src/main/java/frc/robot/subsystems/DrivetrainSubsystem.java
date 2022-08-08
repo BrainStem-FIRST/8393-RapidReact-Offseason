@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SPI;
-import frc.robot.Constants;
 import frc.robot.TimerCanceller;
 import frc.robot.Constants.DrivetrainConstants;
 import com.kauailabs.navx.frc.AHRS;
