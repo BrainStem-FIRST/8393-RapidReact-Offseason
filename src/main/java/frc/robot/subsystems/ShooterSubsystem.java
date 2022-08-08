@@ -191,5 +191,4 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       turretMotor.close();
       elevatorMotor.close();
    }
-
 }
