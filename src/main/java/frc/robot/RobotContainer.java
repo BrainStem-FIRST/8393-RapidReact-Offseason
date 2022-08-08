@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
@@ -17,6 +18,9 @@ import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
 import frc.robot.commands.DrivetrainTestCommand;
+
+import frc.robot.commands.ParallelCommandFunction;
+
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -57,6 +61,12 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
 
+
+       intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem, true));
+       transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true) );
+     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, 0.5, 50, 50));
+       
+       
     /*intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
         true));
     shooterSubsystem.setDefaultCommand(
@@ -102,7 +112,8 @@ public class RobotContainer {
      * .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to
      * whenpressed //FIXME
      */
-
+    
+    
 
 
   }
