@@ -33,10 +33,20 @@ public class SwerveModuleSubsystem implements AutoCloseable {
         // creating motors
         this.driveMotor = new TalonFX(driveMotorID);
         this.turningMotor = new TalonFX(turningMotorID);
+
+         turningMotor.setInverted(turningMotorReversed);
+       
+
+         
+
         // creating encoders
         this.turningMotorAbsoluteEncoder = new CANCoder(absoluteEncoderID);
         this.driveMotorEncoder = driveMotor.getSensorCollection();
         this.turningMotorEncoder = turningMotor.getSensorCollection();
+
+
+
+
 
         this.turningPIDController = new PIDController(SwerveModuleConstants.PROPORTIONAL,
                 SwerveModuleConstants.INTEGRAL,

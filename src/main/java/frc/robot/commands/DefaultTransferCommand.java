@@ -3,33 +3,31 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TransferSubsystem;
 
-
-
-public class TransferCommand extends CommandBase{
+public class DefaultTransferCommand extends CommandBase {
     private TransferSubsystem transferSubsystem;
-    private double transferSpeed;
-
-    public TransferCommand(TransferSubsystem transferSubsystem, double transferSpeed){
+    private boolean turnOn;
+    public DefaultTransferCommand(TransferSubsystem transferSubsystem, boolean turnOn){
         this.transferSubsystem = transferSubsystem;
+        this.turnOn = turnOn;
         addRequirements(transferSubsystem);
     }
 
     @Override
     public void initialize(){
-        transferSubsystem.turnOff();
+        transferSubsystem.initializeTransfer();
     }
 
     @Override
     public void execute(){
-        transferSubsystem.turnOnTransferColorSensor();
+        transferSubsystem.executeTransfer(turnOn);
     }
 
-    @Override 
+    @Override
     public void end(boolean interrupted){
-        transferSubsystem.turnOff();
+        transferSubsystem.endTransfer();
     }
 
-    @Override 
+    @Override
     public boolean isFinished(){
         return false;
     }
