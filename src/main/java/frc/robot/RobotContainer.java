@@ -44,6 +44,7 @@ public class RobotContainer {
 
     //intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem, true));
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true));
+    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, 0.5, 50, 50));
 
     configureButtonBindings();
 
