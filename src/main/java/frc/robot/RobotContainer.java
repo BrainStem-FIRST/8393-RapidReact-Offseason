@@ -54,7 +54,6 @@ public class RobotContainer {
 
     new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileActiveOnce(new ParallelCommandFunction(transferSubsystem, shooterSubsystem, true, 0.5, 10, 20));
       
-    
   }
 
   /**

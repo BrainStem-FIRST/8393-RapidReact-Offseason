@@ -6,26 +6,32 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class DefaultShooterCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
     private double shooterSpeed;
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed){
+    private double elevatorSetPoint;
+    private double turretSetPoint;
+
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed, double elevatorSetPoint, double turretSetPoint){
         this.shooterSubsystem = shooterSubsystem;
         this.shooterSpeed = shooterSpeed;
+        this.elevatorSetPoint = elevatorSetPoint;
+        this.turretSetPoint = turretSetPoint;
+
         addRequirements(shooterSubsystem);
     }
 
 
     @Override
     public void initialize(){
-        shooterSubsystem.initElevatorMotor();
+        shooterSubsystem.initAllMotors();
     }
 
     @Override
     public void execute(){
-        shooterSubsystem.executeShooterMotors(shooterSpeed);
+        shooterSubsystem.executeAllMotors(shooterSpeed, elevatorSetPoint, turretSetPoint);
     }
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsystem.endShooter();
+        shooterSubsystem.endAllMotors();
     }
 
     @Override

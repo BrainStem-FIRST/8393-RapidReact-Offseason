@@ -40,6 +40,11 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
         } else {
             turnOff();
         }
+
+       
+       
+
+
     }
 
     public void endTransfer(){

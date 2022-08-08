@@ -8,12 +8,28 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+
+
+
+
+//import frc.robot.commands.DefaultDriveCommand;
+//import frc.robot.subsystems.DrivetrainSubsystem;
+
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
+  // private DrivetrainSubsystem m_drivetrain;
 
-  @Override
+  /**
+   * This function is run when the robot is first started up and should be used
+   * for any
+   * initialization code.
+   */
+
+
+@Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
@@ -86,6 +102,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -95,6 +112,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
   }
 
   @Override

@@ -99,6 +99,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       resetElevatorMotorEncoder();
       stopElevatorMotor();
    }
+   public void initAllMotors() {
+      initElevatorMotor();
+      initShooterMotors();
+      initTurretMotor();
+   }
 
   
 
@@ -130,6 +135,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    public void endTurret() {
       initTurretMotor();
+   }
+   public void endAllMotors() {
+      endShooter();
+      endElevator();
+      endTurret();
    }
 
    
