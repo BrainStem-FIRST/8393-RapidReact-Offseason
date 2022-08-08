@@ -24,11 +24,25 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
 
         public static final class JoystickConstants {
-                public static final int LEFT_STICK_Y_AXIS = 1;
                 public static final int LEFT_STICK_X_AXIS = 0;
-                public static final int RIGHT_STICK_Y_AXIS = 5;
+                public static final int LEFT_STICK_Y_AXIS = 1;
+                public static final int LEFT_TRIGGER = 2;
+                public static final int RIGHT_TRIGGER = 3;
                 public static final int RIGHT_STICK_X_AXIS = 4;
-                public static final int LEFT_BUMPER = 1;
+                public static final int RIGHT_STICK_Y_AXIS = 5;
+                public static final int A_BUTTON = 1;
+                public static final int B_BUTTON = 2;
+                public static final int X_BUTTON = 3;
+                public static final int Y_BUTTON = 4;
+                public static final int LEFT_BUMPER = 5;                
+                public static final int RIGHT_BUMPER = 7;
+                public static final int BACK_BUTTON = 8;
+                public static final int START_BUTTON = 9;
+                public static final int LEFT_JOYSTICK_BUTTON = 10;
+                public static final int RIGHT_JOYSTICK_BUTTON = 11;
+
+
+                
         }
 
         public static final class Driver1ControllerConstants {
@@ -83,10 +97,9 @@ public final class Constants {
         public static final class IntakeConstants {
 
                 public static final int INTAKE_MOTOR_ID = 20;
-                public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
-                public static final int INTAKE_PNEUMATICS_PORT = 10; // FIXME
+                public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 5; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
