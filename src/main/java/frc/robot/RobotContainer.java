@@ -57,12 +57,12 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
 
-    intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+    /*intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
         true));
     shooterSubsystem.setDefaultCommand(
-        new DefaultShooterCommand(shooterSubsystem, driver2Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
-            driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-            driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS)));
+        new DefaultShooterCommand(shooterSubsystem, 0.75,
+           300, 300));
+            
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true));
 
     // Configure the button bindings
@@ -102,6 +102,9 @@ public class RobotContainer {
      * .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to
      * whenpressed //FIXME
      */
+
+
+
   }
 
   /**

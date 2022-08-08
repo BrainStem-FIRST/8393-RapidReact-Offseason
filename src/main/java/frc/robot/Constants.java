@@ -70,6 +70,8 @@ public final class Constants {
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
                 public static final int ELEVATOR_MOTOR_PORT_ID = 19;
+
+                public static final int ROTATION_TO_TICKS = 28;
         }
 
         public static final class PnuematicsConstants {
@@ -105,8 +107,8 @@ public final class Constants {
                                 / 60) / 2048;
 
                 // PID
-                public static final double PROPORTIONAL = 0.5; // FIXME
-                public static final double INTEGRAL = 0;
+                public static final double PROPORTIONAL = 1.17; // FIXME
+                public static final double INTEGRAL = 0.0017;
                 public static final double DERIVATIVE = 0;
         }
 
@@ -138,7 +140,7 @@ public final class Constants {
                 public static final boolean FRONT_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = true; // FIXME
                 // front left TURNING offset
-                public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(0); // 46.6
+                public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(20); // 46.6
 
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
@@ -147,7 +149,7 @@ public final class Constants {
                 public static final boolean FRONT_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // front right TURNING offset
-                public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(20); // 166.5
+                public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = Math.toRadians(45); // 166.5
 
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
@@ -156,7 +158,7 @@ public final class Constants {
                 public static final boolean BACK_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back left TURNING offset
-                public static final double BACK_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(0); // 135.5
+                public static final double BACK_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(90); // 135.5
 
                 // BACK RIGHT MODULE
                 public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5;
@@ -165,7 +167,7 @@ public final class Constants {
                 public static final boolean BACK_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back right TURNING offset
-                public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(0); // 151.9
+                public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = Math.toRadians(-90); // 151.9
 
         }
 
@@ -203,9 +205,9 @@ public final class Constants {
                 // The formula for calculating the theoretical maximum velocity is:
                 // <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> *
                 // pi
-                public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
-                                SdsModuleConfigurations.MK4_L4.getDriveReduction() *
-                                SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI;
+                public static final double MAX_VELOCITY_METERS_PER_SECOND =(6380.0 / 60.0 *
+                SdsModuleConfigurations.MK4_L4.getDriveReduction() *
+                SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI * 0.25);
                 // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
                 public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
                                 /
