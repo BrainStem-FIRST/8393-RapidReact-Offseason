@@ -9,6 +9,7 @@ import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
+/*
 public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
@@ -100,3 +101,4 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
 }
+*/
