@@ -12,12 +12,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.commands.DefaultDriveCommand;
+//import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
-import frc.robot.commands.DrivetrainTestCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
+//import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
@@ -25,7 +24,7 @@ import frc.robot.subsystems.TransferSubsystem;
 public class RobotContainer {
 
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
+  //private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
 
@@ -50,20 +49,29 @@ public class RobotContainer {
      * () -> -modifyAxis(driver1Controller.getRightX())
      * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
      */
-    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+
+    /*drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> -driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-        () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
+        () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));*/
 
     intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
-        true));
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
     shooterSubsystem.setDefaultCommand(
-        new DefaultShooterCommand(shooterSubsystem, driver2Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
-            driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-            driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS)));
-    transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true));
+        new DefaultShooterCommand(shooterSubsystem,
+            () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+            () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
+            () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), 
+            Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, 
+            Driver2ControllerConstants.CONTROLLER_DEADZONE, 
+            false));
+    transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -102,6 +110,7 @@ public class RobotContainer {
      * .whenActive(() -> liftCommandButton.buttonHit()); // may need to change to
      * whenpressed //FIXME
      */
+
   }
 
   /**

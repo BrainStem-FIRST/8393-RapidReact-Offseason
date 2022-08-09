@@ -1,21 +1,22 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+/*import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 public class DefaultDriveCommand extends CommandBase {
 
     private final DrivetrainSubsystem drivetrainSubsystem;
-    private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
-    private final Supplier<Boolean> fieldOrientedFunction;
+    private final DoubleSupplier xSpdFunction, ySpdFunction, turningSpdFunction;
+    private final BooleanSupplier fieldOrientedFunction;
 
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
-            Supplier<Double> xSpdFuncton, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-            Supplier<Boolean> fieldOrientedFunction) {
+            DoubleSupplier xSpdFuncton, DoubleSupplier ySpdFunction, DoubleSupplier turningSpdFunction,
+            BooleanSupplier fieldOrientedFunction) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.xSpdFunction = xSpdFuncton;
         this.ySpdFunction = ySpdFunction;
@@ -24,9 +25,9 @@ public class DefaultDriveCommand extends CommandBase {
         addRequirements(drivetrainSubsystem);
     }
     /*
-     * private final DoubleSupplier translationXSupplier;
-     * private final DoubleSupplier translationYSupplier;
-     * private final DoubleSupplier rotationSupplier;
+     * private final DoubleSupplier xSpdFunction;
+     * private final DoubleSupplier ySpdFunction;
+     * private final DoubleSupplier turningSpdFunction;
      */
 
     /*
@@ -41,7 +42,7 @@ public class DefaultDriveCommand extends CommandBase {
      * 
      * addRequirements(drivetrainSubsystem);
      * }
-     */
+     
 
     @Override
     public void initialize() {
@@ -50,16 +51,16 @@ public class DefaultDriveCommand extends CommandBase {
     @Override
     public void execute() {
         // get realtime joystick inputs
-        double xSpeed = xSpdFunction.get();
-        double ySpeed = ySpdFunction.get();
-        double turningSpeed = turningSpdFunction.get();
+        double xSpeed = xSpdFunction.getAsDouble();
+        double ySpeed = ySpdFunction.getAsDouble();
+        double turningSpeed = turningSpdFunction.getAsDouble();
         // apply controller deadzone
         xSpeed = Math.abs(xSpeed) > Driver1ControllerConstants.CONTROLLER_DEADZONE ? xSpeed : 0.0;
         ySpeed = Math.abs(xSpeed) > Driver1ControllerConstants.CONTROLLER_DEADZONE ? ySpeed : 0.0;
         turningSpeed = Math.abs(turningSpeed) > Driver1ControllerConstants.CONTROLLER_DEADZONE ? turningSpeed : 0.0;
 
         ChassisSpeeds chassisSpeeds;
-        if (fieldOrientedFunction.get()) {
+        if (fieldOrientedFunction.getAsBoolean()) {
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed,
                     ySpeed, turningSpeed, drivetrainSubsystem.getRotation2d());
         } else {
@@ -87,7 +88,7 @@ public class DefaultDriveCommand extends CommandBase {
          * translationYSupplier.getAsDouble(),
          * rotationSupplier.getAsDouble(),
          * drivetrainSubsystem.getGyroscopeRotation()));
-         */
+         
     }
 
     @Override
@@ -100,3 +101,4 @@ public class DefaultDriveCommand extends CommandBase {
         return false;
     }
 }
+*/

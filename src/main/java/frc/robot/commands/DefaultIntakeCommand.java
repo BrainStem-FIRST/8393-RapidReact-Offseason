@@ -1,14 +1,17 @@
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class DefaultIntakeCommand extends CommandBase{
     private IntakeSubsystem intakeSubsystem;
-    private boolean deploy;
-    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, boolean deploy){
+    private DoubleSupplier deployFunction;
+    private double triggerThreshold;
+    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier deployFunction, double triggerThreshold){
         this.intakeSubsystem = intakeSubsystem;
-        this.deploy = deploy;
+        this.deployFunction = deployFunction;
+        this.triggerThreshold = triggerThreshold;
         addRequirements(intakeSubsystem);
     }
 
@@ -19,6 +22,7 @@ public class DefaultIntakeCommand extends CommandBase{
 
     @Override
     public void execute(){
+        boolean deploy = deployFunction.getAsDouble() > triggerThreshold;
         intakeSubsystem.executeIntake(deploy);
     }
 
