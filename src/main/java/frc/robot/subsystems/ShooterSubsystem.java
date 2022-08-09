@@ -32,10 +32,10 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    private CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
          MotorType.kBrushless);
 
-   private RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
-   private RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
-   private RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
-   private RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
+   public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
+   public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
+   public RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
+   public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
 
    public RelativeEncoder returnShooterMotor1Encoder() {
       return shooterMotor1.getEncoder();
@@ -61,17 +61,17 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       shooterMotor1.set(shooterSpeed);
    }
 
-   public void setTurretSpeed(double turretSetPoint) {
+   public void setTurretSpeed(double speed) {
       turretPIDController.setTolerance(ShooterConstants.TURRET_PID_TOLERANCE);
       double turretSpeed = turretPIDController
-            .calculate(turretMotorEncoder.getPosition() * ShooterConstants.ELEVATOR_PROPORTIONAL, turretSetPoint);
+            .calculate(turretMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
       turretMotor.set(turretSpeed);
    }
 
-   public void setElevatorSpeed(double elevatorSetPoint) {
+   public void setElevatorSpeed(double speed) {
       elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
       double elevatorSpeed = elevatorPIDController
-            .calculate(elevatorMotorEncoder.getPosition() * ShooterConstants.ROTATION_TO_TICKS, elevatorSetPoint);
+            .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
       elevatorMotor.set(elevatorSpeed);
    }
 
@@ -119,10 +119,10 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       setElevatorSpeed(elevatorSetPoint);
    }
 
-   public void executeAllMotors(double shooterSpeed, double turretSetPoint, double elevatorSetPoint){
-      executeElevatorMotor(elevatorSetPoint);
+   public void executeAllMotors(double shooterSpeed, double turretSpeed, double elevatorSpeed){
+      executeElevatorMotor(elevatorSpeed);
       executeShooterMotors(shooterSpeed);
-      executeTurretMotor(turretSetPoint);
+      executeTurretMotor(turretSpeed);
    }
 
    public void endShooter() {

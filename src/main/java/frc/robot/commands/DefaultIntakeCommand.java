@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-/*
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class DefaultIntakeCommand extends CommandBase{
     private IntakeSubsystem intakeSubsystem;
     private boolean deploy;
+    private double intakespeed;
     public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, boolean deploy){
         this.intakeSubsystem = intakeSubsystem;
         this.deploy = deploy;
@@ -34,5 +34,5 @@ public class DefaultIntakeCommand extends CommandBase{
     }
 }
 
-*/
+
 
