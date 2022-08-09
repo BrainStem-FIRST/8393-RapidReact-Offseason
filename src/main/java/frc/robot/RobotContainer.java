@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.CollectorTransferParallel;
+import frc.robot.commands.CompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.subsystems.CompressorSubsytem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.subsystems.IntakeSubsystem;
@@ -30,9 +33,11 @@ public class RobotContainer {
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
+  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
 
   public RobotContainer() {
 
@@ -43,13 +48,13 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
      
-      intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem, true));
-      transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true));
-     
-    
+        driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
+        
+
+    compressorSubsystem.setDefaultCommand(new CompressorCommand(compressorSubsystem, 100, 160));
     if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
     && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
-    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(3), () -> driver2Controller.getRawAxis(1), () -> driver2Controller.getRawAxis(5)));
+    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(3), () -> driver2Controller.getRawAxis(5), () -> driver2Controller.getRawAxis(1)));
     
 
     configureButtonBindings(); 
@@ -58,7 +63,7 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-
+  
     
       
   }

@@ -64,7 +64,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void deployIntake() {
    // lowerIntake();
-    setOutput(0.5);
+    setOutput(-1);
   }
 
   public void retractIntake() {

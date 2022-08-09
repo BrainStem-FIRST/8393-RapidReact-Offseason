@@ -10,18 +10,15 @@ import frc.robot.Constants.TransferConstants;
 
 public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
-    private PIDController transferPIDController = new PIDController(TransferConstants.TRANSFER_PROPORTIONAL,
-            TransferConstants.TRANSFER_INTEGRAL, TransferConstants.TRANSFER_DERIVATIVE);
+    
 
     public CANSparkMax transferMotor = new CANSparkMax(TransferConstants.TRANSFER_MOTOR_PORT_ID,
             MotorType.kBrushless);
 
     private RelativeEncoder transferMotorEncoder = transferMotor.getEncoder();
 
-    public void turnOn() {
-        double speed = transferPIDController.calculate(
-                transferMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM,
-                TransferConstants.TRANSFER_MOTOR_SPEED);
+    public void turnOn(double speed) {
+        
         transferMotor.set(speed);
     }
 
@@ -36,7 +33,7 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void executeTransfer(boolean turnOnTransfer) {
         if (turnOnTransfer) {
-            turnOn();
+            turnOn(-1);
         } else {
             turnOff();
         }
