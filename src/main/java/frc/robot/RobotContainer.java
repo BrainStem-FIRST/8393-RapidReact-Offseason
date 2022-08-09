@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -13,12 +15,10 @@ import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.CollectorTransferParallel;
-import frc.robot.commands.CompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
-import frc.robot.subsystems.CompressorSubsytem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.subsystems.IntakeSubsystem;
@@ -33,6 +33,7 @@ public class RobotContainer {
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  Compressor compressor = new Compressor(9, PneumaticsModuleType.REVPH);
   
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
@@ -50,7 +51,7 @@ public class RobotContainer {
      
         driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
         
-
+        compressor.enableAnalog(50, 160);
     
     if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
     && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))

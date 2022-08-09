@@ -11,7 +11,7 @@ public CollectorTransferParallel (IntakeSubsystem intakeSubsystem, double intake
 
     addCommands(new DefaultIntakeCommand(intakeSubsystem, intakeSpeed, threshold), new DefaultTransferCommand(transferSubsystem, turnOn));
 
-
+ 
 
 }
 
