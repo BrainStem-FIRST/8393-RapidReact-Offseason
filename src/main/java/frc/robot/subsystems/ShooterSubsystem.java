@@ -60,6 +60,13 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       shooterMotor2.follow(shooterMotor1);
       shooterMotor1.set(shooterSpeed);
    }
+   public void setShooterSpeedAuto(double speed) {
+      shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
+      double shooterSetPoint= shooterPIDController
+            .calculate(shooterMotor1Encoder.getPosition() * 42, speed);
+      shooterMotor2.follow(shooterMotor1);
+      shooterMotor1.set(shooterSetPoint);
+   }
 
    public void setTurretSpeed(double speed) {
       turretPIDController.setTolerance(ShooterConstants.TURRET_PID_TOLERANCE);
@@ -67,11 +74,23 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
             .calculate(turretMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
       turretMotor.set(turretSpeed);
    }
+   public void setTurretSpeedAuto(double speed) {
+      turretPIDController.setTolerance(ShooterConstants.TURRET_PID_TOLERANCE);
+      double turretSpeed = turretPIDController
+            .calculate(turretMotorEncoder.getPosition() * 42, speed);
+      turretMotor.set(turretSpeed);
+   }
 
    public void setElevatorSpeed(double speed) {
       elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
       double elevatorSpeed = elevatorPIDController
             .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
+      elevatorMotor.set(elevatorSpeed);
+   }
+   public void setElevatorSpeedAuto(double speed) {
+      elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
+      double elevatorSpeed = elevatorPIDController
+            .calculate(elevatorMotorEncoder.getPosition() * 42, speed);
       elevatorMotor.set(elevatorSpeed);
    }
 
@@ -118,11 +137,26 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    public void executeElevatorMotor(double elevatorSetPoint){
       setElevatorSpeed(elevatorSetPoint);
    }
+   public void  executeElevatorMotorAuto(double elevatorSpeed) {
+      setElevatorSpeedAuto(elevatorSpeed);
+   }
+   public void executeTurretMotorAuto(double turretSpeed) {
+      setTurretSpeedAuto(turretSpeed);
+   }
+   public void executeShooterMotorsAuto(double shooterSpeed) {
+      setShooterSpeedAuto(shooterSpeed);
+   }
+
 
    public void executeAllMotors(double shooterSpeed, double turretSpeed, double elevatorSpeed){
       executeElevatorMotor(elevatorSpeed);
       executeShooterMotors(shooterSpeed);
       executeTurretMotor(turretSpeed);
+   }
+   public void executeAllMotorsAuto(double shooterSetPoint, double elevatorSetPoint, double turretSetPoint) {
+      executeElevatorMotorAuto(elevatorSetPoint);
+      executeShooterMotors(shooterSetPoint);
+      executeTurretMotorAuto(turretSetPoint);
    }
 
    public void endShooter() {
