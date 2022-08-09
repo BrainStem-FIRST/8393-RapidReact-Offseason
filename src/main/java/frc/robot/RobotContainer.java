@@ -51,7 +51,7 @@ public class RobotContainer {
         driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
         
 
-    compressorSubsystem.setDefaultCommand(new CompressorCommand(compressorSubsystem, 100, 160));
+    
     if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
     && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(3), () -> driver2Controller.getRawAxis(5), () -> driver2Controller.getRawAxis(1)));
