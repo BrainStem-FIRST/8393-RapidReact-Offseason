@@ -33,7 +33,7 @@ public class RobotContainer {
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  Compressor compressor = new Compressor(9, PneumaticsModuleType.REVPH);
+ 
   
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
@@ -48,14 +48,13 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
-     
+        
         driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
         
-        compressor.enableAnalog(50, 160);
-    
+        
     if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
     && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
-    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(3), () -> driver2Controller.getRawAxis(5), () -> driver2Controller.getRawAxis(1), true));
+    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), true));
     
 
     configureButtonBindings(); 

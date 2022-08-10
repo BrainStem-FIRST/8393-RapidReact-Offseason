@@ -33,7 +33,7 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void executeTransfer(boolean turnOnTransfer) {
         if (turnOnTransfer) {
-            turnOn(-1);
+            turnOn(1);
         } else {
             turnOff();
         }
