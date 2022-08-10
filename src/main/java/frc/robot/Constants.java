@@ -160,7 +160,7 @@ public final class Constants {
                 public static final boolean FRONT_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = true; // FIXME
                 // front left TURNING offset
-                public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = Math.toRadians(-20); // 46.6
+                public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(46.6); // 46.6
 
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
@@ -170,7 +170,7 @@ public final class Constants {
                 public static final boolean FRONT_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // front right TURNING offset
-                public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = Math.toRadians(45); // 166.5
+                public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(166.5); // 166.5
 
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
@@ -180,7 +180,7 @@ public final class Constants {
                 public static final boolean BACK_LEFT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back left TURNING offset
-                public static final double BACK_LEFT_MODULE_TURNING_OFFSET = Math.toRadians(-90); // 135.5
+                public static final double BACK_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(135.5); // 135.5
 
                 // BACK RIGHT MODULE
                 public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5;
@@ -190,7 +190,7 @@ public final class Constants {
                 public static final boolean BACK_RIGHT_TURNING_ABSOLUTE_ENCODER_REVERSED = false; // FIXME
                 public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back right TURNING offset
-                public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = Math.toRadians(-90); // 151.9
+                public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(151.9); // 151.9
         }
 
         public static final class AutoConstants {
