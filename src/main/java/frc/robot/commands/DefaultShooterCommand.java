@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class DefaultShooterCommand extends CommandBase{
+public class DefaultShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
     private DoubleSupplier shooterSpeedFunction;
     private DoubleSupplier turretSpeedFunction;
@@ -13,8 +13,11 @@ public class DefaultShooterCommand extends CommandBase{
     private double triggerThreshold;
     private double controllerDeadzone;
     private boolean useSetPointsInsteadOfSpeed;
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeedFunction, DoubleSupplier turretSpeedFunction, 
-    DoubleSupplier elevatorSpeedFunction, double triggerThreshold, double controllerDeadzone, boolean useSetPointsInsteadOfSpeed){
+
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeedFunction,
+            DoubleSupplier turretSpeedFunction,
+            DoubleSupplier elevatorSpeedFunction, double triggerThreshold, double controllerDeadzone,
+            boolean useSetPointsInsteadOfSpeed) {
         this.shooterSubsystem = shooterSubsystem;
         this.turretSpeedFunction = turretSpeedFunction;
         this.elevatorSpeedFunction = elevatorSpeedFunction;
@@ -25,28 +28,29 @@ public class DefaultShooterCommand extends CommandBase{
         addRequirements(shooterSubsystem);
     }
 
-
     @Override
-    public void initialize(){
+    public void initialize() {
         shooterSubsystem.initializeAllMotors();
     }
 
     @Override
-    public void execute(){
-
+    public void execute() {
         double shooterSpeed = Math.abs(shooterSpeedFunction.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
         double turretSpeed = Math.abs(turretSpeedFunction.getAsDouble()) > controllerDeadzone ? turretSpeedFunction.getAsDouble() : 0.0;
         double elevatorSpeed = Math.abs(elevatorSpeedFunction.getAsDouble()) > controllerDeadzone ? elevatorSpeedFunction.getAsDouble() : 0.0;
         shooterSubsystem.executeAllMotors(shooterSpeed, turretSpeed, elevatorSpeed);
     }
 
+    boolean programmedWell = true;
+    String isMihirHappy =  programmedWell ? "Yes" : "No";
+
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
         shooterSubsystem.endAllMotors();
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 }

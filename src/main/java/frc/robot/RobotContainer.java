@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
@@ -31,6 +32,7 @@ public class RobotContainer {
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
+  private final JoystickButton driver1button = new JoystickButton(driver1Controller, JoystickConstants.X_BUTTON);
 
   public RobotContainer() {
     // Set up the default command for the drivetrain.
@@ -51,29 +53,36 @@ public class RobotContainer {
      * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
      */
 
-    /*drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+    /*
+     * drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+     * drivetrainSubsystem,
+     * () -> -driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
+     * () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
+     * () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
+     * () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
+     */
+    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
-        () -> -driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
-        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
-        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-        () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));*/
-        drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-          drivetrainSubsystem,
-          () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS)) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
-          () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS)) * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
-          () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS)) * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
+            * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS))
+            * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
+            * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
     intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
+    // driver1button.toggleWhenPressed(new DefaultIntakeCommand(intakeSubsystem,
+    // 1.0, 0.2));
     shooterSubsystem.setDefaultCommand(
         new DefaultShooterCommand(shooterSubsystem,
             () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
             () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-            () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), 
-            Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, 
-            Driver2ControllerConstants.CONTROLLER_DEADZONE, 
+            () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
+            Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD,
+            Driver2ControllerConstants.CONTROLLER_DEADZONE,
             false));
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),

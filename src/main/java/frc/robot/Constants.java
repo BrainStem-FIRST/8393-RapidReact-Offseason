@@ -87,7 +87,9 @@ public final class Constants {
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
                 public static final int ELEVATOR_MOTOR_PORT_ID = 19;
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
+                public static final boolean ELEVATOR_MOTOR_REVERSED = false;
                 public static final double SHOOTING_MOTORS_SPEED = SHOOTING_MOTORS_REVERSED ? -1 : 1;
+                public static final double ELEVATOR_MOTOR_SPEED = ELEVATOR_MOTOR_REVERSED ? -0.3 : 0.3;
         }
 
         public static final class PnuematicsConstants {
@@ -144,7 +146,8 @@ public final class Constants {
                  * Should be measured from center to center.
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
-                public static final double DRIVETRAIN_SPEED_LIMITER = 0.5;
+                public static final double DRIVETRAIN_SPEED_LIMITER = 0.15;
+                public static final double TURNING_LIMITER = 0.15;
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                                 new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),
