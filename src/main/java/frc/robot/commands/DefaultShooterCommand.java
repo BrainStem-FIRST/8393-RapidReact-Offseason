@@ -1,44 +1,48 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class DefaultShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
-    private DoubleSupplier shooterSpeedFunction;
-    private DoubleSupplier turretSpeedFunction;
-    private DoubleSupplier elevatorSpeedFunction;
-    private double triggerThreshold;
-    private double controllerDeadzone;
-    private boolean useSetPointsInsteadOfSpeed;
 
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeedFunction,
-            DoubleSupplier turretSpeedFunction,
-            DoubleSupplier elevatorSpeedFunction, double triggerThreshold, double controllerDeadzone,
-            boolean useSetPointsInsteadOfSpeed) {
+    private DoubleSupplier shooterSpeed;
+    private DoubleSupplier elevatorSpeed;
+    private DoubleSupplier turretSpeed;
+    public boolean isAuto;
+
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed, DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, boolean isAuto){
         this.shooterSubsystem = shooterSubsystem;
-        this.turretSpeedFunction = turretSpeedFunction;
-        this.elevatorSpeedFunction = elevatorSpeedFunction;
-        this.shooterSpeedFunction = shooterSpeedFunction;
-        this.triggerThreshold = triggerThreshold;
-        this.controllerDeadzone = controllerDeadzone;
-        this.useSetPointsInsteadOfSpeed = useSetPointsInsteadOfSpeed;
+        this.shooterSpeed = shootingSpeed;
+        this.elevatorSpeed = elevatorSpeed;
+        this.turretSpeed = turretSpeed;
+        this.isAuto = isAuto;
+
         addRequirements(shooterSubsystem);
     }
 
+
+    
+
+
     @Override
-    public void initialize() {
-        shooterSubsystem.initializeAllMotors();
+    public void initialize(){
+        shooterSubsystem.initAllMotors();
     }
 
     @Override
-    public void execute() {
-        double shooterSpeed = Math.abs(shooterSpeedFunction.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
-        double turretSpeed = Math.abs(turretSpeedFunction.getAsDouble()) > controllerDeadzone ? turretSpeedFunction.getAsDouble() : 0.0;
-        double elevatorSpeed = Math.abs(elevatorSpeedFunction.getAsDouble()) > controllerDeadzone ? elevatorSpeedFunction.getAsDouble() : 0.0;
-        shooterSubsystem.executeAllMotors(shooterSpeed, turretSpeed, elevatorSpeed);
+    public void execute(){
+        double shooterSpeedDouble = shooterSpeed.getAsDouble();
+        double elevatorSpeedDouble = elevatorSpeed.getAsDouble();
+        double turretSpeedDouble = turretSpeed.getAsDouble();
+        if(isAuto) {
+        shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        } else {
+            shooterSubsystem.executeAllMotorsAuto(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        }
     }
 
     boolean programmedWell = true;

@@ -6,12 +6,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class DefaultIntakeCommand extends CommandBase{
     private IntakeSubsystem intakeSubsystem;
-    private DoubleSupplier deployFunction;
-    private double triggerThreshold;
-    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier deployFunction, double triggerThreshold){
+
+    private boolean deploy;
+    private double intakeOn;
+    private double threshold;
+    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, double intakeOn, double threshold){
         this.intakeSubsystem = intakeSubsystem;
-        this.deployFunction = deployFunction;
-        this.triggerThreshold = triggerThreshold;
+        this.intakeOn = intakeOn;
+        this.threshold = threshold;
+        this.deploy = deploy;
         addRequirements(intakeSubsystem);
     }
 
@@ -22,7 +25,8 @@ public class DefaultIntakeCommand extends CommandBase{
 
     @Override
     public void execute(){
-        boolean deploy = deployFunction.getAsDouble() > triggerThreshold;
+
+        boolean deploy = intakeOn > threshold;
         intakeSubsystem.executeIntake(deploy);
     }
 
@@ -36,4 +40,6 @@ public class DefaultIntakeCommand extends CommandBase{
         return false;
     }
 }
+
+
 

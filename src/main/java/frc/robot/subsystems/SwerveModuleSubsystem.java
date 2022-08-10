@@ -42,6 +42,7 @@ public class SwerveModuleSubsystem implements AutoCloseable {
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
+
         this.turningPIDController = new PIDController(SwerveModuleConstants.PROPORTIONAL,
                 SwerveModuleConstants.INTEGRAL,
                 SwerveModuleConstants.DERIVATIVE);

@@ -24,7 +24,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
 
         public static final class JoystickConstants {
-                public static final int LEFT_STICK_X_AXIS = 0;
+
+                public static final int LEFT_STICK_X_AXIS = 0; 
                 public static final int LEFT_STICK_Y_AXIS = 1;
                 public static final int LEFT_TRIGGER = 2;
                 public static final int RIGHT_TRIGGER = 3;
@@ -34,12 +35,13 @@ public final class Constants {
                 public static final int B_BUTTON = 2;
                 public static final int X_BUTTON = 3;
                 public static final int Y_BUTTON = 4;
-                public static final int LEFT_BUMPER = 5;
+                public static final int LEFT_BUMPER = 5;                
                 public static final int RIGHT_BUMPER = 7;
                 public static final int BACK_BUTTON = 8;
                 public static final int START_BUTTON = 9;
                 public static final int LEFT_JOYSTICK_BUTTON = 10;
                 public static final int RIGHT_JOYSTICK_BUTTON = 11;
+
         }
 
         public static final class Driver1ControllerConstants {
@@ -90,6 +92,7 @@ public final class Constants {
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
                 public static final double SHOOTING_MOTORS_SPEED = SHOOTING_MOTORS_REVERSED ? -1 : 1;
                 public static final double ELEVATOR_MOTOR_SPEED = ELEVATOR_MOTOR_REVERSED ? -0.3 : 0.3;
+                public static final int ROTATION_TO_TICKS = 28;
         }
 
         public static final class PnuematicsConstants {
@@ -101,10 +104,10 @@ public final class Constants {
         public static final class IntakeConstants {
                 public static final boolean INTAKE_MOTOR_REVERSED = true;
                 public static final int INTAKE_MOTOR_ID = 20;
-                public static final int INTAKE_PNEUMATICS_DISTANCE = 10; // FIXME
-                public static final double INTAKE_MOTOR_SPEED = 1;
+
+                public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
-                public static final int INTAKE_PNEUMATICS_PORT = 10; // FIXME
+                public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 5; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
@@ -127,9 +130,9 @@ public final class Constants {
                                 / 60) / 2048;
 
                 // PID
-                public static final double PROPORTIONAL = 1.17;
-                public static final double INTEGRAL = 0.17;
-                public static final double DERIVATIVE = 0.017;
+                public static final double PROPORTIONAL = 1.17; // FIXME
+                public static final double INTEGRAL = 0.0017;
+                public static final double DERIVATIVE = 0;
         }
 
         public static final class DrivetrainConstants {
@@ -164,7 +167,6 @@ public final class Constants {
                 public static final boolean FRONT_LEFT_DRIVE_ENCODER_REVERSED = true; // FIXME
                 // front left TURNING offset
                 public static final double FRONT_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(46.6); // 46.6
-
                 // FRONT RIGHT MODULE
                 public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3;
                 public static final boolean FRONT_RIGHT_DRIVE_MOTOR_REVERSED = false;
@@ -175,6 +177,7 @@ public final class Constants {
                 // front right TURNING offset
                 public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(166.5); // 166.5
 
+
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
                 public static final boolean BACK_LEFT_DRIVE_MOTOR_REVERSED = false;
@@ -184,7 +187,6 @@ public final class Constants {
                 public static final boolean BACK_LEFT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back left TURNING offset
                 public static final double BACK_LEFT_MODULE_TURNING_OFFSET = -Math.toRadians(135.5); // 135.5
-
                 // BACK RIGHT MODULE
                 public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 5;
                 public static final boolean BACK_RIGHT_DRIVE_MOTOR_REVERSED = false;
@@ -194,6 +196,7 @@ public final class Constants {
                 public static final boolean BACK_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // back right TURNING offset
                 public static final double BACK_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(151.9); // 151.9
+
         }
 
         public static final class AutoConstants {

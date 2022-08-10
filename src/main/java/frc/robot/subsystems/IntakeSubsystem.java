@@ -56,16 +56,16 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void lowerIntake() {
-    intakePneumatics.set(Value.kForward);
+    //intakePneumatics.set(Value.kForward);
   }
 
   public void raiseIntake() {
-    intakePneumatics.set(Value.kReverse);
+    //intakePneumatics.set(Value.kReverse);
   }
 
   public void deployIntake() {
-    lowerIntake();
-    setOutput(IntakeConstants.INTAKE_MOTOR_SPEED);
+   // lowerIntake();
+    setOutput(-1);
   }
 
   public void retractIntake() {
@@ -101,3 +101,4 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
 }
+

@@ -7,23 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+
+
+
+
 //import frc.robot.commands.DefaultDriveCommand;
 //import frc.robot.subsystems.DrivetrainSubsystem;
 
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the
- * name of this class or
- * the package after creating this project, you must also update the
- * build.gradle file in the
- * project.
- */
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  //private final LiftCommandButton liftCommandButton = new LiftCommandButton(HangingSteps);
 
   // private DrivetrainSubsystem m_drivetrain;
 
@@ -32,7 +28,9 @@ public class Robot extends TimedRobot {
    * for any
    * initialization code.
    */
-  @Override
+
+
+@Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
@@ -105,6 +103,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -114,6 +113,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
   }
 
   @Override
