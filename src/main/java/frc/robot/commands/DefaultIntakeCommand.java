@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class DefaultIntakeCommand extends CommandBase{
     private IntakeSubsystem intakeSubsystem;
+
     private boolean deploy;
     private double intakeOn;
     private double threshold;
@@ -25,6 +25,7 @@ public class DefaultIntakeCommand extends CommandBase{
 
     @Override
     public void execute(){
+
         boolean deploy = intakeOn > threshold;
         intakeSubsystem.executeIntake(deploy);
     }

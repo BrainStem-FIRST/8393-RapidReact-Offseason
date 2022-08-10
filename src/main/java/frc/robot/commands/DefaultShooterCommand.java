@@ -3,20 +3,22 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class DefaultShooterCommand extends CommandBase{
+public class DefaultShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
+
     private DoubleSupplier shooterSpeed;
     private DoubleSupplier elevatorSpeed;
     private DoubleSupplier turretSpeed;
     public boolean isAuto;
 
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier d, DoubleSupplier e, DoubleSupplier f, boolean isAuto){
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed, DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, boolean isAuto){
         this.shooterSubsystem = shooterSubsystem;
-        this.shooterSpeed = d;
-        this.elevatorSpeed = e;
-        this.turretSpeed = f;
+        this.shooterSpeed = shootingSpeed;
+        this.elevatorSpeed = elevatorSpeed;
+        this.turretSpeed = turretSpeed;
         this.isAuto = isAuto;
 
         addRequirements(shooterSubsystem);
@@ -43,13 +45,16 @@ public class DefaultShooterCommand extends CommandBase{
         }
     }
 
+    boolean programmedWell = true;
+    String isMihirHappy =  programmedWell ? "Yes" : "No";
+
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
         shooterSubsystem.endAllMotors();
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 }

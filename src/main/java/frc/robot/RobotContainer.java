@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
@@ -38,9 +39,25 @@ public class RobotContainer {
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
-  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
+  private final JoystickButton driver1button = new JoystickButton(driver1Controller, JoystickConstants.X_BUTTON);
 
   public RobotContainer() {
+
+
+    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+        drivetrainSubsystem,
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
+            * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS))
+            * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+        () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
+            * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+
+  
+
+   
+  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
+
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -63,9 +80,7 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-  
-    
-      
+
   }
 
   /**
