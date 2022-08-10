@@ -4,7 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -12,15 +14,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.CollectorTransferParallel;
 import frc.robot.commands.DefaultDriveCommand;
-//import frc.robot.commands.DefaultIntakeCommand;
+import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
-import frc.robot.commands.ParallelCommandFunction;
 import frc.robot.Constants.JoystickConstants;
 
 public class RobotContainer {
@@ -29,9 +32,13 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+ 
+  
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
+  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
 
   public RobotContainer() {
 
@@ -41,18 +48,23 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
+        
+        driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
+        
+        
+    if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
+    && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
+    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), true));
+    
 
-    //intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem, true));
-    transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem, true));
-
-    configureButtonBindings();
-
+    configureButtonBindings(); 
+ 
   }
 
 
   private void configureButtonBindings() {
-
-    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileActiveOnce(new ParallelCommandFunction(transferSubsystem, shooterSubsystem, true, 0.5, 10, 20));
+  
+    
       
   }
 
