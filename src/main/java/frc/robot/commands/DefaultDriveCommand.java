@@ -17,12 +17,11 @@ public class DefaultDriveCommand extends CommandBase {
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
             DoubleSupplier translationXSupplier,
             DoubleSupplier translationYSupplier,
-            DoubleSupplier rotationSupplier) {
+            DoubleSupplier rotationSupplier) {     
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.translationXFunction = translationXSupplier;
         this.translationYFunction = translationYSupplier;
         this.rotationFunction = rotationSupplier;
-
         addRequirements(drivetrainSubsystem);
     }
     
