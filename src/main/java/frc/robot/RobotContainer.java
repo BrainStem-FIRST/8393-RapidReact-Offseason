@@ -56,15 +56,17 @@ public class RobotContainer {
   
 
    
-  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
+  final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
 
 
-    drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-        drivetrainSubsystem,
-        () -> -driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS),
-        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS),
-        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-        () -> !driver1Controller.getRawButton(JoystickConstants.LEFT_BUMPER)));
+  drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+    drivetrainSubsystem,
+    () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
+        * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_X_AXIS))
+        * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
+        * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
         
         driver2button.toggleWhenPressed(new CollectorTransferParallel(intakeSubsystem, 1, 0.2, transferSubsystem, true));
         
