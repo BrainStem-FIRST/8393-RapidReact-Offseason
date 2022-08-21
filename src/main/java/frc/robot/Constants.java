@@ -29,8 +29,8 @@ public final class Constants {
                 public static final int LEFT_STICK_Y_AXIS = 1;
                 public static final int LEFT_TRIGGER = 2;
                 public static final int RIGHT_TRIGGER = 3;
-                public static final int RIGHT_STICK_X_AXIS = 4;
                 public static final int RIGHT_STICK_Y_AXIS = 5;
+                public static final int RIGHT_STICK_X_AXIS = 4;
                 public static final int A_BUTTON = 1;
                 public static final int B_BUTTON = 2;
                 public static final int X_BUTTON = 3;
