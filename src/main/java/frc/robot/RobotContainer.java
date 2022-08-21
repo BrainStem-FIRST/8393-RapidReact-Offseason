@@ -45,29 +45,12 @@ public class RobotContainer {
         () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
       
-        
-        
     if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
     && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), 0.2, false));
     
-
     configureButtonBindings(); 
  
-  }
-
-    if (((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0)
-        || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50
-        || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50)
-        && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0)
-            || shooterSubsystem.elevatorMotorEncoder.getPosition() * 42 < 50
-            || shooterSubsystem.elevatorMotorEncoder.getPosition() * 42 > -50))
-      shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
-          () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
-          () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-          () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), false));
-    configureButtonBindings();
-
   }
 
   private void configureButtonBindings() {
