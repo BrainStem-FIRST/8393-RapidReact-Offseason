@@ -8,6 +8,7 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -99,6 +100,7 @@ public final class Constants {
                 public static final int PNEUMATICS_PORT = 9;
                 public static final int COMPRESSOR_MIN_PRESSURE = 90;
                 public static final int COMPRESSOR_MAX_PRESSURE = 120;
+                public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
         public static final class IntakeConstants {
@@ -108,7 +110,7 @@ public final class Constants {
                 public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_1 = 5; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
 

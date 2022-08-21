@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -12,7 +11,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushless);
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
-      PneumaticsModuleType.REVPH,
+      PnuematicsConstants.PNEUMATICS_MODULE_TYPE,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
 
   private boolean isIntakeMotorStopped() {
