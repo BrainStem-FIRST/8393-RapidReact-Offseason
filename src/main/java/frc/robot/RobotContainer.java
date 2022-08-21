@@ -43,8 +43,7 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver2ControllerConstants.CONTROLLER_DEADZONE,
-        false));
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver2ControllerConstants.CONTROLLER_DEADZONE));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> modifyAxis(driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),

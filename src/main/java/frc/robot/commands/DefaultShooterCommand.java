@@ -13,12 +13,11 @@ public class DefaultShooterCommand extends CommandBase {
     private DoubleSupplier elevatorSpeed;
     private DoubleSupplier turretSpeed;
     private double triggerThreshold;
-    private boolean isAuto;
     private double controllerDeadzone;
 
     public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed,
             DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, double triggerThreshold,
-            double controllerDeadzone, boolean isAuto) {
+            double controllerDeadzone) {
 
         this.shooterSubsystem = shooterSubsystem;
         this.shooterSpeed = shootingSpeed;
@@ -26,7 +25,6 @@ public class DefaultShooterCommand extends CommandBase {
         this.turretSpeed = turretSpeed;
         this.triggerThreshold = triggerThreshold;
         this.controllerDeadzone = controllerDeadzone;
-        this.isAuto = isAuto;
 
         addRequirements(shooterSubsystem);
     }
