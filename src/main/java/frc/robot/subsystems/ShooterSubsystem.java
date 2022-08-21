@@ -153,11 +153,6 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       executeShooterMotors(shooterSpeed);
       executeTurretMotor(turretSpeed);
    }
-   public void executeAllMotorsAuto(double shooterSetPoint, double elevatorSetPoint, double turretSetPoint) {
-      executeElevatorMotorAuto(elevatorSetPoint);
-      executeShooterMotors(shooterSetPoint);
-      executeTurretMotorAuto(turretSetPoint);
-   }
 
    public void endShooter() {
       initShooterMotors();

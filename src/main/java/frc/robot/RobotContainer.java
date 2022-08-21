@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,9 +8,10 @@ import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.commands.CollectorTransferParallel;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
+import frc.robot.commands.DefaultTransferCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -25,14 +22,11 @@ public class RobotContainer {
   // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final TransferSubsystem transferSubsystem = new TransferSubsystem();
+  final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
+  public final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
-
-  private final JoystickButton driver1button = new JoystickButton(driver1Controller, JoystickConstants.X_BUTTON);
-  private final JoystickButton driver2button = new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON);
 
   public RobotContainer() {
 
@@ -44,17 +38,26 @@ public class RobotContainer {
             * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
             * ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
-      
-    if(((shooterSubsystem.turretMotorEncoder.getPosition() * 42 == 0) || shooterSubsystem.turretMotorEncoder.getPosition() * 42 < 50 || shooterSubsystem.turretMotorEncoder.getPosition() * 42 > -50) 
-    && ((shooterSubsystem.elevatorMotorEncoder.getPosition() == 0) || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 < 50 || shooterSubsystem.elevatorMotorEncoder.getPosition() *42 > -50))
-    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem, () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS), 0.2, false));
-    
-    configureButtonBindings(); 
- 
+
+    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver2ControllerConstants.CONTROLLER_DEADZONE,
+        false));
+
+    transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
+        () -> modifyAxis(driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
+    intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
+    configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-
   }
 
   /**
@@ -89,4 +92,5 @@ public class RobotContainer {
 
     return value;
   }
+
 }

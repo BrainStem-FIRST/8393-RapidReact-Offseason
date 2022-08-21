@@ -13,42 +13,36 @@ public class DefaultShooterCommand extends CommandBase {
     private DoubleSupplier elevatorSpeed;
     private DoubleSupplier turretSpeed;
     private double triggerThreshold;
-    public boolean isAuto;
+    private boolean isAuto;
+    private double controllerDeadzone;
 
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed, DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, double triggerThreshold, boolean isAuto){
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed,
+            DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, double triggerThreshold,
+            double controllerDeadzone, boolean isAuto) {
+
         this.shooterSubsystem = shooterSubsystem;
         this.shooterSpeed = shootingSpeed;
         this.elevatorSpeed = elevatorSpeed;
         this.turretSpeed = turretSpeed;
         this.triggerThreshold = triggerThreshold;
+        this.controllerDeadzone = controllerDeadzone;
         this.isAuto = isAuto;
 
         addRequirements(shooterSubsystem);
     }
 
-
-    
-
-
     @Override
-    public void initialize(){
+    public void initialize() {
         shooterSubsystem.initAllMotors();
     }
 
     @Override
-    public void execute(){
+    public void execute() {
         double shooterSpeedDouble = Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
-        double elevatorSpeedDouble = elevatorSpeed.getAsDouble();
-        double turretSpeedDouble = turretSpeed.getAsDouble();
-        if(isAuto) {
-            shooterSubsystem.executeAllMotorsAuto(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
-        } else {
-            shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
-        }
+        double elevatorSpeedDouble = Math.abs(elevatorSpeed.getAsDouble()) > controllerDeadzone ? elevatorSpeed.getAsDouble() : 0.0;
+        double turretSpeedDouble = Math.abs(turretSpeed.getAsDouble()) > controllerDeadzone ? turretSpeed.getAsDouble() : 0.0;
+        shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
     }
-
-    boolean programmedWell = true;
-    String isMihirHappy =  programmedWell ? "Yes" : "No";
 
     @Override
     public void end(boolean interrupted) {

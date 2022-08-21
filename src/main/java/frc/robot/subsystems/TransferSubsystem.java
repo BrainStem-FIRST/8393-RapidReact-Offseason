@@ -3,9 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.TransferConstants;
 
 public class TransferSubsystem extends SubsystemBase implements AutoCloseable {

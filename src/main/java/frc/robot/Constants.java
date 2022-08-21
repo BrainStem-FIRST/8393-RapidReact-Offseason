@@ -53,7 +53,7 @@ public final class Constants {
 
         public static final class Driver2ControllerConstants {
                 public static final int CONTROLLER_PORT = 1;
-                public static final double CONTROLLER_DEADZONE = 0.05; // FIXME
+                public static final double CONTROLLER_DEADZONE = 0.05; 
                 public static final int DRIVING_EXPONENT = 3;
                 public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
         }
