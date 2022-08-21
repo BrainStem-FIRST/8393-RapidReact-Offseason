@@ -62,7 +62,7 @@ public final class Constants {
         public static final class TransferConstants {
                 public static final int TRANSFER_MOTOR_PORT_ID = 18;
                 public static final boolean TRANSFER_MOTOR_REVERSED = false;
-                public static final double TRANSFER_MOTOR_SPEED = TRANSFER_MOTOR_REVERSED ? -1 : 1; 
+                public static final double TRANSFER_MOTOR_SPEED = 1; 
                 public static final double TRANSFER_PROPORTIONAL = 1.17; // FIXME
                 public static final double TRANSFER_INTEGRAL = 0.0017; // FIXME
                 public static final double TRANSFER_DERIVATIVE = 0; // FIXME
@@ -89,30 +89,32 @@ public final class Constants {
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
                 public static final int ELEVATOR_MOTOR_PORT_ID = 19;
+
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
-                public static final double SHOOTING_MOTORS_SPEED = SHOOTING_MOTORS_REVERSED ? -1 : 1;
-                public static final double ELEVATOR_MOTOR_SPEED = ELEVATOR_MOTOR_REVERSED ? -0.3 : 0.3;
+                public static final boolean TURRET_MOTOR_REVERSED = false;
+                public static final double SHOOTING_MOTORS_SPEED = 1;
+                public static final double ELEVATOR_MOTOR_SPEED = 0.3;
+
                 public static final int ROTATION_TO_TICKS = 28;
         }
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 90;
-                public static final int COMPRESSOR_MAX_PRESSURE = 120;
+                public static final int COMPRESSOR_MIN_PRESSURE = 55;
+                public static final int COMPRESSOR_MAX_PRESSURE = 60;
                 public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
         public static final class IntakeConstants {
                 public static final boolean INTAKE_MOTOR_REVERSED = true;
                 public static final int INTAKE_MOTOR_ID = 20;
-
-                public static final double INTAKE_MOTOR_SPEED = 0.5; // FIXME
+                public static final double INTAKE_MOTOR_SPEED = 1; 
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
-                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; // FIXME
+                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; 
 
         }
 

@@ -59,7 +59,7 @@ public class RobotContainer {
     compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
-        
+
     configureButtonBindings();
   }
 

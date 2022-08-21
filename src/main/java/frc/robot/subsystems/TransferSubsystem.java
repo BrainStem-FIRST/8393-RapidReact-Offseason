@@ -7,17 +7,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransferConstants;
 
 public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
-
     
-
     public CANSparkMax transferMotor = new CANSparkMax(TransferConstants.TRANSFER_MOTOR_PORT_ID,
             MotorType.kBrushless);
-
     private RelativeEncoder transferMotorEncoder = transferMotor.getEncoder();
 
-    public void turnOn(double speed) {
-        
-        transferMotor.set(speed);
+    public void turnOn() {
+        transferMotor.set(TransferConstants.TRANSFER_MOTOR_REVERSED ? -TransferConstants.TRANSFER_MOTOR_SPEED : TransferConstants.TRANSFER_MOTOR_SPEED);
     }
 
     public void turnOff() {
@@ -31,15 +27,10 @@ public class TransferSubsystem extends SubsystemBase implements AutoCloseable {
 
     public void executeTransfer(boolean turnOnTransfer) {
         if (turnOnTransfer) {
-            turnOn(1);
+            turnOn();
         } else {
             turnOff();
         }
-
-       
-       
-
-
     }
 
     public void endTransfer(){

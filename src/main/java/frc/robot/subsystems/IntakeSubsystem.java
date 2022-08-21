@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.PnuematicsConstants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -50,8 +51,8 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void setOutput(double speed) {
-    speed = IntakeConstants.INTAKE_MOTOR_REVERSED ? -speed : speed;
-    intakeMotor.set(speed);
+    double intakeSpeed = IntakeConstants.INTAKE_MOTOR_REVERSED ? -speed : speed;
+    intakeMotor.set(intakeSpeed);
   }
 
   public void lowerIntake() {
