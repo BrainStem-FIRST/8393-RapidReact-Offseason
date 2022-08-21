@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -10,18 +6,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
 
         public static final class JoystickConstants {
@@ -93,7 +77,7 @@ public final class Constants {
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
                 public static final boolean TURRET_MOTOR_REVERSED = false;
-                public static final double SHOOTING_MOTORS_SPEED = 1;
+                public static final double SHOOTING_MOTORS_SPEED = 0.5;
                 public static final double ELEVATOR_MOTOR_SPEED = 0.3;
 
                 public static final int ROTATION_TO_TICKS = 28;
@@ -113,7 +97,7 @@ public final class Constants {
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_2 = 2; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; 
 
         }
@@ -153,8 +137,10 @@ public final class Constants {
                  * Should be measured from center to center.
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
+                //LIMITERS
                 public static final double DRIVETRAIN_SPEED_LIMITER = 0.15;
                 public static final double TURNING_LIMITER = 0.15;
+
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
                                 new Translation2d(DRIVETRAIN_WHEELBASE_METERS / 2, -DRIVETRAIN_TRACKWIDTH_METERS / 2),

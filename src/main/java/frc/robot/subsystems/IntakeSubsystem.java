@@ -65,7 +65,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void deployIntake() {
     lowerIntake();
-    setOutput(1);
+    setOutput(IntakeConstants.INTAKE_MOTOR_SPEED);
   }
 
   public void retractIntake() {
@@ -76,7 +76,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   public void toggleIntake(boolean deploy) {
     if (deploy) {
       deployIntake();
-    } else if (!deploy) {
+    } else {
       retractIntake();
     }
   }
