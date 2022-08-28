@@ -91,3 +91,4 @@ wpi.java.configureTestTasks(test)
 test {
     useJUnit()
 }
+
