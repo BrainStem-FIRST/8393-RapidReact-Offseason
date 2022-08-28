@@ -96,7 +96,7 @@ public final class Constants {
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_2 = 2; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; 
 
         }
@@ -214,8 +214,7 @@ public final class Constants {
                         // pi
                         public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
                                         SdsModuleConfigurations.MK4_L4.getDriveReduction() *
-                                        SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI * 0.5
-                                        / DrivetrainConstants.DRIVETRAIN_SPEED_LIMITER;
+                                        SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI;
                         // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
                         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
                                         /
