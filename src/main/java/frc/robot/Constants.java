@@ -24,6 +24,12 @@ public final class Constants {
                 public static final double autoMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
         }
 
+        public static final class CameraConstans {
+                // PORTS & NAME
+                public static final String TEST_CAMERA_NAME = "USB Camera 0";
+                public static final int TEST_CAMERA_PORTID = 0;
+        }
+
         public static final class ConstraintsConstants {
                 // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
                 public static final double MAX_ROBOT_VOLTAGE = 12.0;
