@@ -26,7 +26,6 @@ public final class Constants {
                 public static final int START_BUTTON = 9;
                 public static final int LEFT_JOYSTICK_BUTTON = 10;
                 public static final int RIGHT_JOYSTICK_BUTTON = 11;
-
         }
 
         public static final class Driver1ControllerConstants {
@@ -191,7 +190,7 @@ public final class Constants {
 
         public static final class AutoConstants {
                 // CONSTRAINTS
-                public static final double MAX_ROBOT_VOLTAGE_AUTONOMOUS = 2.0;
+                public static final double MAX_ROBOT_VOLTAGE_AUTONOMOUS = 12.0;
                 // MEASURED IN RADIANS PER SECOND SQUARED FOR AUTONOMOUS
                 public static final double MAX_ANGULAR_ACCELERATION = ConstraintsConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
                                 / 16;
@@ -203,16 +202,6 @@ public final class Constants {
                 public static final double autoYController = 1.5;
                 public static final double autoThetaController = 3;
                 public static final double autoMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
-                // public static final SwerveDriveKinematics autoDriveKinematics = new
-                // SwerveDriveKinematics(
-                // new Translation2d(DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
-                // DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2),
-                // new Translation2d(DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
-                // -DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2),
-                // new Translation2d(-DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
-                // DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2),
-                // new Translation2d(-DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2,
-                // -DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2));
                  }
 
                 // Mihir added this

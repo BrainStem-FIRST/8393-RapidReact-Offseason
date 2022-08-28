@@ -19,7 +19,7 @@ public class DefaultIntakeCommand extends CommandBase{
 
     @Override
     public void initialize(){
-        intakeSubsystem.initializeIntakeMotor();
+        intakeSubsystem.initializeIntake();
     }
 
     @Override

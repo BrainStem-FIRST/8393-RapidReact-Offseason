@@ -220,6 +220,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 m_chassisSpeeds = chassisSpeeds;
         }
 
+        public SwerveDriveKinematics getKinematics(){
+                return kinematics;
+        }
+
         public void setModuleStates(SwerveModuleState[] desiredStates) {
                 SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND);
                 m_frontLeftModule.set(

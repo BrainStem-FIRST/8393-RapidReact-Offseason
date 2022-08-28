@@ -81,8 +81,8 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
     }
   }
 
-  public void initializeIntakeMotor(){
-    setOutput(0);
+  public void initializeIntake(){
+    retractIntake();
   }
 
   public void executeIntake(boolean deploy){
@@ -90,8 +90,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void endIntake(){
-    //retractIntake();
-    setOutput(0);
+    retractIntake();
   }
 
   @Override
