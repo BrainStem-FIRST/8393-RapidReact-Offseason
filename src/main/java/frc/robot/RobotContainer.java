@@ -96,6 +96,8 @@ public class RobotContainer {
         Arrays.asList(new Pose2d(), new Pose2d(4, 2, new Rotation2d()), new Pose2d(-4, -2, new Rotation2d()), new Pose2d()), 
         trajectoryConfig);
 
+    
+
     PIDController xController = new PIDController(AutoConstants.autoXController, 0, 0);
     PIDController yController = new PIDController(AutoConstants.autoYController, 0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(
