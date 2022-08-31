@@ -14,6 +14,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   private final DoubleSolenoid intakePneumatics = new DoubleSolenoid(PnuematicsConstants.PNEUMATICS_PORT,
       PnuematicsConstants.PNEUMATICS_MODULE_TYPE,
       IntakeConstants.INTAKE_DS_CHANNEL_3_1, IntakeConstants.INTAKE_DS_CHANNEL_3_2);
+  
 
   private boolean isIntakeMotorStopped() {
     return intakeMotor.get() == 0;
@@ -32,11 +33,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
     return intakePneumatics.get() == DoubleSolenoid.Value.kForward;
   }
 
-  public boolean isIntakeReadyToRetract() { // FIXME - More may need to be added
+  private boolean isIntakeReadyToRetract() { // FIXME - More may need to be added
     return isPneumaticsExtended() && isIntakeMotorRunningAtRightSpeed();
   }
 
-  public boolean isIntakeReadyToDeploy() { // FIXME - More may need to be added
+  private boolean isIntakeReadyToDeploy() { // FIXME - More may need to be added
     return isIntakeMotorStopped() && isPneumaticsRetracted();
   }
 
@@ -81,15 +82,15 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
     }
   }
 
-  public void initializeIntake(){
+  public void initializeIntake() {
     retractIntake();
   }
 
-  public void executeIntake(boolean deploy){
+  public void executeIntake(boolean deploy) {
     toggleIntake(deploy);
   }
 
-  public void endIntake(){
+  public void endIntake() {
     retractIntake();
   }
 
@@ -100,4 +101,3 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
 }
-

@@ -84,8 +84,8 @@ public final class Constants {
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 55;
-                public static final int COMPRESSOR_MAX_PRESSURE = 60;
+                public static final int COMPRESSOR_MIN_PRESSURE = 115;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
                 public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
@@ -95,10 +95,17 @@ public final class Constants {
                 public static final double INTAKE_MOTOR_SPEED = 1; 
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME 1
+                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME 6
                 public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15; 
 
+        }
+
+        public static final class ClimbingConstants {
+                public static final int LEFT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 2;
+                public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
+                public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
+                public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
         }
 
         public static final class SwerveModuleConstants {
@@ -137,8 +144,8 @@ public final class Constants {
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
                 //LIMITERS
-                public static final double DRIVETRAIN_SPEED_LIMITER = 0.15;
-                public static final double TURNING_LIMITER = 0.15;
+                public static final double DRIVETRAIN_SPEED_LIMITER = 1;
+                public static final double TURNING_LIMITER = 1;
 
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(

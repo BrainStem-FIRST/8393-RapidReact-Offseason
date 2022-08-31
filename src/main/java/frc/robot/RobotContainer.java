@@ -1,8 +1,6 @@
 package frc.robot;
 
 import java.util.Arrays;
-import java.util.List;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,14 +17,15 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.PnuematicsConstants;
+import frc.robot.commands.DefaultClimbingCommand;
 import frc.robot.commands.DefaultCompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -34,13 +33,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
 
 public class RobotContainer {
-
   // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final CompressorSubsystem compressorSubsystem = new CompressorSubsystem();
+  private final ClimbingSubsystem climbingSubsystem = new ClimbingSubsystem();
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
@@ -66,13 +65,17 @@ public class RobotContainer {
         () -> modifyAxis(driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
-    intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
-        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
-        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+    //intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+     //   () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+     //   Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
-    compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
-        PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
-        PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
+    //compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
+      //  PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
+      //  PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
+
+    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
+        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     configureButtonBindings();
   }

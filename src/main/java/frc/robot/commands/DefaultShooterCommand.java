@@ -32,13 +32,17 @@ public class DefaultShooterCommand extends CommandBase {
     @Override
     public void initialize() {
         shooterSubsystem.initAllMotors();
+        double shooterSpeedDoubleInit = 0.0;
+        double elevatorSpeedDoubleInit = Math.abs(elevatorSpeed.getAsDouble()) > controllerDeadzone ? elevatorSpeed.getAsDouble() : 0.0;
+        double turretSpeedDoubleInit = Math.abs(turretSpeed.getAsDouble()) > controllerDeadzone ? turretSpeed.getAsDouble() : 0.0;
+        shooterSubsystem.executeAllMotors(shooterSpeedDoubleInit, elevatorSpeedDoubleInit, turretSpeedDoubleInit);
     }
 
     @Override
     public void execute() {
         double shooterSpeedDouble = Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
-        double elevatorSpeedDouble = Math.abs(elevatorSpeed.getAsDouble()) > controllerDeadzone ? elevatorSpeed.getAsDouble() : 0.0;
-        double turretSpeedDouble = Math.abs(turretSpeed.getAsDouble()) > controllerDeadzone ? turretSpeed.getAsDouble() : 0.0;
+        double elevatorSpeedDouble = 0.0;
+        double turretSpeedDouble = 0.0;
         shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
     }
 
