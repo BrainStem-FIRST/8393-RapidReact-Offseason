@@ -64,13 +64,13 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void deployIntake(boolean reverse) {
-    lowerIntake();
+    //lowerIntake();
     int negative = reverse ? -1 : 1;
     setOutput(IntakeConstants.INTAKE_MOTOR_SPEED * negative);
   }
 
   public void retractIntake() {
-    raiseIntake();
+   // raiseIntake();
     setOutput(0);
   }
 

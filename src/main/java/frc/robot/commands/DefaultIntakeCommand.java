@@ -31,6 +31,8 @@ public class DefaultIntakeCommand extends CommandBase {
             intakeSubsystem.executeIntake(true, false);
         } else if (intakeReversed.getAsDouble() > triggerThreshold) {
             intakeSubsystem.executeIntake(true, true);
+        }else{
+            intakeSubsystem.executeIntake(false, false);
         }
     }
 
