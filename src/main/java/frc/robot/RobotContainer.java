@@ -65,17 +65,18 @@ public class RobotContainer {
         () -> modifyAxis(driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
-    //intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
-     //   () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
-     //   Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-
-    //compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
-      //  PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
-      //  PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
-
-    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
+    intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
+    compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
+        PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
+        PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
+
+    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
+        () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     configureButtonBindings();
   }
