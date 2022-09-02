@@ -10,17 +10,20 @@ public class DefaultShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
 
     private DoubleSupplier shooterSpeed;
+    private DoubleSupplier shooterSpeedReversed;
     private DoubleSupplier elevatorSpeed;
     private DoubleSupplier turretSpeed;
     private double triggerThreshold;
     private double controllerDeadzone;
 
     public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shootingSpeed,
+            DoubleSupplier shootingSpeedReversed,
             DoubleSupplier elevatorSpeed, DoubleSupplier turretSpeed, double triggerThreshold,
             double controllerDeadzone) {
 
         this.shooterSubsystem = shooterSubsystem;
         this.shooterSpeed = shootingSpeed;
+        this.shooterSpeedReversed = shootingSpeedReversed;
         this.elevatorSpeed = elevatorSpeed;
         this.turretSpeed = turretSpeed;
         this.triggerThreshold = triggerThreshold;
@@ -40,10 +43,19 @@ public class DefaultShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double shooterSpeedDouble = Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
         double elevatorSpeedDouble = 0.0;
-        double turretSpeedDouble = 0.0;
-        shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        double turretSpeedDouble = Math.abs(turretSpeed.getAsDouble()) > triggerThreshold ? turretSpeed.getAsDouble()*0.1 : 0.0;
+        if(shooterSpeed.getAsDouble() > triggerThreshold){
+            double shooterSpeedDouble = Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold ? ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
+            shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        } else if(shooterSpeedReversed.getAsDouble() > triggerThreshold){
+            double shooterSpeedDouble = Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold ? -ShooterConstants.SHOOTING_MOTORS_SPEED : 0.0;
+            shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        } else{
+            double shooterSpeedDouble = 0.0;
+            shooterSubsystem.executeAllMotors(shooterSpeedDouble, elevatorSpeedDouble, turretSpeedDouble);
+        } 
+        
     }
 
     @Override

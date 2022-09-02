@@ -76,7 +76,7 @@ public final class Constants {
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
                 public static final boolean TURRET_MOTOR_REVERSED = false;
-                public static final double SHOOTING_MOTORS_SPEED = 0.5;
+                public static final double SHOOTING_MOTORS_SPEED = 1;
                 public static final double ELEVATOR_MOTOR_SPEED = 0.3;
 
                 public static final int ROTATION_TO_TICKS = 28;
@@ -106,6 +106,8 @@ public final class Constants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
+                public static final int CLIMBING_MOTOR_1 = 30;
+                public static final int CLIMBING_MOTOR_2 = 31;
         }
 
         public static final class SwerveModuleConstants {
@@ -144,8 +146,8 @@ public final class Constants {
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
                 //LIMITERS
-                public static final double DRIVETRAIN_SPEED_LIMITER = 0.25;
-                public static final double TURNING_LIMITER = 0.3;
+                public static final double DRIVETRAIN_SPEED_LIMITER = 0.5;
+                public static final double TURNING_LIMITER = 0.75;
 
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
@@ -221,7 +223,7 @@ public final class Constants {
                         // pi
                         public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
                                         SdsModuleConfigurations.MK4_L4.getDriveReduction() *
-                                        SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI;
+                                        SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI*1.1;
                         // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
                         public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
                                         /

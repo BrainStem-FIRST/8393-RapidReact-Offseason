@@ -3,14 +3,17 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
-   /*PIDController turretPIDController = new PIDController(ShooterConstants.TURRET_PROPORTIONAL,
+   PIDController turretPIDController = new PIDController(ShooterConstants.TURRET_PROPORTIONAL,
          ShooterConstants.TURRET_INTREGRAL,
          ShooterConstants.TURRET_DERIVATIVE);
 
@@ -20,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    PIDController shooterPIDController = new PIDController(ShooterConstants.SHOOTER_PROPORTIONAL,
          ShooterConstants.SHOOTER_INTEGRAL,
-         ShooterConstants.SHOOTER_DERIVATIVE);*/
+         ShooterConstants.SHOOTER_DERIVATIVE);
 
    private CANSparkMax shooterMotor1 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_1_MOTOR_PORT_ID,
          MotorType.kBrushless);
@@ -53,33 +56,33 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    public void setShooterSpeed(double speed) {
-      /*shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
+      shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
       double shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? shooterPIDController
             .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, -speed) : 
             shooterPIDController
-            .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);*/
-      double shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -speed : speed;
+            .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
+      //shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -speed : speed;
       shooterMotor2.follow(shooterMotor1);
       shooterMotor1.set(shooterSpeed);
    }
 
    public void setTurretSpeed(double speed) {
-     /*turretPIDController.setTolerance(ShooterConstants.TURRET_PID_TOLERANCE);
+     turretPIDController.setTolerance(ShooterConstants.TURRET_PID_TOLERANCE);
       double turretSpeed = ShooterConstants.TURRET_MOTOR_REVERSED ? turretPIDController
             .calculate(turretMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, -speed) : 
             turretPIDController
-            .calculate(turretMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);*/
-      double turretSpeed = ShooterConstants.TURRET_MOTOR_REVERSED ? -speed : speed;
+            .calculate(turretMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
+      //turretSpeed = ShooterConstants.TURRET_MOTOR_REVERSED ? -speed : speed;
       turretMotor.set(turretSpeed);
    }
 
    public void setElevatorSpeed(double speed) {
-      /*elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
+      elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
        double elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? elevatorPIDController
             .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, -speed) : 
             elevatorPIDController
-            .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);*/
-      double elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? -speed : speed;
+            .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
+      //elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? -speed : speed;
       elevatorMotor.set(elevatorSpeed);
    }
 

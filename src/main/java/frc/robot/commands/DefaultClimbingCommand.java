@@ -6,11 +6,14 @@ import frc.robot.subsystems.ClimbingSubsystem;
 
 public class DefaultClimbingCommand extends CommandBase {
     private DoubleSupplier deploy;
+    private DoubleSupplier climbingSpeed;
     private double triggerThreshhold;
     private ClimbingSubsystem climbingSubsystem;
-    public DefaultClimbingCommand(ClimbingSubsystem climbingSubsystem, DoubleSupplier deploy, double triggerThreshhold){
+    public DefaultClimbingCommand(ClimbingSubsystem climbingSubsystem, DoubleSupplier deploy, DoubleSupplier climbingSpeed,
+    double triggerThreshhold){
         this.climbingSubsystem = climbingSubsystem;
         this.deploy = deploy;
+        this.climbingSpeed = climbingSpeed;
         this.triggerThreshhold = triggerThreshhold;
         addRequirements(climbingSubsystem);
     }

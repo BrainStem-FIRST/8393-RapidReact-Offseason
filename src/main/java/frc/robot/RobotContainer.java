@@ -56,14 +56,17 @@ public class RobotContainer {
             * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND));
 
     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
-        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver2ControllerConstants.CONTROLLER_DEADZONE));
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE
+        ));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
-        () -> modifyAxis(driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
-        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
+        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER)),
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
@@ -76,8 +79,9 @@ public class RobotContainer {
 
     climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
         () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-
+  
     configureButtonBindings();
   }
 

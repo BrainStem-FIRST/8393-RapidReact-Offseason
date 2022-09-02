@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,6 +18,8 @@ public class ClimbingSubsystem extends SubsystemBase implements AutoCloseable{
             PnuematicsConstants.PNEUMATICS_MODULE_TYPE,
             ClimbingConstants.RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL,
             ClimbingConstants.RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL);
+    private final CANSparkMax climbingMotor1 = new CANSparkMax(ClimbingConstants.CLIMBING_MOTOR_1, MotorType.kBrushless);
+    private final CANSparkMax climbingMotor2 = new CANSparkMax(ClimbingConstants.CLIMBING_MOTOR_2, MotorType.kBrushless);
 
     private void extendClimbingPneumatics() {
         climbingPneumaticsLeft.set(Value.kForward);
@@ -36,14 +41,25 @@ public class ClimbingSubsystem extends SubsystemBase implements AutoCloseable{
 
     public void initializeClimbingPneumatics(){
         retractClimbingPneumatics();
+        setClimbingMotorPowers(0.0);
     }
 
     public void executeClimbingPneumatics(boolean deploy) {
         toggleClimbingPneumatics(deploy);
     }
 
+    public void setClimbingMotorPowers(double speed){
+        climbingMotor1.set(speed);
+        climbingMotor2.set(speed);
+    }
+
+    public void executeClimbingMotors(double speed){
+        setClimbingMotorPowers(speed);
+    }
+
     public void endClimbingPneumatics(){
         retractClimbingPneumatics();
+        setClimbingMotorPowers(0.0);
     }
 
     @Override
