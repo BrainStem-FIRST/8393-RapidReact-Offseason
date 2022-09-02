@@ -57,11 +57,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    public void setShooterSpeed(double speed) {
       shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
-      double shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? shooterPIDController
+      /*double shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? shooterPIDController
             .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, -speed) : 
             shooterPIDController
-            .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
-      //shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -speed : speed;
+            .calculate(shooterMotor1Encoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);*/
+      double shooterSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -speed : speed;
       shooterMotor2.follow(shooterMotor1);
       shooterMotor1.set(shooterSpeed);
    }

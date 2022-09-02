@@ -33,7 +33,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
 
 public class RobotContainer {
-  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
@@ -60,12 +59,11 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE
-        ));
+        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
-        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER)),
-        () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER)),
+        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
@@ -81,7 +79,7 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-  
+
     configureButtonBindings();
   }
 
