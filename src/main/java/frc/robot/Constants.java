@@ -106,8 +106,8 @@ public final class Constants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
-                public static final int CLIMBING_MOTOR_1 = 30;
-                public static final int CLIMBING_MOTOR_2 = 31;
+                public static final int CLIMBING_MOTOR_1 = 30; //FIXME
+                public static final int CLIMBING_MOTOR_2 = 31; //FIXME
         }
 
         public static final class SwerveModuleConstants {

@@ -31,6 +31,9 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
@@ -43,7 +46,28 @@ public class RobotContainer {
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
 
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+
+
   public RobotContainer() {
+    
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+
+    while (x != 0){
+      if (x > 0){
+       shooterSubsystem.setTurretSpeed(-0.25); 
+      } else if (x < 0){
+        shooterSubsystem.setTurretSpeed(0.25); 
+      } else{
+        shooterSubsystem.setTurretSpeed(0); 
+      }
+    }
+    
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
