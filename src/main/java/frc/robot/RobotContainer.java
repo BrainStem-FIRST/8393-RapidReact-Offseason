@@ -71,7 +71,21 @@ public class RobotContainer {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
 
+
+      ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
+        tab.add("Limelight X Value", x);
+      if (x > 0){
+       new TurretCommand(shooterSubsystem, -0.1);
+      } else if (x < 0){
+        new TurretCommand(shooterSubsystem, 0.1);
+      } else{
+        new TurretCommand(shooterSubsystem, 0);
+      }
+      Shuffleboard.update();
     
+  
+
+
 
     /*
       For limelight - when you press a button it reads an x value and then turns the turret the right number of degrees 
@@ -83,10 +97,10 @@ public class RobotContainer {
     */
 
 
+    
     // moves the turret
-    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
-    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
-
+    // new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
+    // new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
     
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -124,7 +138,7 @@ public class RobotContainer {
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
 
-
+    
 
     configureButtonBindings();
   }
