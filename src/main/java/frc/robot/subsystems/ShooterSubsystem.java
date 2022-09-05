@@ -3,9 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.PIDController;
-//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ConstraintsConstants;
@@ -37,6 +35,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
    public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
    public RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
+
   // public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
 
    public RelativeEncoder returnShooterMotor1Encoder() {
@@ -123,6 +122,9 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       initTurretMotor();
    }
 
+   public void setTurretSpeedTest(double speed){
+      turretMotor.set(speed);
+   }
   
 
    public void executeShooterMotors(double shooterspeed) {

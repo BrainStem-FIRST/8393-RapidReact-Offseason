@@ -6,9 +6,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class TurretCommand extends CommandBase{
     private ShooterSubsystem shooterSubsystem;
     private double turretSetPoint;
-    public TurretCommand(ShooterSubsystem shooterSubsystem, double turretSetPoint){
+    public TurretCommand(ShooterSubsystem shooterSubsystem, double turretPower){
         this.shooterSubsystem = shooterSubsystem;
-        this.turretSetPoint = turretSetPoint;
+        this.turretSetPoint = turretPower;
         addRequirements(shooterSubsystem);
     }
 

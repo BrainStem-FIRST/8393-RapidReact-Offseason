@@ -33,6 +33,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.commands.TurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -81,15 +82,12 @@ public class RobotContainer {
 
     */
 
-    CANSparkMax testMotor26 = new CANSparkMax(26, MotorType.kBrushless);
 
-    testMotor26.set(0.25);
+    // moves the turret
+    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
+    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
+
     
-
-   
-
-
-
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
@@ -124,7 +122,9 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-      
+
+
+
 
     configureButtonBindings();
   }
@@ -144,7 +144,7 @@ public class RobotContainer {
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(4, 2, new Rotation2d()), new Pose2d(0, 0, new Rotation2d()),
+        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()), new Pose2d(2, 0, new Rotation2d()),
             new Pose2d()),
         trajectoryConfig);
 
@@ -154,6 +154,7 @@ public class RobotContainer {
         AutoConstants.autoThetaController, 0, 0, AutoConstants.autoThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
+    
     SwerveControllerCommand command = new SwerveControllerCommand(
         trajectory,
         drivetrainSubsystem::getPose,
