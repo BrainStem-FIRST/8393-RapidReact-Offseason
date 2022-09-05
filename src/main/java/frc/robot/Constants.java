@@ -43,7 +43,7 @@ public final class Constants {
         }
 
         public static final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 18;
+                public static final int TRANSFER_MOTOR_PORT_ID = 18; 
                 public static final boolean TRANSFER_MOTOR_REVERSED = false;
                 public static final double TRANSFER_MOTOR_SPEED = 1; 
                 public static final double TRANSFER_PROPORTIONAL = 1.17; // FIXME
@@ -71,7 +71,6 @@ public final class Constants {
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 24;
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
-                public static final int ELEVATOR_MOTOR_PORT_ID = 19;
 
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;

@@ -76,6 +76,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       //turretSpeed = ShooterConstants.TURRET_MOTOR_REVERSED ? -speed : speed;
       turretMotor.set(turretSpeed);
    }
+
 /*
    public void setElevatorSpeed(double speed) {
       elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
