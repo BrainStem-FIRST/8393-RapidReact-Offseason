@@ -84,8 +84,8 @@ public final class Constants {
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 75;
-                public static final int COMPRESSOR_MAX_PRESSURE = 80;
+                public static final int COMPRESSOR_MIN_PRESSURE = 100;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
                 public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
@@ -106,8 +106,8 @@ public final class Constants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
-                public static final int CLIMBING_MOTOR_1 = 22; //FIXME
-                public static final int CLIMBING_MOTOR_2 = 27; //FIXME
+               // public static final int CLIMBING_MOTOR_1 = 22; //FIXME
+             //   public static final int CLIMBING_MOTOR_2 = 27; //FIXME
         }
 
         public static final class SwerveModuleConstants {

@@ -29,15 +29,15 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
          MotorType.kBrushless);
    private CANSparkMax shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
          MotorType.kBrushless);
-   private CANSparkMax elevatorMotor = new CANSparkMax(Constants.ShooterConstants.ELEVATOR_MOTOR_PORT_ID,
-         MotorType.kBrushless);
-   public CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
+  // private CANSparkMax elevatorMotor = new CANSparkMax(Constants.ShooterConstants.ELEVATOR_MOTOR_PORT_ID,
+         // MotorType.kBrushless);
+   private CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
          MotorType.kBrushless);
 
    public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
    public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
    public RelativeEncoder turretMotorEncoder = returnTurretMotorEncoder();
-   public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
+  // public RelativeEncoder elevatorMotorEncoder = returnElevatorMotorEncoder();
 
    public RelativeEncoder returnShooterMotor1Encoder() {
       return shooterMotor1.getEncoder();
@@ -51,9 +51,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       return turretMotor.getEncoder();
    }
 
+   /*
    public RelativeEncoder returnElevatorMotorEncoder() {
       return elevatorMotor.getEncoder();
    }
+   */
 
    public void setShooterSpeed(double speed) {
       shooterPIDController.setTolerance(ShooterConstants.SHOOTER_PID_TOLERANCE);
@@ -75,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       //turretSpeed = ShooterConstants.TURRET_MOTOR_REVERSED ? -speed : speed;
       turretMotor.set(turretSpeed);
    }
-
+/*
    public void setElevatorSpeed(double speed) {
       elevatorPIDController.setTolerance(ShooterConstants.ELEVATOR_PID_TOLERANCE);
        double elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? elevatorPIDController
@@ -83,17 +85,19 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
             elevatorPIDController
             .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
       //elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? -speed : speed;
-      elevatorMotor.set(elevatorSpeed);
+      //elevatorMotor.set(elevatorSpeed);
    }
+   */
 
    public void setTurretPos(double pos) {
       double speed = turretPIDController.calculate(turretMotorEncoder.getPosition() / 42, pos);
       turretMotor.set(speed);
    }
-
+/*
    public double elevatorPosition() {
       return elevatorMotorEncoder.getPosition();
    }
+   */
 
    public double turretPosition() {
       return turretMotorEncoder.getPosition();
@@ -130,7 +134,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    public void executeElevatorMotor(double elevatorSetPoint){
-      setElevatorSpeed(elevatorSetPoint);
+    //  setElevatorSpeed(elevatorSetPoint);
    }
 
    public void executeAllMotors(double shooterSpeed, double turretSpeed, double elevatorSpeed){
@@ -164,7 +168,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    public void resetElevatorMotorEncoder() {
-      elevatorMotorEncoder.setPosition(0);
+    //  elevatorMotorEncoder.setPosition(0);
    }
 
    public void resetTurretMotorEncoder() {
@@ -178,7 +182,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
    }
 
    public void stopElevatorMotor() {
-      elevatorMotor.set(0);
+     // elevatorMotor.set(0);
    }
 
    public void stopShooterMotors() {
@@ -197,6 +201,6 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       shooterMotor1.close();
       shooterMotor2.close();
       turretMotor.close();
-      elevatorMotor.close();
+     // elevatorMotor.close();
    }
 }

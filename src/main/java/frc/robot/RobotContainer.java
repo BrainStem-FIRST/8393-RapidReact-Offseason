@@ -3,6 +3,9 @@ package frc.robot;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -78,13 +81,12 @@ public class RobotContainer {
 
     */
 
-    if (driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER) > 0.2){
-      shooterSubsystem.turretMotor.set(0.25);
-    } 
+    CANSparkMax testMotor26 = new CANSparkMax(26, MotorType.kBrushless);
 
-    if (driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER) < 0.2){
-      shooterSubsystem.turretMotor.set(0);
-    }
+    testMotor26.set(0.25);
+    
+
+   
 
 
 
