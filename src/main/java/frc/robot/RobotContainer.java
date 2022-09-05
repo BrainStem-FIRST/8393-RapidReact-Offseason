@@ -1,18 +1,23 @@
 package frc.robot;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
@@ -35,6 +40,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -45,6 +53,7 @@ public class RobotContainer {
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
+
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -58,15 +67,7 @@ public class RobotContainer {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
 
-    while (x != 0){
-      if (x > 0){
-       shooterSubsystem.setTurretSpeed(-0.25); 
-      } else if (x < 0){
-        shooterSubsystem.setTurretSpeed(0.25); 
-      } else{
-        shooterSubsystem.setTurretSpeed(0); 
-      }
-    }
+    
 
     /*
       For limelight - when you press a button it reads an x value and then turns the turret the right number of degrees 
@@ -76,10 +77,16 @@ public class RobotContainer {
 
 
     */
-    
-    
-   
-    
+
+    if (driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER) > 0.2){
+      shooterSubsystem.turretMotor.set(0.25);
+    } 
+
+    if (driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER) < 0.2){
+      shooterSubsystem.turretMotor.set(0);
+    }
+
+
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,

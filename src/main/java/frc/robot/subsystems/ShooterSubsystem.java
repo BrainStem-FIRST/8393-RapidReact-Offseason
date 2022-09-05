@@ -31,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
          MotorType.kBrushless);
    private CANSparkMax elevatorMotor = new CANSparkMax(Constants.ShooterConstants.ELEVATOR_MOTOR_PORT_ID,
          MotorType.kBrushless);
-   private CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
+   public CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
          MotorType.kBrushless);
 
    public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
@@ -84,6 +84,11 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
             .calculate(elevatorMotorEncoder.getVelocity() / ConstraintsConstants.CAN_SPARK_MAX_MAXIMUM_RPM, speed);
       //elevatorSpeed = ShooterConstants.ELEVATOR_MOTOR_REVERSED ? -speed : speed;
       elevatorMotor.set(elevatorSpeed);
+   }
+
+   public void setTurretPos(double pos) {
+      double speed = turretPIDController.calculate(turretMotorEncoder.getPosition() / 42, pos);
+      turretMotor.set(speed);
    }
 
    public double elevatorPosition() {
