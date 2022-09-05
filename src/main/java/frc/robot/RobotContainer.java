@@ -1,14 +1,20 @@
 package frc.robot;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -27,6 +33,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.commands.TurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -36,6 +43,9 @@ import frc.robot.subsystems.TransferSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
@@ -47,8 +57,7 @@ public class RobotContainer {
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
-  private final JoystickButton joystick1 = new JoystickButton(driver2Controller, 3);
-  private final JoystickButton joystick2 = new JoystickButton(driver2Controller, 4);
+
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -62,7 +71,7 @@ public class RobotContainer {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
 
-   
+    
 
     /*
       For limelight - when you press a button it reads an x value and then turns the turret the right number of degrees 
@@ -72,10 +81,14 @@ public class RobotContainer {
 
 
     */
+
     
     
+    
+
    
-    
+
+
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -85,17 +98,26 @@ public class RobotContainer {
             * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND,
         () -> -modifyAxis(driver1Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS))
             * ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND));
-
-            
-
-    shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
-        () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
-        () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
-        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
+/*
+   shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
+        () -> driver1Controller.getRawAxis(0),
+        () -> driver1Controller.getRawAxis(0),
+        () -> driver2Controller.getRawAxis(0),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE));
+        */
+        new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
+        new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
+      
+
+        
+
+
+
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
+
+
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
@@ -108,19 +130,12 @@ public class RobotContainer {
     compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
-
-        //
-
-  
-        new JoystickButton(driver2Controller, 3).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1), true);
-        new JoystickButton(driver2Controller, 4).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1), true);
- //new JoystickButton(driver2Controller, 3).whenReleased(new DefaultClimbingCommand(climbingSubsystem, 0));
- //new JoystickButton(driver2Controller, 4).whenReleased(new DefaultClimbingCommand(climbingSubsystem, 0));
- if(!driver2Controller.getRawButton(3) || !driver2Controller.getRawButton(4)){
-     climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem, 0));
- }
-   
-      ;
+/*
+    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
+        () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+        */
       
 
     configureButtonBindings();

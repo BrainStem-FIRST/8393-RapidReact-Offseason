@@ -19,7 +19,8 @@ public class DefaultClimbingCommand extends CommandBase {
     
     @Override
     public void initialize(){
-        climbingSubsystem.initializeClimbingPneumatics();
+       // climbingSubsystem.initializeClimbingPneumatics();
+       climbingSubsystem.setClimbingMotorPowers(0);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class DefaultClimbingCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted){
-        
+        climbingSubsystem.setClimbingMotorPowers(0);
         //climbingSubsystem.endClimbingPneumatics();
     }
 
