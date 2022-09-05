@@ -67,6 +67,18 @@ public class RobotContainer {
         shooterSubsystem.setTurretSpeed(0); 
       }
     }
+
+    /*
+      For limelight - when you press a button it reads an x value and then turns the turret the right number of degrees 
+      in the correct direction...not continous...only when you press a button
+
+      x - in terms of degrees from -27 to 27
+
+
+    */
+    
+    
+   
     
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
@@ -103,6 +115,7 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+      
 
     configureButtonBindings();
   }
