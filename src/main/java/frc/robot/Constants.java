@@ -71,7 +71,7 @@ public final class Constants {
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 24;
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
-                public static final int ELEVATOR_MOTOR_PORT_ID = 19;
+                public static final int ELEVATOR_MOTOR_PORT_ID = 31 ;
 
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
@@ -107,7 +107,7 @@ public final class Constants {
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
                 public static final int CLIMBING_MOTOR_1 = 22; //FIXME
-                public static final int CLIMBING_MOTOR_2 = 27; //FIXME
+                public static final int CLIMBING_MOTOR_2 = 19; //FIXME
         }
 
         public static final class SwerveModuleConstants {

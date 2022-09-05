@@ -43,6 +43,7 @@ public class ClimbingSubsystem extends SubsystemBase implements AutoCloseable{
             retractClimbingPneumatics();
         }
     }
+    
 
     public void initializeClimbingPneumatics(){
         retractClimbingPneumatics();
