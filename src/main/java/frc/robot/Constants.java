@@ -84,8 +84,8 @@ public final class Constants {
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 75;
-                public static final int COMPRESSOR_MAX_PRESSURE = 80;
+                public static final int COMPRESSOR_MIN_PRESSURE = 100;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
                 public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 

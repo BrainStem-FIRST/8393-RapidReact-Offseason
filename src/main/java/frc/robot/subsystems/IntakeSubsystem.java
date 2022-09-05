@@ -56,11 +56,11 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void lowerIntake() {
-    intakePneumatics.set(Value.kForward);
+    intakePneumatics.set(Value.kReverse);
   }
 
   public void raiseIntake() {
-    intakePneumatics.set(Value.kReverse);
+    intakePneumatics.set(Value.kForward);
   }
 
   public void deployIntake(boolean reverse) {
@@ -70,7 +70,7 @@ public class IntakeSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void retractIntake() {
-   // raiseIntake();
+   raiseIntake();
     setOutput(0);
   }
 
