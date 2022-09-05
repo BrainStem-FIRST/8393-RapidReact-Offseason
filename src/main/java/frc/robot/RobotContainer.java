@@ -76,10 +76,6 @@ public class RobotContainer {
 
 
     */
-    
-    
-   
-    
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -115,7 +111,6 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-      
 
     configureButtonBindings();
   }
@@ -135,7 +130,7 @@ public class RobotContainer {
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(4, 2, new Rotation2d()), new Pose2d(0, 0, new Rotation2d()),
+        Arrays.asList(new Pose2d(), new Pose2d(0, 0, new Rotation2d()), new Pose2d(0, 0, new Rotation2d()),
             new Pose2d()),
         trajectoryConfig);
 
@@ -144,6 +139,11 @@ public class RobotContainer {
     ProfiledPIDController thetaController = new ProfiledPIDController(
         AutoConstants.autoThetaController, 0, 0, AutoConstants.autoThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    double StartTime = System.currentTimeMillis();
+    shooterSubsystem.setShooterSpeedVelo(2500);
+    while((System.currentTimeMillis() - StartTime) < 250)
+    shooterSubsystem.setShooterSpeedVelo(0);
 
     SwerveControllerCommand command = new SwerveControllerCommand(
         trajectory,
