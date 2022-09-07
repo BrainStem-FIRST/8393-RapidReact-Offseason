@@ -107,6 +107,8 @@ public final class Constants {
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
                 public static final int CLIMBING_MOTOR_1 = 22; //FIXME
                 public static final int CLIMBING_MOTOR_2 = 19; //FIXME
+                public static final double CLIMBING_MOTOR_SPEEDS = 0.5; //FIXME
+                public static final boolean REVERSE_CLIMBING_MOTORS = false;
         }
 
         public static final class SwerveModuleConstants {
@@ -146,7 +148,7 @@ public final class Constants {
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
                 //LIMITERS
                 public static final double DRIVETRAIN_SPEED_LIMITER = 0.5;
-                public static final double TURNING_LIMITER = 0.75;
+                public static final double TURNING_LIMITER = 0.9;
 
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
