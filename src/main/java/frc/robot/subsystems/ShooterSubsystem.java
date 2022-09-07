@@ -3,9 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.PIDController;
-//import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ConstraintsConstants;
@@ -13,23 +12,24 @@ import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
-   PIDController turretPIDController = new PIDController(ShooterConstants.TURRET_PROPORTIONAL,
+   private PIDController turretPIDController = new PIDController(ShooterConstants.TURRET_PROPORTIONAL,
          ShooterConstants.TURRET_INTREGRAL,
          ShooterConstants.TURRET_DERIVATIVE);
 
-   PIDController elevatorPIDController = new PIDController(ShooterConstants.ELEVATOR_PROPORTIONAL,
+   private PIDController elevatorPIDController = new PIDController(ShooterConstants.ELEVATOR_PROPORTIONAL,
          ShooterConstants.ELEVATOR_INTEGRAL,
          ShooterConstants.ELEVATOR_DERIVATIVE);
 
-   PIDController shooterPIDController = new PIDController(ShooterConstants.SHOOTER_PROPORTIONAL,
+   private PIDController shooterPIDController = new PIDController(ShooterConstants.SHOOTER_PROPORTIONAL,
          ShooterConstants.SHOOTER_INTEGRAL,
          ShooterConstants.SHOOTER_DERIVATIVE);
 
    private CANSparkMax shooterMotor1 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_1_MOTOR_PORT_ID,
          MotorType.kBrushless);
+
    private CANSparkMax shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
          MotorType.kBrushless);
-
+         
    private CANSparkMax turretMotor = new CANSparkMax(Constants.ShooterConstants.TURRET_MOTOR_PORT_ID,
          MotorType.kBrushless);
 

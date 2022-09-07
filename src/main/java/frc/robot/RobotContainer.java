@@ -82,6 +82,7 @@ public class RobotContainer {
     new JoystickButton(driver2Controller, JoystickConstants.A_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
     new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
 
+
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
@@ -108,10 +109,15 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
+    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
+        () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        driver2Controller.getRawButton(JoystickConstants.A_BUTTON),
+        driver2Controller.getRawButton(JoystickConstants.Y_BUTTON),
+        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
     compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
-
 
     configureButtonBindings();
   }
@@ -131,7 +137,8 @@ public class RobotContainer {
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()), new Pose2d(2, 0, new Rotation2d(Math.toRadians(90))),
+        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()),
+            new Pose2d(2, 0, new Rotation2d(Math.toRadians(90))),
             new Pose2d()),
         trajectoryConfig);
 
