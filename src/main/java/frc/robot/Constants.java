@@ -148,7 +148,8 @@ public final class Constants {
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
                 //LIMITERS
                 public static final double DRIVETRAIN_SPEED_LIMITER = 0.5;
-                public static final double TURNING_LIMITER = 0.9;
+                public static final double TURNING_LIMITER = 0.93;
+
 
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(

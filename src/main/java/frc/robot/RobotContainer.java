@@ -8,7 +8,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -45,12 +51,37 @@ public class RobotContainer {
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
 
+
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+
+
   public RobotContainer() {
 
-    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON)
-        .whileHeld(new TurretCommand(shooterSubsystem, 0.1));
-    new JoystickButton(driver2Controller, JoystickConstants.B_BUTTON)
-        .whileHeld(new TurretCommand(shooterSubsystem, -0.1));
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+
+    SmartDashboard.putNumber("Limelight", x);
+    SmartDashboard.updateValues();
+    
+       if (x > 0){
+         //new TurretCommand(shooterSubsystem, -0.1);
+       } else if (x < 0){
+         //new TurretCommand(shooterSubsystem, 0.1);
+       } else{
+         //new TurretCommand(shooterSubsystem, 0);
+       }
+       Shuffleboard.update();
+
+    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
+    new JoystickButton(driver2Controller, JoystickConstants.B_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
+
+    new JoystickButton(driver2Controller, JoystickConstants.A_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
+    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
+
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
