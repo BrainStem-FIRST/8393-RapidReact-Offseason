@@ -1,20 +1,13 @@
 package frc.robot;
 
 import java.util.Arrays;
-import java.util.logging.Logger;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -40,12 +33,6 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
@@ -58,50 +45,14 @@ public class RobotContainer {
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
 
-
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tx = table.getEntry("tx");
-  NetworkTableEntry ty = table.getEntry("ty");
-  NetworkTableEntry ta = table.getEntry("ta");
-
-
   public RobotContainer() {
-    
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
 
+    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
+    new JoystickButton(driver2Controller, JoystickConstants.B_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
 
-      ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
-        tab.add("Limelight X Value", x);
-      if (x > 0){
-       new TurretCommand(shooterSubsystem, -0.1);
-      } else if (x < 0){
-        new TurretCommand(shooterSubsystem, 0.1);
-      } else{
-        new TurretCommand(shooterSubsystem, 0);
-      }
-      Shuffleboard.update();
-    
-  
+    new JoystickButton(driver2Controller, JoystickConstants.A_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
+    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
 
-
-
-    /*
-      For limelight - when you press a button it reads an x value and then turns the turret the right number of degrees 
-      in the correct direction...not continous...only when you press a button
-
-      x - in terms of degrees from -27 to 27
-
-
-    */
-
-
-    
-    // moves the turret
-    // new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
-    // new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
-    
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
         () -> modifyAxis(driver1Controller.getRawAxis(JoystickConstants.LEFT_STICK_Y_AXIS))
@@ -132,13 +83,6 @@ public class RobotContainer {
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
 
-    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
-        () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
-        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
-
-
-    
 
     configureButtonBindings();
   }
@@ -158,7 +102,7 @@ public class RobotContainer {
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()), new Pose2d(2, 0, new Rotation2d()),
+        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()), new Pose2d(2, 0, new Rotation2d(Math.toRadians(90))),
             new Pose2d()),
         trajectoryConfig);
 
@@ -168,7 +112,6 @@ public class RobotContainer {
         AutoConstants.autoThetaController, 0, 0, AutoConstants.autoThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    
     SwerveControllerCommand command = new SwerveControllerCommand(
         trajectory,
         drivetrainSubsystem::getPose,

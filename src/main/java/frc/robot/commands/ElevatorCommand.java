@@ -15,17 +15,14 @@ public class ElevatorCommand extends CommandBase{
 
     @Override
     public void initialize(){
-        shooterSubsystem.initElevatorMotor();
     }
 
     @Override
     public void execute(){
-        shooterSubsystem.executeElevatorMotor(elevatorSetPoint);
     }
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsystem.endElevator();
     }
 
     @Override

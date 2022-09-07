@@ -15,7 +15,6 @@ public class TurretCommand extends CommandBase{
 
     @Override
     public void initialize(){
-        shooterSubsystem.initElevatorMotor();
     }
 
     @Override
