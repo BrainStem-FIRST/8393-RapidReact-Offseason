@@ -43,7 +43,7 @@ public final class Constants {
         }
 
         public static final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 18;
+                public static final int TRANSFER_MOTOR_PORT_ID = 18; 
                 public static final boolean TRANSFER_MOTOR_REVERSED = false;
                 public static final double TRANSFER_MOTOR_SPEED = 1; 
                 public static final double TRANSFER_PROPORTIONAL = 1.17; // FIXME
@@ -71,7 +71,6 @@ public final class Constants {
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 24;
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
-                public static final int ELEVATOR_MOTOR_PORT_ID = 19;
 
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
                 public static final boolean ELEVATOR_MOTOR_REVERSED = false;
@@ -84,8 +83,8 @@ public final class Constants {
 
         public static final class PnuematicsConstants {
                 public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 75;
-                public static final int COMPRESSOR_MAX_PRESSURE = 80;
+                public static final int COMPRESSOR_MIN_PRESSURE = 100;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
                 public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
@@ -106,8 +105,8 @@ public final class Constants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
-                public static final int CLIMBING_MOTOR_1 = 30;
-                public static final int CLIMBING_MOTOR_2 = 31;
+                public static final int CLIMBING_MOTOR_1 = 22; //FIXME
+                public static final int CLIMBING_MOTOR_2 = 19; //FIXME
         }
 
         public static final class SwerveModuleConstants {

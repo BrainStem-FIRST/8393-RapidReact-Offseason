@@ -6,11 +6,10 @@ import frc.robot.subsystems.ClimbingSubsystem;
 
 public class DefaultClimbingCommand extends CommandBase {
     private DoubleSupplier deploy;
-    private DoubleSupplier climbingSpeed;
+    private double climbingSpeed;
     private double triggerThreshhold;
     private ClimbingSubsystem climbingSubsystem;
-    public DefaultClimbingCommand(ClimbingSubsystem climbingSubsystem, DoubleSupplier deploy, DoubleSupplier climbingSpeed,
-    double triggerThreshhold){
+    public DefaultClimbingCommand(ClimbingSubsystem climbingSubsystem,double climbingSpeed){
         this.climbingSubsystem = climbingSubsystem;
         this.deploy = deploy;
         this.climbingSpeed = climbingSpeed;
@@ -20,18 +19,23 @@ public class DefaultClimbingCommand extends CommandBase {
     
     @Override
     public void initialize(){
-        climbingSubsystem.initializeClimbingPneumatics();
+       // climbingSubsystem.initializeClimbingPneumatics();
+       climbingSubsystem.setClimbingMotorPowers(0);
     }
 
     @Override
     public void execute(){
+        /*
         boolean deployPneumatics = deploy.getAsDouble() > triggerThreshhold;
         climbingSubsystem.executeClimbingPneumatics(deployPneumatics);
+        */
+        climbingSubsystem.setClimbingMotorPowers(climbingSpeed);
     }
 
     @Override
     public void end(boolean interrupted){
-        climbingSubsystem.endClimbingPneumatics();
+        climbingSubsystem.setClimbingMotorPowers(0);
+        //climbingSubsystem.endClimbingPneumatics();
     }
 
     @Override

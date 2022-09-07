@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
@@ -25,6 +26,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.commands.TurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -44,6 +46,12 @@ public class RobotContainer {
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
 
   public RobotContainer() {
+
+    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
+    new JoystickButton(driver2Controller, JoystickConstants.B_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
+
+    new JoystickButton(driver2Controller, JoystickConstants.A_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
+    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -75,10 +83,6 @@ public class RobotContainer {
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
         PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
 
-    climbingSubsystem.setDefaultCommand(new DefaultClimbingCommand(climbingSubsystem,
-        () -> driver2Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
-        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     configureButtonBindings();
   }
@@ -98,7 +102,7 @@ public class RobotContainer {
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(4, 2, new Rotation2d()), new Pose2d(0, 0, new Rotation2d()),
+        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()), new Pose2d(2, 0, new Rotation2d(Math.toRadians(90))),
             new Pose2d()),
         trajectoryConfig);
 
