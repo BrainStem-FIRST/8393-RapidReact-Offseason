@@ -32,7 +32,6 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
-import frc.robot.commands.TurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -63,6 +62,7 @@ public class RobotContainer {
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
+    
 
     SmartDashboard.putNumber("Limelight", x);
     SmartDashboard.updateValues();
@@ -76,11 +76,7 @@ public class RobotContainer {
        }
        Shuffleboard.update();
 
-    new JoystickButton(driver2Controller, JoystickConstants.X_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, 0.1));
-    new JoystickButton(driver2Controller, JoystickConstants.B_BUTTON).whileHeld(new TurretCommand(shooterSubsystem, -0.1));
 
-    new JoystickButton(driver2Controller, JoystickConstants.A_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, 1));
-    new JoystickButton(driver2Controller, JoystickConstants.Y_BUTTON).whileHeld(new DefaultClimbingCommand(climbingSubsystem, -1));
 
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
@@ -97,6 +93,8 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
+        0,
+        this.tx,
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
