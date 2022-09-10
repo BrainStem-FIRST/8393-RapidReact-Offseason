@@ -10,7 +10,7 @@ public final class Constants {
 
         public static final class JoystickConstants {
 
-                public static final int LEFT_STICK_X_AXIS = 0; 
+                public static final int LEFT_STICK_X_AXIS = 0;
                 public static final int LEFT_STICK_Y_AXIS = 1;
                 public static final int LEFT_TRIGGER = 2;
                 public static final int RIGHT_TRIGGER = 3;
@@ -20,7 +20,7 @@ public final class Constants {
                 public static final int B_BUTTON = 2;
                 public static final int X_BUTTON = 3;
                 public static final int Y_BUTTON = 4;
-                public static final int LEFT_BUMPER = 5;                
+                public static final int LEFT_BUMPER = 5;
                 public static final int RIGHT_BUMPER = 7;
                 public static final int BACK_BUTTON = 8;
                 public static final int START_BUTTON = 9;
@@ -37,32 +37,21 @@ public final class Constants {
 
         public static final class Driver2ControllerConstants {
                 public static final int CONTROLLER_PORT = 1;
-                public static final double CONTROLLER_DEADZONE = 0.05; 
+                public static final double CONTROLLER_DEADZONE = 0.05;
                 public static final int DRIVING_EXPONENT = 3;
                 public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
         }
 
         public static final class TransferConstants {
-                public static final int TRANSFER_MOTOR_PORT_ID = 18; 
+                public static final int TRANSFER_MOTOR_PORT_ID = 18;
                 public static final boolean TRANSFER_MOTOR_REVERSED = false;
-                public static final double TRANSFER_MOTOR_SPEED = 1; 
+                public static final double TRANSFER_MOTOR_SPEED = 1;
                 public static final double TRANSFER_PROPORTIONAL = 1.17; // FIXME
                 public static final double TRANSFER_INTEGRAL = 0.0017; // FIXME
                 public static final double TRANSFER_DERIVATIVE = 0; // FIXME
         }
 
         public final class ShooterConstants {
-                // TURRET PID VALUES
-                public static final double TURRET_PROPORTIONAL = 1.17; // FIXME
-                public static final double TURRET_INTREGRAL = 0.0017; // FIXME
-                public static final double TURRET_DERIVATIVE = 0; // FIXME
-                public static final double TURRET_PID_TOLERANCE = 3; // FIXME
-                // ELEVATOR PID VALUES
-                public static final double ELEVATOR_PROPORTIONAL = 1.17; // FIXME
-                public static final double ELEVATOR_INTEGRAL = 0.0017; // FIXME
-                public static final double ELEVATOR_DERIVATIVE = 0; // FIXME
-                public static final double ELEVATOR_PID_TOLERANCE = 3; // FIXME
-                // SHOOTER PID VALUES
                 public static final double SHOOTER_PROPORTIONAL = 1.17; // FIXME
                 public static final double SHOOTER_INTEGRAL = 0.0017; // FIXME
                 public static final double SHOOTER_DERIVATIVE = 0; // FIXME
@@ -70,15 +59,32 @@ public final class Constants {
 
                 public static final int SHOOTER_1_MOTOR_PORT_ID = 24;
                 public static final int SHOOTER_2_MOTOR_PORT_ID = 21;
-                public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
 
                 public static final boolean SHOOTING_MOTORS_REVERSED = false;
-                public static final boolean ELEVATOR_MOTOR_REVERSED = false;
-                public static final boolean TURRET_MOTOR_REVERSED = false;
                 public static final double SHOOTING_MOTORS_SPEED = 1;
-                public static final double ELEVATOR_MOTOR_SPEED = 0.3;
 
                 public static final int ROTATION_TO_TICKS = 28;
+        }
+
+        public static final class TurretConstants {
+                public static final double TURRET_PROPORTIONAL = 1.17; // FIXME
+                public static final double TURRET_INTREGRAL = 0.0017; // FIXME
+                public static final double TURRET_DERIVATIVE = 0; // FIXME
+                public static final double TURRET_PID_TOLERANCE = 3; // FIXME
+
+                public static final boolean TURRET_MOTOR_REVERSED = false;
+                public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
+        }
+
+        public static final class HoodConstants {
+                public static final double HOOD_PROPORTIONAL = 1.17; // FIXME
+                public static final double HOOD_INTEGRAL = 0.0017; // FIXME
+                public static final double HOOD_DERIVATIVE = 0; // FIXME
+                public static final double HOOD_PID_TOLERANCE = 3; // FIXME
+
+                public static final int HOOD_MOTOR_PORT_ID = 100; // FIXME
+                public static final boolean HOOD_MOTOR_REVERSED = false;
+                public static final double HOOD_MOTOR_SPEED = 0.3;
         }
 
         public static final class PnuematicsConstants {
@@ -91,7 +97,7 @@ public final class Constants {
         public static final class IntakeConstants {
                 public static final boolean INTAKE_MOTOR_REVERSED = true;
                 public static final int INTAKE_MOTOR_ID = 20;
-                public static final double INTAKE_MOTOR_SPEED = 1; 
+                public static final double INTAKE_MOTOR_SPEED = 1;
                 // solonoid ports
                 public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
                 public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME 1
@@ -105,9 +111,9 @@ public final class Constants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 0;
                 public static final int RIGHT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 7;
-                public static final int CLIMBING_MOTOR_1 = 22; //FIXME
-                public static final int CLIMBING_MOTOR_2 = 19; //FIXME
-                public static final double CLIMBING_MOTOR_SPEEDS = 0.5; //FIXME
+                public static final int CLIMBING_MOTOR_1 = 22; // FIXME
+                public static final int CLIMBING_MOTOR_2 = 19; // FIXME
+                public static final double CLIMBING_MOTOR_SPEEDS = 0.5; // FIXME
                 public static final boolean REVERSE_CLIMBING_MOTORS = false;
         }
 
@@ -146,10 +152,9 @@ public final class Constants {
                  * Should be measured from center to center.
                  */
                 public static final double DRIVETRAIN_WHEELBASE_METERS = 0.73025;
-                //LIMITERS
+                // LIMITERS
                 public static final double DRIVETRAIN_SPEED_LIMITER = 0.5;
                 public static final double TURNING_LIMITER = 0.93;
-
 
                 // KINEMATICS
                 public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
@@ -176,7 +181,6 @@ public final class Constants {
                 public static final boolean FRONT_RIGHT_DRIVE_ENCODER_REVERSED = false; // FIXME
                 // front right TURNING offset
                 public static final double FRONT_RIGHT_MODULE_TURNING_OFFSET = -Math.toRadians(166.5); // 166.5
-
 
                 // BACK LEFT MODULE
                 public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
@@ -213,24 +217,24 @@ public final class Constants {
                 public static final double autoYController = 1.5;
                 public static final double autoThetaController = 3;
                 public static final double autoMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
-                 }
-
-                // Mihir added this
-                public static final class ConstraintsConstants {
-                        // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
-                        public static final double MAX_ROBOT_VOLTAGE = 12.0;
-                        // ABSOLUTE MAXIUMUM VELOCITY OF ROBOT
-                        // The formula for calculating the theoretical maximum velocity is:
-                        // <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> *
-                        // pi
-                        public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
-                                        SdsModuleConfigurations.MK4_L4.getDriveReduction() *
-                                        SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI*1.1;
-                        // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
-                        public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
-                                        /
-                                        Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                                        DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
-                        public static final int CAN_SPARK_MAX_MAXIMUM_RPM = 5700; // FIXME
-                }
         }
+
+        // Mihir added this
+        public static final class ConstraintsConstants {
+                // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
+                public static final double MAX_ROBOT_VOLTAGE = 12.0;
+                // ABSOLUTE MAXIUMUM VELOCITY OF ROBOT
+                // The formula for calculating the theoretical maximum velocity is:
+                // <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> *
+                // pi
+                public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+                                SdsModuleConfigurations.MK4_L4.getDriveReduction() *
+                                SdsModuleConfigurations.MK4_L4.getWheelDiameter() * Math.PI * 1.1;
+                // ABSOLUTE MAXIMUM ANGULAR VELOCITY OF ROBOT
+                public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND
+                                /
+                                Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+                                                DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
+                public static final int CAN_SPARK_MAX_MAXIMUM_RPM = 5700; // FIXME
+        }
+}

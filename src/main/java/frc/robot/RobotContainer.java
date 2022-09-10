@@ -32,16 +32,19 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
+import frc.robot.commands.DefaultTurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TransferSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final TurretSubsystem turretSubsystem = new TurretSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final CompressorSubsystem compressorSubsystem = new CompressorSubsystem();
@@ -49,35 +52,14 @@ public class RobotContainer {
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
-
+  private final JoystickButton driver1XButton = new JoystickButton(driver1Controller, JoystickConstants.X_BUTTON);
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
-
   public RobotContainer() {
-
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
-    
-
-    SmartDashboard.putNumber("Limelight", x);
-    SmartDashboard.updateValues();
-    
-       if (x > 0){
-         //new TurretCommand(shooterSubsystem, -0.1);
-       } else if (x < 0){
-         //new TurretCommand(shooterSubsystem, 0.1);
-       } else{
-         //new TurretCommand(shooterSubsystem, 0);
-       }
-       Shuffleboard.update();
-
-
-
 
     drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
         drivetrainSubsystem,
@@ -91,11 +73,16 @@ public class RobotContainer {
     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
+        false, Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+
+    turretSubsystem.setDefaultCommand(new DefaultTurretCommand(turretSubsystem, true, false,
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), this.tx,
+        Driver2ControllerConstants.CONTROLLER_DEADZONE));
+
+    driver1XButton.toggleWhenPressed(new DefaultTurretCommand(turretSubsystem,
+        false, false,
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
-        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_Y_AXIS),
-        0,
-        this.tx,
-        Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, Driver1ControllerConstants.CONTROLLER_DEADZONE));
+        this.tx, Driver2ControllerConstants.CONTROLLER_DEADZONE));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
