@@ -8,6 +8,20 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public final class Constants {
 
+        public static final class Driver1ControllerConstants {
+                public static final int CONTROLLER_PORT = 0;
+                public static final double CONTROLLER_DEADZONE = 0.05;
+                public static final int DRIVING_EXPONENT = 3;
+                public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
+        }
+
+        public static final class Driver2ControllerConstants {
+                public static final int CONTROLLER_PORT = 1;
+                public static final double CONTROLLER_DEADZONE = 0.05;
+                public static final int DRIVING_EXPONENT = 3;
+                public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
+        }
+
         public static final class JoystickConstants {
 
                 public static final int LEFT_STICK_X_AXIS = 0;
@@ -28,18 +42,16 @@ public final class Constants {
                 public static final int RIGHT_JOYSTICK_BUTTON = 11;
         }
 
-        public static final class Driver1ControllerConstants {
-                public static final int CONTROLLER_PORT = 0;
-                public static final double CONTROLLER_DEADZONE = 0.05;
-                public static final int DRIVING_EXPONENT = 3;
-                public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
-        }
+        public static final class IntakeConstants {
+                public static final boolean INTAKE_MOTOR_REVERSED = true;
+                public static final int INTAKE_MOTOR_ID = 20;
+                public static final double INTAKE_MOTOR_SPEED = 1;
+                // solonoid ports
+                public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
+                public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME 1
+                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME 6
+                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15;
 
-        public static final class Driver2ControllerConstants {
-                public static final int CONTROLLER_PORT = 1;
-                public static final double CONTROLLER_DEADZONE = 0.05;
-                public static final int DRIVING_EXPONENT = 3;
-                public static final double TRIGGER_ACTIVATION_THRESHOLD = 0.05;
         }
 
         public static final class TransferConstants {
@@ -87,25 +99,6 @@ public final class Constants {
                 public static final double HOOD_MOTOR_SPEED = 0.3;
         }
 
-        public static final class PnuematicsConstants {
-                public static final int PNEUMATICS_PORT = 9;
-                public static final int COMPRESSOR_MIN_PRESSURE = 100;
-                public static final int COMPRESSOR_MAX_PRESSURE = 120;
-                public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
-        }
-
-        public static final class IntakeConstants {
-                public static final boolean INTAKE_MOTOR_REVERSED = true;
-                public static final int INTAKE_MOTOR_ID = 20;
-                public static final double INTAKE_MOTOR_SPEED = 1;
-                // solonoid ports
-                public static final int INTAKE_PNEUMATICS_PORT = 9; // FIXME
-                public static final int INTAKE_DS_CHANNEL_3_1 = 1; // FIXME 1
-                public static final int INTAKE_DS_CHANNEL_3_2 = 6; // FIXME 6
-                public static final double INTAKE_MOTOR_SPEED_ERROR_ALLOWANCE = 0.15;
-
-        }
-
         public static final class ClimbingConstants {
                 public static final int LEFT_CLIMBING_PNEUMATICS_FORWARD_CHANNEL = 2;
                 public static final int LEFT_CLIMBING_PNEUMATICS_REVERSE_CHANNEL = 5;
@@ -117,25 +110,11 @@ public final class Constants {
                 public static final boolean REVERSE_CLIMBING_MOTORS = false;
         }
 
-        public static final class SwerveModuleConstants {
-                public static final double WHEEL_DIAMETER_METERS = 0.10033;
-                public static final double DRIVE_MOTOR_GEAR_RATIO = 1 / 8.14; // (16.0 / 48.0) * (28.0 / 16.0) * (15.0 /
-                                                                              // 45.0)
-                public static final double TURNING_MOTOR_GEAR_RATIO = 1 / (150 / 7); // (15.0 / 32.0) * (10.0 / 60.0) *
-                                                                                     // 0.6666666
-                public static final double DRIVE_ENCODER_TICKS_TO_METERS = (DRIVE_MOTOR_GEAR_RATIO * Math.PI
-                                * WHEEL_DIAMETER_METERS) / 2048;
-                public static final double TURNING_ENCODER_TICKS_TO_RADIANS = (TURNING_MOTOR_GEAR_RATIO * Math.PI * 2)
-                                / 2048;
-                public static final double DRIVE_ENCODER_TICKS_TO_METERS_PER_SECOND = (DRIVE_ENCODER_TICKS_TO_METERS
-                                / 60) / 2048;
-                public static final double TURNING_ENCODER_TICKS_TO_METERS_PER_SECOND = (TURNING_ENCODER_TICKS_TO_RADIANS
-                                / 60) / 2048;
-
-                // PID
-                public static final double PROPORTIONAL = 1.17; // FIXME
-                public static final double INTEGRAL = 0.0017;
-                public static final double DERIVATIVE = 0;
+        public static final class PnuematicsConstants {
+                public static final int PNEUMATICS_PORT = 9;
+                public static final int COMPRESSOR_MIN_PRESSURE = 100;
+                public static final int COMPRESSOR_MAX_PRESSURE = 120;
+                public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.REVPH;
         }
 
         public static final class DrivetrainConstants {
@@ -203,6 +182,27 @@ public final class Constants {
 
         }
 
+        public static final class SwerveModuleConstants {
+                public static final double WHEEL_DIAMETER_METERS = 0.10033;
+                public static final double DRIVE_MOTOR_GEAR_RATIO = 1 / 8.14; // (16.0 / 48.0) * (28.0 / 16.0) * (15.0 /
+                                                                              // 45.0)
+                public static final double TURNING_MOTOR_GEAR_RATIO = 1 / (150 / 7); // (15.0 / 32.0) * (10.0 / 60.0) *
+                                                                                     // 0.6666666
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS = (DRIVE_MOTOR_GEAR_RATIO * Math.PI
+                                * WHEEL_DIAMETER_METERS) / 2048;
+                public static final double TURNING_ENCODER_TICKS_TO_RADIANS = (TURNING_MOTOR_GEAR_RATIO * Math.PI * 2)
+                                / 2048;
+                public static final double DRIVE_ENCODER_TICKS_TO_METERS_PER_SECOND = (DRIVE_ENCODER_TICKS_TO_METERS
+                                / 60) / 2048;
+                public static final double TURNING_ENCODER_TICKS_TO_METERS_PER_SECOND = (TURNING_ENCODER_TICKS_TO_RADIANS
+                                / 60) / 2048;
+
+                // PID
+                public static final double PROPORTIONAL = 1.17; // FIXME
+                public static final double INTEGRAL = 0.0017;
+                public static final double DERIVATIVE = 0;
+        }
+
         public static final class AutoConstants {
                 // CONSTRAINTS
                 public static final double MAX_ROBOT_VOLTAGE_AUTONOMOUS = 12.0;
@@ -218,7 +218,7 @@ public final class Constants {
                 public static final double autoThetaController = 3;
                 public static final double autoMaxSpeedMetersPerSecond = ConstraintsConstants.MAX_VELOCITY_METERS_PER_SECOND;
         }
-
+        
         // Mihir added this
         public static final class ConstraintsConstants {
                 // ABSOLUTE MAXIMUM VOLTAGE OF ROBOT
