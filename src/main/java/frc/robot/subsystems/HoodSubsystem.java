@@ -13,5 +13,5 @@ public class HoodSubsystem extends SubsystemBase{
          HoodConstants.HOOD_DERIVATIVE);
     
     private CANSparkMax hoodMotor = new CANSparkMax(HoodConstants.HOOD_MOTOR_PORT_ID, MotorType.kBrushless);
-
+what is this bruv 
 }*/
