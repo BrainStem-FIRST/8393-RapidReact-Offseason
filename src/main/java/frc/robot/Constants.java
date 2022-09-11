@@ -85,6 +85,7 @@ public final class Constants {
                 public static final double TURRET_PID_TOLERANCE = 3; // FIXME
 
                 public static final boolean TURRET_MOTOR_REVERSED = false;
+                public static final double TURRET_MOTOR_SPEED = 0.4;
                 public static final int TURRET_MOTOR_PORT_ID = 26; // positive turns right, negative turns left
         }
 

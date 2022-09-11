@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -14,6 +15,7 @@ public class DefaultTurretCommand extends CommandBase {
     private DoubleSupplier turretSpeed;
     private NetworkTableEntry limeLight;
     private double controllerDeadzone;
+    ArrayList<Double> limeLightAvg = new ArrayList<>();
 
     public DefaultTurretCommand(TurretSubsystem turretSubsystem, boolean manual, boolean usePID,
             DoubleSupplier turretSpeed,
@@ -36,14 +38,15 @@ public class DefaultTurretCommand extends CommandBase {
         double updatedSpeed;
         if (manual) {
             if (Math.abs(turretSpeed.getAsDouble()) > controllerDeadzone) {
-                updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED ? -turretSpeed.getAsDouble()
-                        : turretSpeed.getAsDouble();
+                updatedSpeed = turretSpeed.getAsDouble() > 0 ? TurretConstants.TURRET_MOTOR_SPEED: -TurretConstants.TURRET_MOTOR_SPEED;
+                updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED ? -updatedSpeed : updatedSpeed;
             } else {
                 updatedSpeed = 0.0;
             }
         } else {
-            updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED ? -automaticTurretLock(limeLight.getDouble(0.0), 0, 0)
-                    : automaticTurretLock(limeLight.getDouble(0.0), 0, 0);
+            updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED
+                    ? -automaticTurretLock(limeLight.getDouble(0.0), 0, 0, false)
+                    : automaticTurretLock(limeLight.getDouble(0.0), 0, 0, false);
         }
         turretSubsystem.executeTurretMotor(updatedSpeed, usePID);
     }
@@ -58,12 +61,26 @@ public class DefaultTurretCommand extends CommandBase {
         return false;
     }
 
-    private double automaticTurretLock(double limeLightXPosition, double targetRangeMin, double targetRangeMax) {
-        double turretSpeedDouble;
+    private double automaticTurretLock(double limeLightXPosition, double targetRangeMin, double targetRangeMax,
+            boolean useAvg) {
+        double turretSpeedDouble = 0;
+        double limeLightSum = 0;
+        if (useAvg) {
+            if (limeLightAvg.size() < 50) {
+                limeLightAvg.add(limeLightXPosition);
+            } else {
+                limeLightAvg.clear();
+            }
+            limeLightSum = 0;
+            for (var i = 0; i < limeLightAvg.size(); i++) {
+                limeLightSum = limeLightSum + limeLightAvg.get(i);
+            }
+            limeLightXPosition = limeLightSum / limeLightAvg.size();
+        }
         if (limeLightXPosition > targetRangeMax) {
-            turretSpeedDouble = 0.2;
+            turretSpeedDouble = 0.5;
         } else if (limeLightXPosition < targetRangeMin) {
-            turretSpeedDouble = -0.2;
+            turretSpeedDouble = -0.5;
         } else {
             turretSpeedDouble = 0.0;
         }

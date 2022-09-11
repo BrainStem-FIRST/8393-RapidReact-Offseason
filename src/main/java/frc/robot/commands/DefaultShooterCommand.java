@@ -8,16 +8,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class DefaultShooterCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
     private DoubleSupplier shooterSpeed;
+    private DoubleSupplier secondaryShooterSpeed;
     private boolean usePID;
     private DoubleSupplier shooterSpeedReversed;
     private double triggerThreshold;
 
-    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeed, 
+    public DefaultShooterCommand(ShooterSubsystem shooterSubsystem, DoubleSupplier shooterSpeed, DoubleSupplier secondaryShooterSpeed,
             DoubleSupplier shooterSpeedReversed,
             boolean usePID,
             double triggerThreshold) {
         this.shooterSubsystem = shooterSubsystem;
         this.shooterSpeed = shooterSpeed;
+        this.secondaryShooterSpeed = secondaryShooterSpeed;
         this.shooterSpeedReversed = shooterSpeedReversed;
         this.triggerThreshold = triggerThreshold;
         addRequirements(shooterSubsystem);
@@ -31,7 +33,7 @@ public class DefaultShooterCommand extends CommandBase {
     @Override
     public void execute() {
         double updatedSpeed;
-        if (Math.abs(shooterSpeed.getAsDouble()) > triggerThreshold) {
+        if ((Math.abs((shooterSpeed.getAsDouble())) > triggerThreshold) || (Math.abs(secondaryShooterSpeed.getAsDouble()) > triggerThreshold)) {
             updatedSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -ShooterConstants.SHOOTING_MOTORS_SPEED
                     : ShooterConstants.SHOOTING_MOTORS_SPEED;
         } else if (Math.abs(shooterSpeedReversed.getAsDouble()) > triggerThreshold) {

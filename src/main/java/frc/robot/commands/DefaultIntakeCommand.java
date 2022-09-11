@@ -8,13 +8,16 @@ public class DefaultIntakeCommand extends CommandBase {
 
     private IntakeSubsystem intakeSubsystem;
     private DoubleSupplier intakeOn;
+    private DoubleSupplier secondaryIntakeOn;
     private DoubleSupplier intakeReversed;
     private double triggerThreshold;
 
-    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier intakeOn, DoubleSupplier intakeReversed,
+    public DefaultIntakeCommand(IntakeSubsystem intakeSubsystem, DoubleSupplier intakeOn, DoubleSupplier secondaryIntakeOn, 
+    DoubleSupplier intakeReversed,
             double triggerThreshold) {
         this.intakeSubsystem = intakeSubsystem;
         this.intakeOn = intakeOn;
+        this.secondaryIntakeOn = secondaryIntakeOn;
         this.intakeReversed = intakeReversed;
         this.triggerThreshold = triggerThreshold;
         addRequirements(intakeSubsystem);
@@ -27,7 +30,7 @@ public class DefaultIntakeCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if (intakeOn.getAsDouble() > triggerThreshold) {
+        if ((intakeOn.getAsDouble() > triggerThreshold) || (secondaryIntakeOn.getAsDouble() > triggerThreshold)) {
             intakeSubsystem.executeIntake(true, false);
         } else if (intakeReversed.getAsDouble() > triggerThreshold) {
             intakeSubsystem.executeIntake(true, true);

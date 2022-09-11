@@ -69,6 +69,7 @@ public class RobotContainer {
 
     shooterSubsystem.setDefaultCommand(new DefaultShooterCommand(shooterSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         false, Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
@@ -83,11 +84,13 @@ public class RobotContainer {
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
     intakeSubsystem.setDefaultCommand(new DefaultIntakeCommand(intakeSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
+        () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
         Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
