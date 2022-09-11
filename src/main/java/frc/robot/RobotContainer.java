@@ -50,6 +50,7 @@ public class RobotContainer {
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
   private final Joystick driver2Controller = new Joystick(Driver2ControllerConstants.CONTROLLER_PORT);
   private final JoystickButton driver1XButton = new JoystickButton(driver1Controller, JoystickConstants.X_BUTTON);
+  private final JoystickButton driver1BButton = new JoystickButton(driver1Controller, JoystickConstants.B_BUTTON);
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -81,6 +82,8 @@ public class RobotContainer {
         false, false,
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         this.tx, Driver2ControllerConstants.CONTROLLER_DEADZONE));
+    
+    driver1BButton.whenPressed(new InstantCommand(() -> DrivetrainSubsystem.getInstance().zeroGyroscope()));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
