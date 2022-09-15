@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -23,6 +24,7 @@ import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.PnuematicsConstants;
+import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.DefaultClimbingCommand;
 import frc.robot.commands.DefaultCompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
@@ -72,9 +74,9 @@ public class RobotContainer {
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
         () -> driver1Controller.getRawAxis(JoystickConstants.LEFT_TRIGGER),
-        false, Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
+        false, Driver1ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD, 0));
 
-    turretSubsystem.setDefaultCommand(new DefaultTurretCommand(turretSubsystem, true, false,
+    turretSubsystem.setDefaultCommand(new DefaultTurretCommand(turretSubsystem, true, true,
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS), this.tx,
         Driver2ControllerConstants.CONTROLLER_DEADZONE));
 
@@ -82,7 +84,7 @@ public class RobotContainer {
         false, false,
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         this.tx, Driver2ControllerConstants.CONTROLLER_DEADZONE));
-    
+
     driver1BButton.whenPressed(new InstantCommand(() -> DrivetrainSubsystem.getInstance().zeroGyroscope()));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
@@ -119,23 +121,23 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
         AutoConstants.autoMaxSpeedMetersPerSecond,
         AutoConstants.autoMaxAccelerationMetersPerSecondSquared);
     trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
-
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(1, 0, new Rotation2d()),
-            new Pose2d(2, 0, new Rotation2d(Math.toRadians(90))),
+        Arrays.asList(new Pose2d(), new Pose2d(0, 2, new Rotation2d()), // new Pose2d(0, 0, new Rotation2d()),
             new Pose2d()),
         trajectoryConfig);
-
-    PIDController xController = new PIDController(AutoConstants.autoXController, 0, 0);
-    PIDController yController = new PIDController(AutoConstants.autoYController, 0, 0);
+    PIDController xController = new PIDController(AutoConstants.autoXController,
+        0, 0);
+    PIDController yController = new PIDController(AutoConstants.autoYController,
+        0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(
-        AutoConstants.autoThetaController, 0, 0, AutoConstants.autoThetaControllerConstraints);
+        AutoConstants.autoThetaController, 0, 0,
+        AutoConstants.autoThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
     SwerveControllerCommand command = new SwerveControllerCommand(
         trajectory,
         drivetrainSubsystem::getPose,
@@ -145,11 +147,19 @@ public class RobotContainer {
         thetaController,
         drivetrainSubsystem::setModuleStates,
         drivetrainSubsystem);
-
-    return new SequentialCommandGroup(
-        new InstantCommand(() -> drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-        command,
-        new InstantCommand(() -> drivetrainSubsystem.stopModules()));
+    return new DefaultAutoCommand(drivetrainSubsystem,
+        () -> -4,
+        () -> 0,
+        () -> 0, 1);/*
+                     * ,
+                     * new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
+                     * () -> 1,
+                     * () -> 0,
+                     * () -> 0,
+                     * false, 0, 2),
+                     * new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, this.tx,
+                     * 0)));
+                     */
 
   }
 
