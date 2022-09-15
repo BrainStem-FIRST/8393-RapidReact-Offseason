@@ -45,8 +45,8 @@ public class DefaultTurretCommand extends CommandBase {
             }
         } else {
             updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED
-                    ? -automaticTurretLock(limeLight.getDouble(0.0), 0, 0, false)
-                    : automaticTurretLock(limeLight.getDouble(0.0), 0, 0, false);
+                    ? -automaticTurretLock(limeLight.getDouble(0.0), 0, 0, true)
+                    : automaticTurretLock(limeLight.getDouble(0.0), 0, 0, true);
         }
         turretSubsystem.executeTurretMotor(updatedSpeed, usePID);
     }

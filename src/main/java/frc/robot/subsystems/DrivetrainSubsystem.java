@@ -258,6 +258,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 desiredStates[3].angle.getRadians());
         }
 
+        public void setModuleSpeedAndDistance(){
+
+        }
+
         @Override
         public void periodic() {
                 odometer.update(getRotation2d(), m_frontLeftModule.getState(), m_frontRightModule.getState(),
