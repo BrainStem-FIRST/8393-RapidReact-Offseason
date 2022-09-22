@@ -26,7 +26,7 @@ import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.PnuematicsConstants;
 import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.DefaultClimbingCommand;
-import frc.robot.commands.DefaultCompressorCommand;
+//import frc.robot.commands.DefaultCompressorCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DefaultIntakeCommand;
 import frc.robot.commands.DefaultShooterCommand;
