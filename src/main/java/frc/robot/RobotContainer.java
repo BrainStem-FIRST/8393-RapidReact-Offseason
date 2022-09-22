@@ -33,7 +33,7 @@ import frc.robot.commands.DefaultShooterCommand;
 import frc.robot.commands.DefaultTransferCommand;
 import frc.robot.commands.DefaultTurretCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
-import frc.robot.subsystems.CompressorSubsystem;
+//import frc.robot.subsystems.CompressorSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -46,7 +46,7 @@ public class RobotContainer {
   private final TurretSubsystem turretSubsystem = new TurretSubsystem();
   private final TransferSubsystem transferSubsystem = new TransferSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final CompressorSubsystem compressorSubsystem = new CompressorSubsystem();
+  //private final CompressorSubsystem compressorSubsystem = new CompressorSubsystem();
   private final ClimbingSubsystem climbingSubsystem = new ClimbingSubsystem();
 
   private final Joystick driver1Controller = new Joystick(Driver1ControllerConstants.CONTROLLER_PORT);
@@ -105,9 +105,9 @@ public class RobotContainer {
         driver2Controller.getRawButton(JoystickConstants.Y_BUTTON),
         Driver2ControllerConstants.TRIGGER_ACTIVATION_THRESHOLD));
 
-    compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
+    /*compressorSubsystem.setDefaultCommand(new DefaultCompressorCommand(compressorSubsystem,
         PnuematicsConstants.COMPRESSOR_MIN_PRESSURE,
-        PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));
+        PnuematicsConstants.COMPRESSOR_MAX_PRESSURE));*/
 
     configureButtonBindings();
   }
