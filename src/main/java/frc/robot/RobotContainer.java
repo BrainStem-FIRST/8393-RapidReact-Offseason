@@ -167,7 +167,7 @@ public class RobotContainer {
         () -> 1,
         () -> 0,
         () -> 0,
-        false, 0, 2),
+        false, 0, 5),
         new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, this.tx, 0))));
                      
 
