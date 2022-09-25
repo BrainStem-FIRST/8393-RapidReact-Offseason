@@ -45,8 +45,8 @@ public class DefaultTurretCommand extends CommandBase {
             }
         } else {
             updatedSpeed = TurretConstants.TURRET_MOTOR_REVERSED
-                    ? -automaticTurretLock(limeLight.getDouble(0.0), 0, 0, true)
-                    : automaticTurretLock(limeLight.getDouble(0.0), 0, 0, true);
+                    ? -automaticTurretLock(limeLight.getDouble(0.0), -1, 1, true)
+                    : automaticTurretLock(limeLight.getDouble(0.0), -1, 1, true);
         }
         turretSubsystem.executeTurretMotor(updatedSpeed, usePID);
     }
@@ -78,9 +78,9 @@ public class DefaultTurretCommand extends CommandBase {
             limeLightXPosition = limeLightSum / limeLightAvg.size();
         }
         if (limeLightXPosition > targetRangeMax) {
-            turretSpeedDouble = 0.5;
+            turretSpeedDouble = 0.09*((limeLightXPosition-targetRangeMax)/2);
         } else if (limeLightXPosition < targetRangeMin) {
-            turretSpeedDouble = -0.5;
+            turretSpeedDouble = -0.09*((targetRangeMin-limeLightXPosition)/2);
         } else {
             turretSpeedDouble = 0.0;
         }

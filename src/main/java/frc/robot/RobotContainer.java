@@ -14,8 +14,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
@@ -23,7 +23,7 @@ import frc.robot.Constants.ConstraintsConstants;
 import frc.robot.Constants.Driver1ControllerConstants;
 import frc.robot.Constants.Driver2ControllerConstants;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.Constants.PnuematicsConstants;
+//import frc.robot.Constants.PnuematicsConstants;
 import frc.robot.commands.DefaultAutoCommand;
 import frc.robot.commands.DefaultClimbingCommand;
 //import frc.robot.commands.DefaultCompressorCommand;
@@ -85,7 +85,7 @@ public class RobotContainer {
         () -> driver2Controller.getRawAxis(JoystickConstants.RIGHT_STICK_X_AXIS),
         this.tx, Driver2ControllerConstants.CONTROLLER_DEADZONE));
 
-    driver1BButton.whenPressed(new InstantCommand(() -> DrivetrainSubsystem.getInstance().zeroGyroscope()));
+    //driver1BButton.whenPressed(new InstantCommand(() -> DrivetrainSubsystem.getInstance().zeroGyroscope()));
 
     transferSubsystem.setDefaultCommand(new DefaultTransferCommand(transferSubsystem,
         () -> driver1Controller.getRawAxis(JoystickConstants.RIGHT_TRIGGER),
@@ -148,9 +148,9 @@ public class RobotContainer {
         drivetrainSubsystem::setModuleStates,
         drivetrainSubsystem);
     return new DefaultAutoCommand(drivetrainSubsystem,
-        () -> -4,
+        () -> 4,
         () -> 0,
-        () -> 0, 1);/*
+        () -> 0, 3);/*
                      * ,
                      * new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
                      * () -> 1,
