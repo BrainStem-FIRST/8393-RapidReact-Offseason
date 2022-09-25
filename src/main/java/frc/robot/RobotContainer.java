@@ -122,56 +122,58 @@ public class RobotContainer {
     private void configureButtonBindings() {
     }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        NetworkTableEntry tx = table.getEntry("tx");
 
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-        AutoConstants.autoMaxSpeedMetersPerSecond,
-        AutoConstants.autoMaxAccelerationMetersPerSecondSquared);
-    trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        Arrays.asList(new Pose2d(), new Pose2d(0, 2, new Rotation2d()), // new Pose2d(0, 0, new Rotation2d()),
-            new Pose2d()),
-        trajectoryConfig);
-    PIDController xController = new PIDController(AutoConstants.autoXController,
-        0, 0);
-    PIDController yController = new PIDController(AutoConstants.autoYController,
-        0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-        AutoConstants.autoThetaController, 0, 0,
-        AutoConstants.autoThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-    SwerveControllerCommand command = new SwerveControllerCommand(
-        trajectory,
-        drivetrainSubsystem::getPose,
-        drivetrainSubsystem.getKinematics(),
-        xController,
-        yController,
-        thetaController,
-        drivetrainSubsystem::setModuleStates,
-        drivetrainSubsystem);
-        /*return new DefaultAutoCommand(drivetrainSubsystem,
-        () -> 4,
-        () -> 0,
-        () -> 0, 3);*/
-    return new SequentialCommandGroup((new DefaultAutoCommand(
-        drivetrainSubsystem,
-        () -> 4,
-        () -> 0,
-        () -> 0, 3)),
-        (new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
-        () -> 1,
-        () -> 0,
-        () -> 0,
-        false, 0, 5),
-        new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, this.tx, 0))));
-                     
+        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+                AutoConstants.autoMaxSpeedMetersPerSecond,
+                AutoConstants.autoMaxAccelerationMetersPerSecondSquared);
+        trajectoryConfig.setKinematics(drivetrainSubsystem.getKinematics());
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                Arrays.asList(new Pose2d(), new Pose2d(0, 2, new Rotation2d()), // new Pose2d(0, 0, new Rotation2d()),
+                        new Pose2d()),
+                trajectoryConfig);
+        PIDController xController = new PIDController(AutoConstants.autoXController,
+                0, 0);
+        PIDController yController = new PIDController(AutoConstants.autoYController,
+                0, 0);
+        ProfiledPIDController thetaController = new ProfiledPIDController(
+                AutoConstants.autoThetaController, 0, 0,
+                AutoConstants.autoThetaControllerConstraints);
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+        SwerveControllerCommand command = new SwerveControllerCommand(
+                trajectory,
+                drivetrainSubsystem::getPose,
+                drivetrainSubsystem.getKinematics(),
+                xController,
+                yController,
+                thetaController,
+                drivetrainSubsystem::setModuleStates,
+                drivetrainSubsystem);
+        /*
+         * return new DefaultAutoCommand(drivetrainSubsystem,
+         * () -> 4,
+         * () -> 0,
+         * () -> 0, 3);
+         */
+        return new SequentialCommandGroup((new DefaultAutoCommand(
+                drivetrainSubsystem,
+                () -> 4,
+                () -> 0,
+                () -> 0, 3)),
+                (new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
+                        () -> 1,
+                        () -> 0,
+                        () -> 0,
+                        false, 0, 5),
+                        new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, tx, 0.1))));
 
-  }
+    }
 
     private static double deadband(double value, double deadband) {
         if (Math.abs(value) > deadband) {
