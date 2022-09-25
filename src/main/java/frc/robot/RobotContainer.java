@@ -161,17 +161,19 @@ public class RobotContainer {
          * () -> 0,
          * () -> 0, 3);
          */
-        return new SequentialCommandGroup((new DefaultAutoCommand(
+        return new SequentialCommandGroup((new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
+        () -> 1,
+        () -> 0,
+        () -> 0,
+        false, 0, 5),
+        new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, tx, 0.1),
+        new DefaultTransferCommand(transferSubsystem, () -> 1, 
+        () -> 1, () -> 0, 0.1),
+        new DefaultIntakeCommand(intakeSubsystem, () -> 1, () -> 1, () -> 0, 0.1))),(new DefaultAutoCommand(
                 drivetrainSubsystem,
                 () -> 4,
                 () -> 0,
-                () -> 0, 3)),
-                (new ParallelCommandGroup(new DefaultShooterCommand(shooterSubsystem,
-                        () -> 1,
-                        () -> 0,
-                        () -> 0,
-                        false, 0, 5),
-                        new DefaultTurretCommand(turretSubsystem, false, false, () -> 0.2, tx, 0.1))));
+                () -> 0, 1.9)));
 
     }
 

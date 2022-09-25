@@ -15,22 +15,22 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
          ShooterConstants.SHOOTER_INTEGRAL,
          ShooterConstants.SHOOTER_DERIVATIVE);
 
-   private CANSparkMax shooterMotor1 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_1_MOTOR_PORT_ID,
+   private CANSparkMax shooterMotor1 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
          MotorType.kBrushless);
 
-   private CANSparkMax shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
-         MotorType.kBrushless);
+  // private CANSparkMax shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.SHOOTER_2_MOTOR_PORT_ID,
+        // MotorType.kBrushless);
 
    public RelativeEncoder shooterMotor1Encoder = returnShooterMotor1Encoder();
-   public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
+  // public RelativeEncoder shooterMotor2Encoder = returnShooterMotor2Encoder();
 
    public RelativeEncoder returnShooterMotor1Encoder() {
       return shooterMotor1.getEncoder();
    }
 
-   public RelativeEncoder returnShooterMotor2Encoder() {
+  /* public RelativeEncoder returnShooterMotor2Encoder() {
       return shooterMotor2.getEncoder();
-   }
+   }*/
 
    public void setShooterSpeed(double speed, boolean usePID) {
       double updatedSpeed;
@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
       } else {
          updatedSpeed = ShooterConstants.SHOOTING_MOTORS_REVERSED ? -speed : speed;
       }
-      shooterMotor2.follow(shooterMotor1);
+      //shooterMotor2.follow(shooterMotor1);
       shooterMotor1.set(updatedSpeed);
    }
 
@@ -64,18 +64,18 @@ public class ShooterSubsystem extends SubsystemBase implements AutoCloseable {
 
    public void resetShooterMotorEncoders() {
       shooterMotor1Encoder.setPosition(0);
-      shooterMotor2Encoder.setPosition(0);
+     // shooterMotor2Encoder.setPosition(0);
    }
 
    public void stopShooterMotors() {
       shooterMotor1.set(0);
-      shooterMotor2.set(0);
+     // shooterMotor2.set(0);
    }
 
    @Override
    public void close() throws Exception {
       shooterMotor1.close();
-      shooterMotor2.close();
+     // shooterMotor2.close();
    }
 
 }
